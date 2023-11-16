@@ -6,9 +6,10 @@ function App() {
 
   return (
     <>
-    
-      <NavBar/>
-      <AppRouter/>
+
+      <NavBar />
+
+      <AppRouter />
 
     </>
   )
