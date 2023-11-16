@@ -1,0 +1,18 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+
+/*ESTILOS GENERALES*/
+body {
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  /* para un elemento específico, como un párrafo */
+  p {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  /* También puedes aplicarla a clases o IDs específicos */
+  .mi-clase {
+    font-family: 'Open Sans', sans-serif;
+  }
