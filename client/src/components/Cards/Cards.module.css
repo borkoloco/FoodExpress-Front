@@ -1,0 +1,17 @@
+.bigDiv {
+    background-color: rgb(254, 250, 224);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 30px 30px;
+    justify-content: space-between;
+    padding-bottom: 20px;
+
+
+}
+
+.item {
+    width: 25%;
+    box-sizing: border-box;
+    padding: 1em;
+}
