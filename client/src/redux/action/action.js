@@ -1,4 +1,4 @@
-import axios from 'axios'
+// import axios from 'axios'
 import menu from '../../Views/Home/menu'
 
 export const ALL_MENU = 'ALL_MENU'
