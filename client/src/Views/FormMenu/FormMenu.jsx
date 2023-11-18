@@ -154,8 +154,8 @@ const FormMenu = () => {
           <div className="mb-3">
             <h3>Tipos de Platos:</h3>
 
-            <div  class="form-check">
-              <label class="form-check-label">
+            <div  className="form-check">
+              <label className="form-check-label">
                 <input
                   className="form-check-input"
                   type="radio"
@@ -167,8 +167,8 @@ const FormMenu = () => {
               </label>
             </div>
 
-            <div class="form-check">
-              <label class="form-check-label">
+            <div className="form-check">
+              <label className="form-check-label">
                 <input
                    className="form-check-input"
                   type="radio"
@@ -181,8 +181,8 @@ const FormMenu = () => {
             </div>
 
 
-            <div  class="form-check">
-              <label class="form-check-label">
+            <div  className="form-check">
+              <label className="form-check-label">
                 <input
                    className="form-check-input"
                   type="radio"
@@ -199,8 +199,8 @@ const FormMenu = () => {
           <div className="mb-3">
             <h3>Especialidades:</h3>
 
-            <div class="form-check">
-              <label class="form-check-label">
+            <div className="form-check">
+              <label className="form-check-label">
                 <input
                   className="form-check-input"
                   type="radio"
@@ -212,8 +212,8 @@ const FormMenu = () => {
               </label>
             </div>
 
-            <div class="form-check">
-              <label class="form-check-label">
+            <div className="form-check">
+              <label className="form-check-label">
                 <input
                   className="form-check-input"
                   type="radio"
@@ -226,8 +226,8 @@ const FormMenu = () => {
             </div>
 
 
-            <div class="form-check">
-              <label class="form-check-label">
+            <div className="form-check">
+              <label className="form-check-label">
                 <input
                   className="form-check-input"
                   type="radio"
