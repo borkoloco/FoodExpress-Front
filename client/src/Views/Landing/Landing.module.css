@@ -1,0 +1,55 @@
+
+
+.btn {
+    margin-top: 1rem;
+    border:0;
+    padding: 14px 38px;
+}
+
+.btn_brand{
+    background-color: sandybrown;
+    color: white;
+    font-weight: 700;
+}
+.btn_brand:hover{
+    border: 1px solid sandybrown;
+    background-color: transparent;
+    color: white;
+}
+
+
+/* Sliders aqui */
+
+.slide_1{
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../../assets/banner-food.jpg);
+}
+.slide_2{
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../../assets/banner-reservation.jpg);
+}
+
+
+.bg_cover {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#heroSlider h6::after,
+#heroSlider h6::before{
+    content: " ";
+    width: 40px;
+    height: 4px;
+    background-color: #ffffff;
+    display: inline-block;
+    margin: 10px;
+    vertical-align: middle;
+}
+
+
+.carousel-control-prev,
+.carousel-control-next{
+    background-color: rgba(0,0,0,0.6);
+    width: 40px;
+    height: 70px;
+    margin: auto;
+}

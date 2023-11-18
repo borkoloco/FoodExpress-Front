@@ -3,11 +3,11 @@ import logo from '../../assets/logo-FE.svg';
 
 export const NavBar = () => {
   return (
-    <>
+    <div className="shadow-sm  z-1 position-relative  rounded">
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
 
-          <NavLink className="navbar-brand" to="/home">
+          <NavLink className="navbar-brand" to="/">
             <img src={logo} alt='logo-FE'/>
           </NavLink>
 
@@ -58,6 +58,6 @@ export const NavBar = () => {
           </div>
         </div>
       </nav>
-    </>
+    </div>
   );
 };

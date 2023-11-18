@@ -1,0 +1,15 @@
+.container_form{
+    background: rgb(238, 238, 238);
+    /* border: 1px solid black; */
+    border-radius: 1rem;
+    width: auto;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    padding: 2.2rem;
+    margin-right: 20vw;
+    margin-left: 20vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    /* align-items: center; */
+}
