@@ -31,3 +31,13 @@
     width: auto;
     border-radius: 50%;
 }
+
+/* Fondo del home */
+.background_home{
+    background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url(../../assets/banner-food.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}

@@ -1,0 +1,23 @@
+
+
+.btnBack {
+    /* background: sandybrown; */
+    border-radius: 0.5rem;
+    border: 0;
+    padding: 6px;
+    padding-left: 16px;
+    padding-right: 16px;
+    /* color: white; */
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+.btnBack:hover {
+    background: white;
+    border-radius: 0.5rem;
+    /* border: 1px solid sandybrown; */
+    padding: 6px;
+    padding-left: 16px;
+    padding-right: 16px;
+    color: sandybrown;
+}
