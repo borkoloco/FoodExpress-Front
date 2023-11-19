@@ -1,22 +1,116 @@
 import React, { useEffect, useRef, useState } from "react";
 import Switch from "react-switch";
 import validations from "../../utils/validations";
-import style from './FormMenu.module.css'
+import style from "./FormMenu.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  postProduct,
+  getSpecialties,
+  getTypesOfFood,
+  postSpecialties,
+  postTypesOfFood,
+} from "../../redux/action/action";
+import SubFormCategories from "./subFormCategories";
 
 const FormMenu = () => {
+  const imgDefault =
+    "https://res.cloudinary.com/foodexpressimg/image/upload/v1700339341/FoodExpressImg/FoodLogo_nsnkjw.png";
   const [menuData, setMenuData] = useState({
     //idMenu sería Integer y autoIncrement
     nameMenu: "", //string de unos 30 caracteres
     description: "", //string de 255 caracteres estimo
-    imageUrl: "", //string de 255 caracteres
+    imageUrl: imgDefault, //string de 255 caracteres
     price: 0, //Decimal de 2 posiciones flotantes
     available: true, //booleano disponible o no disponoble
-    tipeMenu: "Platos", //string ENUM Platos, Postres, Bebidas...
-    specialtyMenu: "Tradicional", //string ENUM Tradicional, Vegetariano, Libre de glúten
+    tipeMenu: "",
+    specialtyMenu: "",
   });
 
   const [errors, setErrors] = useState({ initial: "initial" });
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
+  const dispatch = useDispatch();
+  const allSpecialties = useSelector((state) => state.allSpecialties);
+  const allTypesOfFood = useSelector((state) => state.allTypesOfFood);
+  //*cloudinary
+  const cloudinaryRef = useRef();
+  const widgetRef = useRef();
+  const [imgUrl, setImgUrl] = useState("");
+  const [force, setForce] = useState(true);
+
+  //!modal
+  const regexName = /^[A-Za-z\s]+$/;
+  const handleAddSpecial = async () => {
+    const inputValue = window.prompt("Ingresa una especialidad:");
+    if (!(inputValue === null || inputValue === "")) {
+      // El usuario hizo clic en "Aceptar" y proporcionó un valor
+      if (validationsCategories(inputValue)) {
+        await dispatch(postSpecialties(inputValue));
+        await dispatch(getSpecialties());
+        setForce(!force);
+      }
+    }
+  };
+
+  const handleAddTipoComida = async () => {
+    const inputValue = window.prompt("Ingresa un tipo de comida:");
+    if (!(inputValue === null || inputValue === "")) {
+      // El usuario hizo clic en "Aceptar" y proporcionó un valor
+      if (validationsCategories(inputValue)) {
+        await dispatch(postTypesOfFood(inputValue));
+        await dispatch(getTypesOfFood());
+        setForce(!force);
+      }
+    }
+  };
+
+  const validationsCategories = (value) => {
+    if (value === "") {
+      window.alert("Debes ingresar una categoria");
+      return false;
+    } else if (value.trim() === "") {
+      window.alert("No uses cadenas de espacios");
+      return false;
+    } else if (value.length < 2 || value.length > 30) {
+      window.alert("Usa entre 2 y 30 caracteres");
+      return false;
+    } else if (!regexName.test(value)) {
+      window.alert("Usa solo letras y espacios");
+      return false;
+    }
+    return true;
+  };
+
+  //!fin modal
+
+  //!verificar dónde hacemos las peticiones
+
+  useEffect(() => {
+    if (allSpecialties.length === 0) {
+      dispatch(getSpecialties());
+    }
+    if (allTypesOfFood.length === 0) {
+      dispatch(getTypesOfFood());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (allSpecialties.length !== 0) {
+      setMenuData((prevMenuData) => ({
+        ...prevMenuData,
+        specialtyMenu: allSpecialties[0].name,
+      }));
+    }
+  }, [allSpecialties]);
+
+  useEffect(() => {
+    if (allTypesOfFood.length !== 0) {
+      setMenuData((prevMenuData) => ({
+        ...prevMenuData,
+        tipeMenu: allTypesOfFood[0].name,
+      }));
+    }
+  }, [allTypesOfFood]);
+  //!-------------
 
   //manejadores de eventos onChange
   const handleChange = (event) => {
@@ -43,11 +137,18 @@ const FormMenu = () => {
   }, [errors]);
 
   //!logica para el envio del formulario
+  useEffect(() => {
+    if (imgUrl) {
+      setMenuData((prevMenuData) => ({ ...prevMenuData, imageUrl: imgUrl }));
+    }
+  }, [imgUrl]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!imgUrl) {
       const result = window.confirm("Crear un plato sin imagen?");
       if (result) {
+        //datos que se envian
         console.log(menuData);
         return;
       } else {
@@ -56,14 +157,10 @@ const FormMenu = () => {
     }
     setMenuData({ ...menuData, imageUrl: imgUrl });
     console.log(menuData);
-    // ¡Continúa con la lógica!
+    //* ¡Continúa con la lógica!
   };
 
   //!cloudinary
-  const cloudinaryRef = useRef();
-  const widgetRef = useRef();
-  const [imgUrl, setImgUrl] = useState("");
-
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
     widgetRef.current = cloudinaryRef.current.createUploadWidget(
@@ -89,177 +186,123 @@ const FormMenu = () => {
     <div className={style.container_form}>
       <h2>Crea tu nuevo plato</h2>
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label" htmlFor="nameMenu">
-            Plato:{" "}
-          </label>
-          <input
-            className="form-control"
-            type="text"
-            name="nameMenu"
-            id="nameMenu"
-            placeholder="Nombre del plato"
-            value={menuData.nameMenu}
-            onChange={handleChange}
+      <div className="mb-3">
+        <label className="form-label" htmlFor="nameMenu">
+          Plato:{" "}
+        </label>
+        <input
+          className="form-control"
+          type="text"
+          name="nameMenu"
+          id="nameMenu"
+          placeholder="Nombre del plato"
+          value={menuData.nameMenu}
+          onChange={handleChange}
+        />
+        <span className="form-text text-danger">{errors.nameMenu}</span>
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label" htmlFor="description">
+          Descripción:{" "}
+        </label>
+        <textarea
+          className="form-control"
+          rows="3"
+          type="text"
+          name="description"
+          id="description"
+          placeholder="Descripción del plato"
+          value={menuData.description}
+          onChange={handleChange}
+        />
+        <span className="form-text text-danger">{errors.description}</span>
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label" htmlFor="price">
+          Precio:{" "}
+        </label>
+        <input
+          className="form-control"
+          type="number"
+          name="price"
+          id="price"
+          placeholder="Precio del plato"
+          value={menuData.price}
+          onChange={handleChange}
+        />
+        <span className="form-text text-danger">{errors.price}</span>
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">
+          Disponible:{"  "}
+          <Switch
+            onChange={handleChangeAvailable}
+            checked={menuData.available}
           />
-          <span className="form-text text-danger">{errors.nameMenu}</span>
+        </label>
+      </div>
+
+      {/*options*/}
+      <div>
+        <div className="mb-3">
+          <label className="form-label">Tipos de Platos:</label>{" "}
+          <button onClick={handleAddTipoComida}>Agregar</button>
+          <select
+            className="form-select"
+            value={menuData.tipeMenu}
+            onChange={handleTipoPlatoChange}
+          >
+            {allTypesOfFood.map((type) => (
+              <option key={type.id} value={type.name}>
+                {type.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="mb-3">
-          <label className="form-label" htmlFor="description">
-            Descripción:{" "}
-          </label>
-          <textarea
-            className="form-control"
-            rows="3"
-            type="text"
-            name="description"
-            id="description"
-            placeholder="Descripción del plato"
-            value={menuData.description}
-            onChange={handleChange}
+          <label className="form-label">Especialidades:</label>{" "}
+          <button onClick={handleAddSpecial}>Agregar</button>
+          <select
+            className="form-select"
+            value={menuData.specialtyMenu}
+            onChange={handleEspecialidadChange}
+          >
+            {allSpecialties.map((specialty) => (
+              <option key={specialty.id} value={specialty.name}>
+                {specialty.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="mb-3">
+        <button className="btn btn-success" onClick={handleUploadButtonClick}>
+          Upload
+        </button>
+        {imgUrl && (
+          <img
+            src={imgUrl}
+            alt="Uploaded"
+            style={{ marginLeft: "10px", maxWidth: "150px" }}
           />
-          <span className="form-text text-danger">{errors.description}</span>
-        </div>
+        )}
+      </div>
 
-        <div className="mb-3">
-          <label className="form-label" htmlFor="price">
-            Precio:{" "}
-          </label>
-          <input
-            className="form-control"
-            type="number"
-            name="price"
-            id="price"
-            placeholder="Precio del plato"
-            value={menuData.price}
-            onChange={handleChange}
-          />
-          <span className="form-text text-danger">{errors.price}</span>
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">
-            Disponible:{"  "}
-            <Switch
-              onChange={handleChangeAvailable}
-              checked={menuData.available}
-            />
-          </label>
-        </div>
-
-        {/*options*/}
-        <div>
-          <div className="mb-3">
-            <h3>Tipos de Platos:</h3>
-
-            <div  className="form-check">
-              <label className="form-check-label">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  value="Platos"
-                  checked={menuData.tipeMenu === "Platos"}
-                  onChange={handleTipoPlatoChange}
-                />
-                Platos
-              </label>
-            </div>
-
-            <div className="form-check">
-              <label className="form-check-label">
-                <input
-                   className="form-check-input"
-                  type="radio"
-                  value="Postres"
-                  checked={menuData.tipeMenu === "Postres"}
-                  onChange={handleTipoPlatoChange}
-                />
-                Postres
-              </label>
-            </div>
-
-
-            <div  className="form-check">
-              <label className="form-check-label">
-                <input
-                   className="form-check-input"
-                  type="radio"
-                  value="Bebidas"
-                  checked={menuData.tipeMenu === "Bebidas"}
-                  onChange={handleTipoPlatoChange}
-                />
-                Bebidas
-              </label>
-            </div>
-          </div>
-
-
-          <div className="mb-3">
-            <h3>Especialidades:</h3>
-
-            <div className="form-check">
-              <label className="form-check-label">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  value="Tradicional"
-                  checked={menuData.specialtyMenu === "Tradicional"}
-                  onChange={handleEspecialidadChange}
-                />
-                Tradicional
-              </label>
-            </div>
-
-            <div className="form-check">
-              <label className="form-check-label">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  value="Vegetariano"
-                  checked={menuData.specialtyMenu === "Vegetariano"}
-                  onChange={handleEspecialidadChange}
-                />
-                Vegetariano
-              </label>
-            </div>
-
-
-            <div className="form-check">
-              <label className="form-check-label">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  value="Libre de glúten"
-                  checked={menuData.specialtyMenu === "Libre de glúten"}
-                  onChange={handleEspecialidadChange}
-                />
-                Libre de glúten
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div className="mb-3">
-          <button className="btn btn-success" onClick={handleUploadButtonClick}>Upload</button>
-          {imgUrl && (
-            <img
-              src={imgUrl}
-              alt="Uploaded"
-              style={{ marginLeft: "10px", maxWidth: "150px" }}
-            />
-          )}
-        </div>
-
-        {/* El handleSubmit lo puse directamente en la apertura de 
-        de la etiqueta form, en su atributo onSubmit */}
-        <div className="mb-3">
-          <button className="btn btn-success" type="submit" disabled={isSubmitButtonDisabled}>
-            Agregar
-          </button>
-        </div>
-      </form>
+      <div className="mb-3">
+        <button
+          className="btn btn-success"
+          type="button"
+          onClick={handleSubmit}
+          disabled={isSubmitButtonDisabled}
+        >
+          Agregar
+        </button>
+      </div>
     </div>
   );
 };

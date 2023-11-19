@@ -1,18 +1,34 @@
-const specialties = ['Tradicional', 'Vegetariano', 'Libre de gluten']
+// const specialties = ["Tradicional", "Vegetariano", "Libre de gluten"];
 
-const types = ['Plato', 'Ensalada', 'Postre', 'Bebida']
+// const types = ["Plato", "Ensalada", "Postre", "Bebida"];
 
-
-
-
-
-
-
+var types = [
+  { id: 1, name: "Platos" },
+  { id: 2, name: "Postres" },
+  { id: 3, name: "Bebidas" },
+  { id: 4, name: "Otrossss" },
+];
+var specialties = [
+  { id: 1, name: "Tradicional" },
+  { id: 2, name: "Vegetariano" },
+  { id: 3, name: "Libre de glúten" },
+  { id: 4, name: "otrooooo" },
+];
 
 export const specialty = () => {
-    return specialties
-}
+  return specialties;
+};
 
 export const typesOfFood = () => {
-    return types
-}
+  return types;
+};
+
+export const addSpecialty = (value) => {
+  specialties.push({ id: specialties.length + 1, name: value });
+  return specialties;
+};
+
+export const addTypes = (value) => {
+  types.push({ id: types.length + 1, name: value });
+  return types;
+};
