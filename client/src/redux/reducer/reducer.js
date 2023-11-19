@@ -1,10 +1,11 @@
-import { ALL_MENU, ALL_SPECIALTIES, ALL_TYPES, FILTERS, ORDER} from "../action/action";
+import { ALL_MENU,GET_MENU_DETAIL_BY_NAME,CLEAN_DETAIL_MENU, ALL_SPECIALTIES, ALL_TYPES, FILTERS, ORDER} from "../action/action";
 
 
 
 
 const initialState = {
     allMenu: [],
+    menuDetail:{},
     allMenuOriginal:[], 
     allSpecialties: [],
     allTypesOfFood: [],
@@ -18,6 +19,14 @@ const rootReducer = (state = initialState, action) => {
             }
             
             break;
+
+        /*Menu detail */
+        case GET_MENU_DETAIL_BY_NAME:
+            return { ...state, menuDetail: action.payload };
+        case CLEAN_DETAIL_MENU:
+            return { ...state, menuDetail: {} };
+
+
         
         case ALL_SPECIALTIES:
             return {
