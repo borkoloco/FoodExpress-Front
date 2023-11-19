@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import style from "./Landing.module.css";
 
-export const Landing = () => {
+
+const Landing = () => {
   return (
     <div id={`${style.heroSlider}`} className="carousel slide">
       <div className="carousel-inner">
@@ -66,3 +67,6 @@ export const Landing = () => {
     </div>
   );
 };
+
+
+export default Landing;

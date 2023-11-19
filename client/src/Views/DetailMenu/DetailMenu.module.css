@@ -1,0 +1,48 @@
+
+
+.containerCard{
+    /* background: red; */
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+
+}
+
+
+.imgLoading {
+    margin-top: 10em;
+    margin-left: 25em;
+    height: 14em;
+    width: auto;
+    border-radius: 50%;
+}
+
+
+
+/* nuevo */
+
+.newArrival {
+    background: green;
+    width: 50px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.price {
+    color: sandybrown;
+    font-size: 26px;
+    font-weight: bold;
+    padding-top: 5px;
+}
+
+.quantityInput{
+    border: 1px solid #ccc;
+    font-weight: bold;
+    height: 33px;
+    text-align: center;
+    width: 30px;
+    margin-right: 12px;
+
+}
