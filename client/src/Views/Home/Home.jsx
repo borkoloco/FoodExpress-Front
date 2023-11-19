@@ -49,7 +49,7 @@ function Home() {
 
 
     return (
-        <div className={Style.bigDiv}>
+        <div className={`${Style.bigDiv} ${Style.background_home}`}>
 
 
             <div className={Style.barDiv}>
