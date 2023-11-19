@@ -1,4 +1,4 @@
-import { ALL_MENU, ALL_SPECIALTIES, ALL_TYPES, FILTERS} from "../action/action";
+import { ALL_MENU, ALL_SPECIALTIES, ALL_TYPES, FILTERS, ORDER} from "../action/action";
 
 
 
@@ -51,7 +51,30 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state, allMenu: filteredMenu
             }
-               
+            
+        case ORDER:
+            console.log(state.allMenu[0].price);
+            if (payload === 'nameUp') {
+                return {
+                    ...state, allMenu: state.allMenu.slice().sort((a,b)=> a.nameMenu.localeCompare(b.nameMenu)),
+                }
+            }
+            if (payload === 'nameDown') {
+                return {
+                    ...state, allMenu: state.allMenu.slice().sort((a,b)=> b.nameMenu.localeCompare(a.nameMenu)),
+                }
+            }
+
+            if (payload === 'priceUp') {
+                return {
+                    ...state, allMenu: state.allMenu.slice().sort((a,b) => a.price - b.price),
+                }
+            }
+            if (payload === 'priceDown') {
+                return {
+                    ...state, allMenu: state.allMenu.slice().sort((a,b) => b.price - a.price),
+                }
+            }
         
         
         

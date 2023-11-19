@@ -6,6 +6,7 @@ export const ALL_MENU = 'ALL_MENU'
 export const ALL_SPECIALTIES = 'ALL_SPECIALTIES'
 export const ALL_TYPES = 'ALL_TYPES'
 export const FILTERS = 'FILTERS'
+export const ORDER = 'ORDER'
 
 export const getAllMenu = () => {
     /////aca se pone el axios para traer del back todo el menu
@@ -80,4 +81,14 @@ export const filters = (props) => {
     }
 
 
+    
+}
+
+export const orderMenu = (prop) => {
+    return (dispatch) => {
+        return dispatch({
+            type: ORDER,
+            payload: prop,
+        })
+    }
 }

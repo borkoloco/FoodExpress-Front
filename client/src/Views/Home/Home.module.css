@@ -1,0 +1,33 @@
+.bigDiv {
+    display: flex;
+    flex-direction: row;
+
+
+}
+
+.barDiv {
+    width: 300px;
+    margin-top: 3.9em;
+
+
+}
+
+.accordion {
+    width: 200px;
+
+}
+
+.cardsDiv {
+    flex-grow: 1;
+
+    margin-left: 3em;
+
+}
+
+.imgLoading {
+    margin-top: 10em;
+    margin-left: 25em;
+    height: 14em;
+    width: auto;
+    border-radius: 50%;
+}
