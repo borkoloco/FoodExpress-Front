@@ -1,6 +1,6 @@
 .bigDiv {
-    width: 8em;
-    height: 12em;
+    width: 16em;
+    height: 21em;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
@@ -32,13 +32,13 @@
 
 .image {
     max-width: 100%;
-    height: 5em;
+    height: 9em;
     border-radius: 5px;
     margin-bottom: 4px;
 }
 
 .text {
-    font-size: 0.5em;
+    font-size: 1em;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     white-space: nowrap;
     overflow: hidden;
@@ -47,7 +47,7 @@
 }
 
 .textName {
-    font-size: 0.8em;
+    font-size: 1.5em;
     white-space: nowrap;
     overflow: hidden;
 
