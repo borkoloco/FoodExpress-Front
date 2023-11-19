@@ -1,4 +1,5 @@
 // import axios from 'axios'
+
 import menu from '../../Views/Home/menu'
 import { specialty, typesOfFood } from '../../Views/Home/datosParaFiltros'
 import { getMenu } from '../../utils/detailByName'
@@ -13,21 +14,21 @@ export const ORDER = 'ORDER'
 
 
 
+
 export const getAllMenu = () => {
-    /////aca se pone el axios para traer del back todo el menu
-    return async (dispatch) => {
-        try {
-            const data = await menu();
-            return dispatch({
-                type: ALL_MENU,
-                payload: data
-            })
-        } catch (error) {
-            console.log(error.message);
-        }
+  /////aca se pone el axios para traer del back todo el menu
+  return async (dispatch) => {
+    try {
+      const data = await menu();
+      return dispatch({
+        type: ALL_MENU,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
     }
-    
-}
+  };
+};
 
 /* Actions para el Detail */
 export const getMenuDetailByName = (name) => {
@@ -52,70 +53,109 @@ export const cleanDetailMenu = () => {
 
 
 export const getSpecialties = () => {
-    return async (dispatch) => {
-        try {
-            const data = await specialty();
+  return async (dispatch) => {
+    try {
+      const data = await specialty();
 
-            return dispatch({
-                type: ALL_SPECIALTIES,
-                payload: data
-            })
-        } catch (error) {
-            console.log(error.message);
-        }
+      return dispatch({
+        type: ALL_SPECIALTIES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
     }
-}
+  };
+};
 
 export const getTypesOfFood = () => {
-    return async (dispatch) => {
-        try {
-            const data = await typesOfFood();
-            return dispatch({
-                type: ALL_TYPES,
-                payload: data,
-            })
-        } catch (error) {
-            console.log(error.message);
-        }
+  return async (dispatch) => {
+    try {
+      const data = await typesOfFood();
+      return dispatch({
+        type: ALL_TYPES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
     }
-}
+  };
+};
 
 export const filters = (props) => {
-   
-    let { specialties, types, availability } = props
-    if (specialties === '') {
-        specialties = 'all'
-    }
-    if (types === '') {
-        types = 'all'
-    }
-    
-    if (availability === '') {
-        availability = 'all'
-    } 
-    
-    
-    return (dispatch) => {
+  let { specialties, types, availability } = props;
+  if (specialties === "") {
+    specialties = "all";
+  }
+  if (types === "") {
+    types = "all";
+  }
 
-        return dispatch({
-            type: FILTERS,
-            payload: {
-                specialties: specialties,
-                typesOfFood: types,
-                availability: availability
-            }
-        })
-    }
+  if (availability === "") {
+    availability = "all";
+  }
 
-
-    
-}
+  return (dispatch) => {
+    return dispatch({
+      type: FILTERS,
+      payload: {
+        specialties: specialties,
+        typesOfFood: types,
+        availability: availability,
+      },
+    });
+  };
+};
 
 export const orderMenu = (prop) => {
-    return (dispatch) => {
-        return dispatch({
-            type: ORDER,
-            payload: prop,
-        })
+  return (dispatch) => {
+    return dispatch({
+      type: ORDER,
+      payload: prop,
+    });
+  };
+};
+
+//dar de alta un producto/plato en la BD
+export const postProduct = (product) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post("ENDPOINT", product);
+      dispatch({
+        type: POST_MENU,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
     }
-}
+  };
+};
+
+export const postSpecialties = (value) => {
+  return async (dispatch) => {
+    try {
+      const data = await addSpecialty(value);
+
+      return dispatch({
+        type: ALL_SPECIALTIES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const postTypesOfFood = (value) => {
+  return async (dispatch) => {
+    try {
+      const data = await addTypes(value);
+
+      return dispatch({
+        type: ALL_TYPES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
