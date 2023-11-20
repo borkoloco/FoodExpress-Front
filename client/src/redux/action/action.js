@@ -9,6 +9,7 @@ import {
 } from "../../Views/Home/datosParaFiltros";
 
 import { getMenu } from '../../utils/detailByName'
+import { findByName } from "../../utils/findByName";
 
 export const ALL_MENU = 'ALL_MENU'
 export const GET_MENU_DETAIL_BY_NAME = 'GET_MENU_DETAIL_BY_NAME'
@@ -19,6 +20,8 @@ export const FILTERS = 'FILTERS'
 export const ORDER = 'ORDER'
 export const POST_MENU = 'POST_MENU'
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+export const SEARCH_INPUT = "SEARCH_INPUT";
+export const GET_MENUS = "GET_MENUS";
 
 
 export const getAllMenu = () => {
@@ -174,3 +177,24 @@ export const setCurrentPage = (page) => ({
   type: SET_CURRENT_PAGE,
   payload: page,
 });
+
+
+/*  ACTIONS PARA EL SEARCH */
+export const setInput = (valor) => {
+  return { type: SEARCH_INPUT, payload: valor };
+};
+
+export const getMenus = (name) => {
+  return async (dispatch) => {
+    try {
+      const data = await findByName(name);
+
+      return dispatch({
+        type: GET_MENUS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
