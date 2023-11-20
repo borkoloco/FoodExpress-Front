@@ -1,3 +1,4 @@
+
 import {
   ALL_MENU,
   ALL_SPECIALTIES,
@@ -6,10 +7,15 @@ import {
   ORDER,
   POST_MENU,
   SET_CURRENT_PAGE,
+  GET_MENU_DETAIL_BY_NAME,
+  CLEAN_DETAIL_MENU
 } from "../action/action";
+
+
 
 const initialState = {
   allMenu: [],
+  menuDetail:{},
   allMenuOriginal: [],
   allSpecialties: [],
   allTypesOfFood: [],
@@ -39,6 +45,12 @@ const rootReducer = (state = initialState, action) => {
       };
 
       break;
+
+   /*Menu detail */
+    case GET_MENU_DETAIL_BY_NAME:
+        return { ...state, menuDetail: action.payload };
+    case CLEAN_DETAIL_MENU:
+        return { ...state, menuDetail: {} };
 
     case ALL_SPECIALTIES:
       return {
@@ -113,6 +125,7 @@ const rootReducer = (state = initialState, action) => {
           allMenu: state.allMenu.slice().sort((a, b) => b.price - a.price),
         };
       }
+
 
     default:
       return state;

@@ -50,11 +50,16 @@
     font-size: 1.5em;
     white-space: nowrap;
     overflow: hidden;
-
+    
     width: 10em;
     text-align: center;
     justify-self: center;
     margin-bottom: 0.7em;
     -webkit-text-stroke: 1px black;
 
+}
+
+.deleteDecoration {
+    text-decoration: none;
+    color: black;
 }
