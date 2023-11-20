@@ -5,6 +5,7 @@ import {
   FILTERS,
   ORDER,
   POST_MENU,
+  SET_CURRENT_PAGE,
 } from "../action/action";
 
 const initialState = {
@@ -13,10 +14,17 @@ const initialState = {
   allSpecialties: [],
   allTypesOfFood: [],
   menu: null,
+  currentPage: 1,
+  itemsPerPage: 3,
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
   switch (action.type) {
+    case SET_CURRENT_PAGE: //paginacion
+      return {
+        ...state,
+        currentPage: payload,
+      };
     case POST_MENU:
       return {
         ...state,
@@ -71,6 +79,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allMenu: filteredMenu,
+        currentPage: 1,
       };
 
     case ORDER:

@@ -1,5 +1,5 @@
 // import axios from 'axios'
-import menu from "../../Views/Home/menu";
+import menu, { postMenu } from "../../Views/Home/menu";
 import {
   specialty,
   typesOfFood,
@@ -13,6 +13,7 @@ export const ALL_TYPES = "ALL_TYPES";
 export const FILTERS = "FILTERS";
 export const ORDER = "ORDER";
 export const POST_MENU = "POST_MENU";
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 
 export const getAllMenu = () => {
   /////aca se pone el axios para traer del back todo el menu
@@ -92,11 +93,12 @@ export const orderMenu = (prop) => {
   };
 };
 
-//dar de alta un producto/plato en la BD
+//fn dar de alta un producto/plato en la BD
 export const postProduct = (product) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("ENDPOINT", product);
+      // const { data } = await axios.post("ENDPOINT", product);
+      const data = postMenu(product);
       dispatch({
         type: POST_MENU,
         payload: data,
@@ -107,6 +109,7 @@ export const postProduct = (product) => {
   };
 };
 
+//fn post tipo de especialidad
 export const postSpecialties = (value) => {
   return async (dispatch) => {
     try {
@@ -122,6 +125,7 @@ export const postSpecialties = (value) => {
   };
 };
 
+//fn post tipo de comida o plato
 export const postTypesOfFood = (value) => {
   return async (dispatch) => {
     try {
@@ -136,3 +140,9 @@ export const postTypesOfFood = (value) => {
     }
   };
 };
+
+//fn para el paginado
+export const setCurrentPage = (page) => ({
+  type: SET_CURRENT_PAGE,
+  payload: page,
+});

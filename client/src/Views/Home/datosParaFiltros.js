@@ -6,13 +6,13 @@ var types = [
   { id: 1, name: "Platos" },
   { id: 2, name: "Postres" },
   { id: 3, name: "Bebidas" },
-  { id: 4, name: "Otrossss" },
+  { id: 4, name: "Ensalada" },
 ];
 var specialties = [
   { id: 1, name: "Tradicional" },
   { id: 2, name: "Vegetariano" },
-  { id: 3, name: "Libre de glúten" },
-  { id: 4, name: "otrooooo" },
+  { id: 3, name: "Libre de gluten" },
+  { id: 4, name: "Otros" },
 ];
 
 export const specialty = () => {
