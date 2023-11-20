@@ -11,6 +11,7 @@ export const ALL_SPECIALTIES = 'ALL_SPECIALTIES'
 export const ALL_TYPES = 'ALL_TYPES'
 export const FILTERS = 'FILTERS'
 export const ORDER = 'ORDER'
+export const POST_MENU = 'POST_MENU'
 
 
 

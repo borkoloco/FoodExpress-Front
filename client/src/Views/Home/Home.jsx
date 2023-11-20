@@ -68,7 +68,7 @@ function Home() {
                                     <option value='all'>Todos</option>
                                     {
                                         allSpecialties && allSpecialties.map((special, index) => {
-                                            return <option value={special} key={index}>{special}</option>
+                                            return <option value={special.name} key={index}>{special.name}</option>
                                         })
                                     }
                                 </select>
@@ -80,7 +80,7 @@ function Home() {
                                     <option value='all'>Todos</option>
                                     {
                                         allTypesOfFood && allTypesOfFood.map((typeFood, index) => {
-                                            return <option value={typeFood} key={index}>{typeFood}</option>
+                                            return <option value={typeFood.name} key={index}>{typeFood.name}</option>
                                         })
                                     }
                                 </select>
