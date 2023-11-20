@@ -1,4 +1,5 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { Search } from "../../components";
 import logo from '../../assets/logo-FE.svg';
 
 export const NavBar = () => {
@@ -25,7 +26,7 @@ export const NavBar = () => {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/menu">
-                  Menu
+                  Reservas
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -36,9 +37,7 @@ export const NavBar = () => {
              
             </ul>
 
-            <form className="d-flex" role="search">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-            </form>
+            {/* <Search/> */}
 
             <ul className="navbar-nav ms-3">
 
