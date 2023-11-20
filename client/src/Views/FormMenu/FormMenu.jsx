@@ -10,7 +10,6 @@ import {
   postSpecialties,
   postTypesOfFood,
 } from "../../redux/action/action";
-import SubFormCategories from "./subFormCategories";
 
 const FormMenu = () => {
   const imgDefault =
@@ -150,6 +149,7 @@ const FormMenu = () => {
       if (result) {
         //datos que se envian
         console.log(menuData);
+        dispatch(postProduct(menuData));
         return;
       } else {
         return;
@@ -157,10 +157,12 @@ const FormMenu = () => {
     }
     setMenuData({ ...menuData, imageUrl: imgUrl });
     console.log(menuData);
+    dispatch(postProduct(menuData));
     //* ¡Continúa con la lógica!
+    //!limpiar formulario
   };
 
-  //!cloudinary
+  //*cloudinary
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
     widgetRef.current = cloudinaryRef.current.createUploadWidget(
