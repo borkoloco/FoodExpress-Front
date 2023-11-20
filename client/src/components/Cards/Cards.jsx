@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "../Card/Card";
 import Style from "./Cards.module.css";
 import { setCurrentPage } from "../../redux/action/action";
@@ -8,6 +8,7 @@ function Cards({ props }) {
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.currentPage);
   const itemsPerPage = useSelector((state) => state.itemsPerPage);
+  const input = useSelector((state) => state.input);
 
   //*paginación
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -37,6 +38,12 @@ function Cards({ props }) {
       handlePageChange(currentPage + 1);
     }
   };
+
+  /*Ubica en la pagina 1 cuando se busca */
+  useEffect(() => {
+    dispatch(setCurrentPage(1))
+  }, [input])
+  
   return (
     <div className={Style.bigDiv}>
       {menuToDisplay.map((plato, index) => {

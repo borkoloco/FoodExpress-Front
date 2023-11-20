@@ -10,6 +10,7 @@ import {
   postSpecialties,
   postTypesOfFood,
 } from "../../redux/action/action";
+import { BackButton } from "../../components";
 
 const FormMenu = () => {
   const imgDefault =
@@ -185,127 +186,122 @@ const FormMenu = () => {
   };
 
   return (
-    <div className={style.container_form}>
-      <h2>Crea tu nuevo plato</h2>
-
-      <div className="mb-3">
-        <label className="form-label" htmlFor="nameMenu">
-          Plato:{" "}
-        </label>
-        <input
-          className="form-control"
-          type="text"
-          name="nameMenu"
-          id="nameMenu"
-          placeholder="Nombre del plato"
-          value={menuData.nameMenu}
-          onChange={handleChange}
-        />
-        <span className="form-text text-danger">{errors.nameMenu}</span>
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label" htmlFor="description">
-          Descripción:{" "}
-        </label>
-        <textarea
-          className="form-control"
-          rows="3"
-          type="text"
-          name="description"
-          id="description"
-          placeholder="Descripción del plato"
-          value={menuData.description}
-          onChange={handleChange}
-        />
-        <span className="form-text text-danger">{errors.description}</span>
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label" htmlFor="price">
-          Precio:{" "}
-        </label>
-        <input
-          className="form-control"
-          type="number"
-          name="price"
-          id="price"
-          placeholder="Precio del plato"
-          value={menuData.price}
-          onChange={handleChange}
-        />
-        <span className="form-text text-danger">{errors.price}</span>
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label">
-          Disponible:{"  "}
-          <Switch
-            onChange={handleChangeAvailable}
-            checked={menuData.available}
-          />
-        </label>
-      </div>
-
-      {/*options*/}
-      <div>
+    <>
+      <BackButton/>
+      <div className={style.container_form}>
+        <h2>Crea tu nuevo plato</h2>
         <div className="mb-3">
-          <label className="form-label">Tipos de Platos:</label>{" "}
-          <button onClick={handleAddTipoComida}>Agregar</button>
-          <select
-            className="form-select"
-            value={menuData.tipeMenu}
-            onChange={handleTipoPlatoChange}
-          >
-            {allTypesOfFood.map((type) => (
-              <option key={type.id} value={type.name}>
-                {type.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Especialidades:</label>{" "}
-          <button onClick={handleAddSpecial}>Agregar</button>
-          <select
-            className="form-select"
-            value={menuData.specialtyMenu}
-            onChange={handleEspecialidadChange}
-          >
-            {allSpecialties.map((specialty) => (
-              <option key={specialty.id} value={specialty.name}>
-                {specialty.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className="mb-3">
-        <button className="btn btn-success" onClick={handleUploadButtonClick}>
-          Upload
-        </button>
-        {imgUrl && (
-          <img
-            src={imgUrl}
-            alt="Uploaded"
-            style={{ marginLeft: "10px", maxWidth: "150px" }}
+          <label className="form-label" htmlFor="nameMenu">
+            Plato:{" "}
+          </label>
+          <input
+            className="form-control"
+            type="text"
+            name="nameMenu"
+            id="nameMenu"
+            placeholder="Nombre del plato"
+            value={menuData.nameMenu}
+            onChange={handleChange}
           />
-        )}
+          <span className="form-text text-danger">{errors.nameMenu}</span>
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="description">
+            Descripción:{" "}
+          </label>
+          <textarea
+            className="form-control"
+            rows="3"
+            type="text"
+            name="description"
+            id="description"
+            placeholder="Descripción del plato"
+            value={menuData.description}
+            onChange={handleChange}
+          />
+          <span className="form-text text-danger">{errors.description}</span>
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="price">
+            Precio:{" "}
+          </label>
+          <input
+            className="form-control"
+            type="number"
+            name="price"
+            id="price"
+            placeholder="Precio del plato"
+            value={menuData.price}
+            onChange={handleChange}
+          />
+          <span className="form-text text-danger">{errors.price}</span>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">
+            Disponible:{"  "}
+            <Switch
+              onChange={handleChangeAvailable}
+              checked={menuData.available}
+            />
+          </label>
+        </div>
+        {/*options*/}
+        <div>
+          <div className="mb-3">
+            <label className="form-label">Tipos de Platos:</label>{" "}
+            <button onClick={handleAddTipoComida}>Agregar</button>
+            <select
+              className="form-select"
+              value={menuData.tipeMenu}
+              onChange={handleTipoPlatoChange}
+            >
+              {allTypesOfFood.map((type) => (
+                <option key={type.id} value={type.name}>
+                  {type.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Especialidades:</label>{" "}
+            <button onClick={handleAddSpecial}>Agregar</button>
+            <select
+              className="form-select"
+              value={menuData.specialtyMenu}
+              onChange={handleEspecialidadChange}
+            >
+              {allSpecialties.map((specialty) => (
+                <option key={specialty.id} value={specialty.name}>
+                  {specialty.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="mb-3">
+          <button className="btn btn-success" onClick={handleUploadButtonClick}>
+            Upload
+          </button>
+          {imgUrl && (
+            <img
+              src={imgUrl}
+              alt="Uploaded"
+              style={{ marginLeft: "10px", maxWidth: "150px" }}
+            />
+          )}
+        </div>
+        <div className="mb-3">
+          <button
+            className="btn btn-success"
+            type="button"
+            onClick={handleSubmit}
+            disabled={isSubmitButtonDisabled}
+          >
+            Agregar
+          </button>
+        </div>
       </div>
-
-      <div className="mb-3">
-        <button
-          className="btn btn-success"
-          type="button"
-          onClick={handleSubmit}
-          disabled={isSubmitButtonDisabled}
-        >
-          Agregar
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
 

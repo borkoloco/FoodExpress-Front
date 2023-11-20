@@ -8,7 +8,9 @@ import {
   POST_MENU,
   SET_CURRENT_PAGE,
   GET_MENU_DETAIL_BY_NAME,
-  CLEAN_DETAIL_MENU
+  CLEAN_DETAIL_MENU,
+  SEARCH_INPUT,
+  GET_MENUS
 } from "../action/action";
 
 
@@ -22,6 +24,7 @@ const initialState = {
   menu: null,
   currentPage: 1,
   itemsPerPage: 3,
+  input:""
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -125,7 +128,13 @@ const rootReducer = (state = initialState, action) => {
           allMenu: state.allMenu.slice().sort((a, b) => b.price - a.price),
         };
       }
-
+    case SEARCH_INPUT:
+      return { ...state, input: payload };
+    case GET_MENUS:
+      return { ...state,
+         allMenu: payload ,
+         allMenuOriginal: payload,
+        };
 
     default:
       return state;
