@@ -43,6 +43,16 @@ const menuHardCode = [
     specialtyMenu: "Tradicional",
   },
   {
+    nameMenu: "Pizza Hawaiana",
+    description: "Pizza con tomate, mozzarella y muy hawaiana",
+    imageUrl:
+      "https://www.visitdubai.com/-/media/images/leisure/campaigns/delicious-dubai-nordics/nordics-campaign-arabic-food-dubai-header-2.jpg?&cw=256&ch=25PostresPostres6",
+    price: 14.99,
+    available: false,
+    typeMenu: "Postres",
+    specialtyMenu: "Tradicional",
+  },
+  {
     nameMenu: "Tarta de Manzana",
     description: "Deliciosa tarta de manzana con canela",
     imageUrl:
