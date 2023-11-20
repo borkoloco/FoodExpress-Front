@@ -166,43 +166,9 @@ function Home() {
         )}
       </div>
     </div>
+  
   );
 }
 
 export default Home;
 
-//     < select className = 'form-select form-select-sm' aria - label="Small select example" name = 'specialties' defaultValue = { ""} onChange = {(el) => handleFilters(el)}>
-//                 <option value='' disabled>Especialidades</option>
-//                 <option value='all'>Todos</option>
-// {
-//     allSpecialties && allSpecialties.map((special, index) => {
-//         return <option value={special} key={index}>{special}</option>
-//     })
-// }
-//             </select >
-
-//             <select className='form-select form-select-sm' aria-label="Small select example" name='types' defaultValue={""} onChange={(el) => handleFilters(el)}>
-//                 <option value='' disabled>Tipos</option>
-//                 <option value='all'>Todos</option>
-//                 {
-//                     allTypesOfFood && allTypesOfFood.map((typeFood, index) => {
-//                         return <option value={typeFood} key={index}>{typeFood}</option>
-//                     })
-//                 }
-//             </select>
-
-//             <select className='form-select form-select-sm' aria-label="Small select example" name='availability' onChange={(el) => handleFilters(el)} defaultValue={''}>
-//                 <option value='' disabled>Disponibilidad</option>
-//                 <option value='all'>Todos</option>
-//                 <option value={1}>Disponible</option>
-//                 <option value={0} >No disponible</option>
-//             </select>
-
-// {/* <label>Ordernar por:</label> */ }
-// <select className='form-select form-select-sm' aria-label="Small select example" onChange={(el) => handleOrder(el)}>
-//     <option selected disabled>Ordernar</option>
-//     <option value='nameUp'>AZ</option>
-//     <option value='nameDown'>ZA</option>
-//     <option value='priceUp'>Precio &uarr;</option>
-//     <option value='priceDown'>Precio &darr;</option>
-// </select>
