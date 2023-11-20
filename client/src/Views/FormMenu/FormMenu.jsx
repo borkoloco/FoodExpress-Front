@@ -30,6 +30,7 @@ const FormMenu = () => {
   const dispatch = useDispatch();
   const allSpecialties = useSelector((state) => state.allSpecialties);
   const allTypesOfFood = useSelector((state) => state.allTypesOfFood);
+  console.log(allTypesOfFood);
   //*cloudinary
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
@@ -57,6 +58,7 @@ const FormMenu = () => {
       if (validationsCategories(inputValue)) {
         await dispatch(postTypesOfFood(inputValue));
         await dispatch(getTypesOfFood());
+        console.log(allTypesOfFood);
         setForce(!force);
       }
     }
