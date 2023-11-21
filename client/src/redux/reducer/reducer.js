@@ -1,4 +1,3 @@
-
 import {
   ALL_MENU,
   ALL_SPECIALTIES,
@@ -10,21 +9,19 @@ import {
   GET_MENU_DETAIL_BY_NAME,
   CLEAN_DETAIL_MENU,
   SEARCH_INPUT,
-  GET_MENUS
+  GET_MENUS,
 } from "../action/action";
-
-
 
 const initialState = {
   allMenu: [],
-  menuDetail:{},
+  menuDetail: {},
   allMenuOriginal: [],
   allSpecialties: [],
   allTypesOfFood: [],
   menu: null,
   currentPage: 1,
   itemsPerPage: 3,
-  input:""
+  input: "",
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -49,11 +46,11 @@ const rootReducer = (state = initialState, action) => {
 
       break;
 
-   /*Menu detail */
+    /*Menu detail */
     case GET_MENU_DETAIL_BY_NAME:
-        return { ...state, menuDetail: action.payload };
+      return { ...state, menuDetail: action.payload };
     case CLEAN_DETAIL_MENU:
-        return { ...state, menuDetail: {} };
+      return { ...state, menuDetail: {} };
 
     case ALL_SPECIALTIES:
       return {
@@ -67,6 +64,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allTypesOfFood: payload,
       };
+
       break;
     case FILTERS:
       let { specialties, typesOfFood, availability } = payload;
@@ -128,13 +126,11 @@ const rootReducer = (state = initialState, action) => {
           allMenu: state.allMenu.slice().sort((a, b) => b.price - a.price),
         };
       }
+
     case SEARCH_INPUT:
       return { ...state, input: payload };
     case GET_MENUS:
-      return { ...state,
-         allMenu: payload ,
-         allMenuOriginal: payload,
-        };
+      return { ...state, allMenu: payload, allMenuOriginal: payload };
 
     default:
       return state;
