@@ -116,11 +116,11 @@ const DetailMenu = () => {
               </p>
               <p>
                 <b>Tipo: </b>
-                {menuDetail.idTipoMenu}
+                {menuDetail.typeMenu}
               </p>
               <p>
                 <b>Especial: </b>
-                {menuDetail.idEspecialidad}
+                {menuDetail.specialtyMenu}
               </p>
               <p>
                 <b>Disponibilidad: </b>5

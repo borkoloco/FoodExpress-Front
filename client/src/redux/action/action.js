@@ -58,10 +58,21 @@ export const getAllMenu = () => {
 export const getMenuDetailById = (id) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get(endPoint + `/menus/${id}`);    
+      const {data} = await axios.get(endPoint + `/menus/${id}`); 
+      
+      const newData = {
+        idMenu: data.idMenu,
+        nameMenu: data.nameMenu,
+        description: data.description,
+        imageUrl: data.imageUrl,
+        price: data.price,
+        available: data.available,
+        typeMenu: data.typeMenu.nameTipo,
+        specialtyMenu: data.specialtyMenu.NameEspecialidad,
+      };
       return dispatch({
         type: GET_MENU_DETAIL_BY_ID,
-        payload: data,
+        payload: newData,
       });
     } catch (error) {
       console.log(error.message);
