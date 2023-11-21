@@ -1,5 +1,6 @@
 import axios from "axios";
 
+/*
 import menu, { postMenu } from "../../Views/Home/menu";
 import {
   specialty,
@@ -8,10 +9,9 @@ import {
   addTypes,
 } from "../../Views/Home/datosParaFiltros";
 
-
-import { getMenu } from '../../utils/detailByName'
+*/
+import { getMenu } from "../../utils/detailByName";
 import { findByName } from "../../utils/findByName";
-
 
 export const ALL_MENU = "ALL_MENU";
 export const GET_MENU_DETAIL_BY_NAME = "GET_MENU_DETAIL_BY_NAME";
@@ -31,10 +31,24 @@ export const getAllMenu = () => {
   ///aca se pone el axios para traer del back todo el menu
   return async (dispatch) => {
     try {
-      const data = await menu();
+      const { data } = await axios.get(endPoint + "/menus");
+
+      const newData = data
+        .map((dat) => ({
+          idMenu: dat.idMenu,
+          nameMenu: dat.nameMenu,
+          description: dat.description,
+          imageUrl: dat.imageUrl,
+          price: dat.price,
+          available: dat.available,
+          typeMenu: dat.typeMenu.nameTipo,
+          specialtyMenu: dat.specialtyMenu.NameEspecialidad,
+        }))
+        .sort((a, b) => a.nameMenu.localeCompare(b.nameMenu));
+
       return dispatch({
         type: ALL_MENU,
-        payload: data,
+        payload: newData,
       });
     } catch (error) {
       console.log(error.message);
@@ -146,10 +160,11 @@ export const orderMenu = (prop) => {
 export const postProduct = (product) => {
   return async (dispatch) => {
     try {
-      // const { data } = await axios.post("ENDPOINT", product);
-      const data = postMenu(product);
+      const { data } = await axios.post(endPoint + "/addmenu", product);
+
+      // const data = postMenu(product);
       dispatch({
-        type: POST_MENU,
+        type: "", //POST_MENU
         payload: data,
       });
     } catch (error) {
@@ -204,7 +219,6 @@ export const setCurrentPage = (page) => ({
   type: SET_CURRENT_PAGE,
   payload: page,
 });
-
 
 /*  ACTIONS PARA EL SEARCH */
 export const setInput = (valor) => {

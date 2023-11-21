@@ -31,7 +31,6 @@ const FormMenu = () => {
   const dispatch = useDispatch();
   const allSpecialties = useSelector((state) => state.allSpecialties);
   const allTypesOfFood = useSelector((state) => state.allTypesOfFood);
-  console.log(allTypesOfFood);
   //*cloudinary
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
@@ -151,18 +150,52 @@ const FormMenu = () => {
       const result = window.confirm("Crear un plato sin imagen?");
       if (result) {
         //datos que se envian
-        console.log(menuData);
-        dispatch(postProduct(menuData));
+        const sendData = {
+          nameMenu: menuData.nameMenu,
+          description: menuData.description,
+          imageUrl: menuData.imageUrl,
+          price: menuData.price,
+          available: menuData.available,
+          tipo: menuData.tipeMenu,
+          especialidad: menuData.specialtyMenu,
+        };
+        dispatch(postProduct(sendData));
+        //* limpiar formulario
+        setMenuData({
+          ...menuData,
+          nameMenu: "",
+          description: "",
+          imageUrl: imgDefault,
+          available: true,
+          price: 0,
+        });
+        setErrors({ initial: "initial" });
         return;
       } else {
         return;
       }
     }
     setMenuData({ ...menuData, imageUrl: imgUrl });
-    console.log(menuData);
-    dispatch(postProduct(menuData));
-    //* ¡Continúa con la lógica!
-    //!limpiar formulario
+    const sendData = {
+      nameMenu: menuData.nameMenu,
+      description: menuData.description,
+      imageUrl: imgUrl,
+      price: menuData.price,
+      available: menuData.available,
+      tipo: menuData.tipeMenu,
+      especialidad: menuData.specialtyMenu,
+    };
+    dispatch(postProduct(sendData));
+    //* limpiar formulario
+    setMenuData({
+      ...menuData,
+      nameMenu: "",
+      description: "",
+      imageUrl: imgDefault,
+      available: true,
+      price: 0,
+    });
+    setErrors({ initial: "initial" });
   };
 
   //*cloudinary
@@ -189,7 +222,7 @@ const FormMenu = () => {
 
   return (
     <>
-      <BackButton/>
+      <BackButton />
       <div className={style.container_form}>
         <h2>Crea tu nuevo plato</h2>
         <div className="mb-3">
