@@ -13,6 +13,7 @@ const DetailMenu = () => {
 
   const menuDetail = useSelector((state) => state.menuDetail);
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
     dispatch(getMenuDetailById(id));
