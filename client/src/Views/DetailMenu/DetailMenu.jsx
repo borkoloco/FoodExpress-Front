@@ -3,25 +3,24 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   cleanDetailMenu,
-  getMenuDetailByName,
+  getMenuDetailById,
 } from "../../redux/action/action";
 import { AddCart, BackButton } from "../../components";
 import style from "./DetailMenu.module.css";
 
 const DetailMenu = () => {
-  const { name } = useParams();
+  const { id } = useParams();
 
   const menuDetail = useSelector((state) => state.menuDetail);
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
-    console.log(name);
-
-    dispatch(getMenuDetailByName(name));
+    dispatch(getMenuDetailById(id));
     return () => {
       dispatch(cleanDetailMenu());
     };
-  }, [name]);
+  }, [id]);
 
   return (
     <>
@@ -127,7 +126,7 @@ const DetailMenu = () => {
               <p>
                 <b>Disponibilidad: </b>5
               </p>
-              <p className={style.price}>$.15.00</p>
+              <p className={style.price}>$. {menuDetail.price}.00</p>
               <label>
                 <b>Cantidad: </b>
               </label>

@@ -6,10 +6,10 @@ import {
   ORDER,
   POST_MENU,
   SET_CURRENT_PAGE,
-  GET_MENU_DETAIL_BY_NAME,
+  GET_MENU_DETAIL_BY_ID,
   CLEAN_DETAIL_MENU,
   SEARCH_INPUT,
-  GET_MENUS,
+  GET_MENUS_BY_NAME,
 } from "../action/action";
 
 const initialState = {
@@ -47,8 +47,8 @@ const rootReducer = (state = initialState, action) => {
       break;
 
     /*Menu detail */
-    case GET_MENU_DETAIL_BY_NAME:
-      return { ...state, menuDetail: action.payload };
+    case GET_MENU_DETAIL_BY_ID:
+      return { ...state, menuDetail: payload };
     case CLEAN_DETAIL_MENU:
       return { ...state, menuDetail: {} };
 
@@ -127,10 +127,21 @@ const rootReducer = (state = initialState, action) => {
         };
       }
 
+    /* Menú SearchBar */  
     case SEARCH_INPUT:
       return { ...state, input: payload };
-    case GET_MENUS:
-      return { ...state, allMenu: payload, allMenuOriginal: payload };
+
+    case GET_MENUS_BY_NAME:
+      const filteredMenus = state.allMenuOriginal.filter(menu =>
+        menu.nameMenu.toLowerCase().includes(payload.toLowerCase())
+      );
+      return {
+        ...state,
+        allMenu: filteredMenus,
+        allMenuOriginal: state.allMenuOriginal, // Mantener el original
+      };
+
+      
 
     default:
       return state;
@@ -139,3 +150,5 @@ const rootReducer = (state = initialState, action) => {
 };
 
 export default rootReducer;
+
+

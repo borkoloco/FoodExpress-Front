@@ -2,12 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Style from './Card.module.css'
 
-function Card({ nameMenu, description, imageUrl, price, available, typeMenu, specialtyMenu }) {
-
+function Card({ idMenu, nameMenu, description, imageUrl, price, available, typeMenu, specialtyMenu }) {
+    
     return (
 
         <div className={Style.bigDiv}>
-            <Link to={`/menu/detail/${nameMenu}`}>
+            <Link to={`/menu/detail/${idMenu}`}>
                 <img className={Style.image} src={imageUrl} alt={nameMenu} />
             </Link>
             <Link className={Style.deleteDecoration} to={`/menu/detail/${nameMenu}`}>
