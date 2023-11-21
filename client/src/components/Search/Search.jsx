@@ -1,6 +1,6 @@
 
 import { useDispatch, useSelector } from "react-redux";
-import { setInput,getMenus } from '../../redux/action/action'
+import { setInput,getMenusByName } from '../../redux/action/action'
 import { useEffect } from "react";
 
 
@@ -12,27 +12,34 @@ export const Search = () => {
 
   const handleChange = ( event ) => {
     const { value } = event.target;
-    distpatch(setInput(value))
-    distpatch(getMenus(input))
+    distpatch(setInput(value));
+    distpatch(getMenusByName(input));
   }
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      distpatch(getMenusByName(input));
+    }
+  };
 
   useEffect(() => {
     if (input.length === 0){
-        distpatch(getMenus(input))
+        distpatch(getMenusByName(input));
     }
   }, [input])
   
 
   return (
-    <form className="d-flex" role="search">
+    <div className="d-flex" role="search">
       <input
         className="form-control "
         type="search"
         placeholder="Buscar"
         aria-label="Search"
         onChange={handleChange}
+        onKeyUp={handleKeyPress}
         value={input}
+        // name="name"
       />
-    </form>
+    </div>
   );
 };

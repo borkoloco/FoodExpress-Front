@@ -48,6 +48,7 @@ function Cards({ props }) {
     <div className={Style.bigDiv}>
       {menuToDisplay.map((plato, index) => {
         const {
+          idMenu,
           nameMenu,
           description,
           imageUrl,
@@ -59,7 +60,7 @@ function Cards({ props }) {
         return (
           <div key={index} className={Style.item}>
             <Card
-              id={index}
+              idMenu={idMenu}
               nameMenu={nameMenu}
               description={description}
               imageUrl={imageUrl}
