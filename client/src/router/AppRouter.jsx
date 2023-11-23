@@ -1,20 +1,24 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 /*IMPORTACIÓN DE RUTAS */
-import Home from "../Views/Home/Home";
-import FormMenu from "../Views/FormMenu/FormMenu";
-import  Landing  from "../Views/Landing/Landing";
-import DetailMenu from "../Views/DetailMenu/DetailMenu";
+import { RestaurantRoutes } from "../restaurant/routes/RestaurantRoutes";
+import { AdminRoutes } from "../admin/routes/AdminRoutes";
 
 /*ROUTER PRINCIPAL DE LA APLICACIÓN */
 export const AppRouter = () => {
+  const location = useLocation();
   return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/form" element={<FormMenu />} />
-      <Route path="/menu/detail/:id" element={<DetailMenu />} />
-      {/*Añade más rutas aqui...  */}
-    </Routes>
+    <>
+     
+      <Routes>
+        
+        <Route path="/*" element={<RestaurantRoutes />} />
+
+        <Route path="/dashboard/*" element={<AdminRoutes />} />
+
+        {/* Más rutas generales aquí...  */}
+
+      </Routes>
+    </>
   );
 };
