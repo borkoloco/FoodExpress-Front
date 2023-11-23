@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Style from "./Home.module.css";
-import Cards from "../../components/Cards/Cards";
-import { Search } from "../../components";
+import Cards from "../../components/Menus/Cards/Cards";
+import { Search } from "../../../ui/components/Search/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllMenu,
@@ -9,7 +9,7 @@ import {
   getTypesOfFood,
   filters,
   orderMenu,
-} from "../../redux/action/action";
+} from "../../../redux/actions/action";
 
 
 function Home() {

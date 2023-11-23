@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   cleanDetailMenu,
   getMenuDetailById,
-} from "../../redux/action/action";
-import { AddCart, BackButton } from "../../components";
+} from "../../../redux/actions/action";
+import { BackButton } from "../../../ui/components/BackButton/BackButton";
+import { AddCart } from "../../../ui/components/AddCart/AddCart";
 import style from "./DetailMenu.module.css";
 
 const DetailMenu = () => {

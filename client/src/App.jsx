@@ -1,4 +1,4 @@
-import { NavBar } from "./components/NavBar/NavBar"
+import { NavBar } from "./ui/components/NavBar/NavBar"
 import { AppRouter } from "./router/AppRouter"
 
 

@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Search } from "../../components";
-import logo from '../../assets/logo-FE.svg';
+import logo from '../../../assets/logo-FE.svg';
 
 export const NavBar = () => {
   return (
@@ -25,8 +24,8 @@ export const NavBar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/menu">
-                  Reservas
+                <NavLink className="nav-link" to="/bookings">
+                  Bookings
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -36,8 +35,6 @@ export const NavBar = () => {
               </li>
              
             </ul>
-
-            {/* <Search/> */}
 
             <ul className="navbar-nav ms-3">
 

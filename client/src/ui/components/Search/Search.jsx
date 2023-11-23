@@ -1,6 +1,6 @@
 
 import { useDispatch, useSelector } from "react-redux";
-import { setInput,getMenusByName } from '../../redux/action/action'
+import { setInput,getMenusByName } from '../../../redux/actions/action'
 import { useEffect } from "react";
 
 

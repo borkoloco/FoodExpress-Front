@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Switch from "react-switch";
-import validations from "../../utils/validations";
+import validations from "../../../utils/validations";
 import style from "./FormMenu.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,8 +9,8 @@ import {
   getTypesOfFood,
   postSpecialties,
   postTypesOfFood,
-} from "../../redux/action/action";
-import { BackButton } from "../../components";
+} from "../../../redux/actions/action";
+import { BackButton } from "../../../ui/components/BackButton/BackButton";
 
 const FormMenu = () => {
   const imgDefault =

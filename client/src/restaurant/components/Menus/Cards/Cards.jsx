@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Card from "../Card/Card";
 import Style from "./Cards.module.css";
-import { setCurrentPage } from "../../redux/action/action";
+import { setCurrentPage } from "../../../../redux/actions/action";
 import { useSelector, useDispatch } from "react-redux";
 
 function Cards({ props }) {

@@ -21,10 +21,10 @@
 /* Sliders aqui */
 
 .slide_1{
-    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../../assets/banner-food.jpg);
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../../../assets/banner-food.jpg);
 }
 .slide_2{
-    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../../assets/banner-reservation.jpg);
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(../../../assets/banner-reservation.jpg);
 }
 
 

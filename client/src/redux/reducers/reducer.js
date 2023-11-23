@@ -10,7 +10,7 @@ import {
   CLEAN_DETAIL_MENU,
   SEARCH_INPUT,
   GET_MENUS_BY_NAME,
-} from "../action/action";
+} from "../actions/action";
 
 const initialState = {
   allMenu: [],
