@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import logo from '../../../assets/logo-FE.svg';
+import cart from '../../../assets/cart.svg';
 
 export const NavBar = () => {
   return (
@@ -37,6 +38,11 @@ export const NavBar = () => {
             </ul>
 
             <ul className="navbar-nav ms-3">
+            <li className="nav-item">
+                <NavLink to="/cart" className="nav-link" href="#">
+                <img src={cart} alt="cart" />
+                </NavLink>
+              </li>
 
               <li className="nav-item">
                 <a className="nav-link" href="#">

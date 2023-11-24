@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   cleanDetailMenu,
@@ -132,7 +132,9 @@ const DetailMenu = () => {
                 <b>Cantidad: </b>
               </label>
               <input className={style.quantityInput} type="number" value={1} />
-              <AddCart />
+              <NavLink to='/cart'>
+                <AddCart />
+              </NavLink>
             </div>
           </div>
         </div>
