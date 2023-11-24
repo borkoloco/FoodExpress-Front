@@ -1,0 +1,36 @@
+
+
+.container_{
+    margin-left: 1.5rem;
+}
+.containerTotal{
+
+    /* border: 2px solid black; */
+    border-radius: 1rem;
+    width: 13rem;
+    padding: 1rem;
+    position: relative;
+
+}
+
+.feature {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.btn {
+    background: sandybrown;
+    height: 3rem;
+    width: 100%;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+.btn:hover {
+    background: black;
+    color: white;
+
+}
+
+

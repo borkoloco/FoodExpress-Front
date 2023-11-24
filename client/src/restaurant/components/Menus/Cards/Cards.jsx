@@ -41,39 +41,42 @@ function Cards({ props }) {
 
   /*Ubica en la pagina 1 cuando se busca */
   useEffect(() => {
-    dispatch(setCurrentPage(1))
-  }, [input])
-  
-  return (
-    <div className={Style.bigDiv}>
-      {menuToDisplay.map((plato, index) => {
-        const {
-          idMenu,
-          nameMenu,
-          description,
-          imageUrl,
-          price,
-          available,
-          typeMenu,
-          specialtyMenu,
-        } = plato;
-        return (
-          <div key={index} className={Style.item}>
-            <Card
-              idMenu={idMenu}
-              nameMenu={nameMenu}
-              description={description}
-              imageUrl={imageUrl}
-              price={price}
-              available={available}
-              typeMenu={typeMenu}
-              specialtyMenu={specialtyMenu}
-            />
-          </div>
-        );
-      })}
+    dispatch(setCurrentPage(1));
+  }, [input]);
 
-      <div>
+  return (
+    <div className={Style.container_}>
+      <div className={Style.bigDiv}>
+        {menuToDisplay.map((plato, index) => {
+          const {
+            idMenu,
+            nameMenu,
+            description,
+            imageUrl,
+            price,
+            available,
+            typeMenu,
+            specialtyMenu,
+          } = plato;
+          return (
+            <div key={index} className={Style.item}>
+              <Card
+                idMenu={idMenu}
+                nameMenu={nameMenu}
+                description={description}
+                imageUrl={imageUrl}
+                price={price}
+                available={available}
+                typeMenu={typeMenu}
+                specialtyMenu={specialtyMenu}
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Paginación */}
+      
         <button onClick={goToPreviousPage} disabled={currentPage === 1}>
           {"<"}
         </button>
@@ -89,7 +92,7 @@ function Cards({ props }) {
         <button onClick={goToNextPage} disabled={currentPage === totalPages}>
           {">"}
         </button>
-      </div>
+      
     </div>
   );
 }
