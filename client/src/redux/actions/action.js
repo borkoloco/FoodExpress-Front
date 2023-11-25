@@ -1,4 +1,5 @@
 import axios from "axios";
+import { firebase, googleAuthProvider } from "../../utils/firebase";
 
 /*
 import menu, { postMenu } from "../../Views/Home/menu";
@@ -22,8 +23,73 @@ export const POST_MENU = "POST_MENU";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const SEARCH_INPUT = "SEARCH_INPUT";
 export const GET_MENUS_BY_NAME = "GET_MENUS_BY_NAME";
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
+export const UISTARTLOADING = "UISTARTLOADING";
+export const UIFINISHLOADING = "UIFINISHLOADING";
 
 const endPoint = "http://localhost:3001";
+
+//funciones para el logueo
+export const login = (uid, displayName) => {
+  return {
+    type: LOGIN,
+    payload: { uid, displayName },
+  };
+};
+export const logout = () => {
+  return {
+    type: LOGOUT,
+  };
+};
+export const startGoogleAuth = () => {
+  return (dispatch) => {
+    firebase
+      .auth()
+      // .signInWithRedirect(googleAuthProvider)
+      .signInWithPopup(googleAuthProvider)
+      .then(({ user }) => {
+        console.log(user);
+        console.log(user.uid + "   " + user.displayName);
+        dispatch(login(user.uid, user.displayName));
+      })
+      .catch((e) => console.log(e));
+  };
+};
+
+//actualizar un tipo de comida en categorías
+export const updateType = (id, nameTipo) => {
+  const endPointUpdateType = endPoint + "/updatetipo/" + id;
+  const dataSend = { nameTipo };
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(endPointUpdateType, dataSend);
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+//actualizar especialidad en categorías
+export const updateSpecialty = (id, nameSpecialty) => {
+  const endPointUpdateType = endPoint + "/updatespecialty" + id;
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(endPointUpdateType, nameSpecialty);
+
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
 
 export const getAllMenu = () => {
   ///aca se pone el axios para traer del back todo el menu
@@ -58,8 +124,8 @@ export const getAllMenu = () => {
 export const getMenuDetailById = (id) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get(endPoint + `/menus/${id}`); 
-      
+      const { data } = await axios.get(endPoint + `/menus/${id}`);
+
       const newData = {
         idMenu: data.idMenu,
         nameMenu: data.nameMenu,
@@ -236,8 +302,6 @@ export const setInput = (valor) => {
 export const getMenusByName = (name) => {
   return { type: GET_MENUS_BY_NAME, payload: name };
 };
-
-
 
 /* DESCOMENTAR AQUI SI YA ESTÁ HECHO EL ENDPOINT PARA BUSCAR BYQUERY */
 // export const getMenus = (name) => {
