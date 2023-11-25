@@ -6,7 +6,31 @@ import DetailMenu from "../Views/DetailMenu/DetailMenu";
 import FormMenu from "../../admin/views/FormMenu/FormMenu";
 import ShoppingCart from "../Views/ShoppingCart/ShoppingCart";
 import Login from "../../auth/views/Login";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { firebase } from "../../utils/firebase";
+import { login } from "../../redux/actions/action";
+
 export const RestaurantRoutes = () => {
+  const dispatch = useDispatch();
+  const [checking, setChecking] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user?.uid) {
+        dispatch(login(user.uid, user.displayName));
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+      setChecking(false);
+    });
+  }, [dispatch, checking, isLoggedIn]);
+
+  if (checking) {
+    return <h3>Cargando...</h3>;
+  }
   return (
     <>
       <NavBar />
