@@ -1,0 +1,19 @@
+
+
+.btnCart {
+    border: none;
+    background: black;
+    color: white;
+    font-weight: 400;
+    border-radius: 25px;
+    padding: 4px 12px;
+    
+    
+}
+
+
+
+.imgCart {
+    margin-right: 10px;
+    width: 1.4rem;
+}

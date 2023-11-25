@@ -128,7 +128,7 @@ const DetailMenu = () => {
               <p>
                 <b>Disponibilidad: </b>5
               </p>
-              <p className={style.price}>$. {menuDetail.price}.00</p>
+              <p className={style.price}>$ {menuDetail.price}.00</p>
               <label>
                 <b>Cantidad: </b>
               </label>
