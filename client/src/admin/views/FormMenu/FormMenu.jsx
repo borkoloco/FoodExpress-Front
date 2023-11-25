@@ -11,6 +11,7 @@ import {
   postTypesOfFood,
 } from "../../../redux/actions/action";
 import { BackButton } from "../../../ui/components/BackButton/BackButton";
+import Swal from "sweetalert2";
 
 const FormMenu = () => {
   const imgDefault =
@@ -83,8 +84,6 @@ const FormMenu = () => {
 
   //!fin modal
 
-  //!verificar dónde hacemos las peticiones
-
   useEffect(() => {
     if (allSpecialties.length === 0) {
       dispatch(getSpecialties());
@@ -111,7 +110,6 @@ const FormMenu = () => {
       }));
     }
   }, [allTypesOfFood]);
-  //!-------------
 
   //manejadores de eventos onChange
   const handleChange = (event) => {

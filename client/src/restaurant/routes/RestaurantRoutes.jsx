@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { firebase } from "../../utils/firebase";
 import { login } from "../../redux/actions/action";
+import FormCategories from "../../admin/views/FormMenu/FormCategories";
+import FormABMcategory from "../../admin/views/FormMenu/FormABMcategory";
 
 export const RestaurantRoutes = () => {
   const dispatch = useDispatch();
@@ -31,15 +33,17 @@ export const RestaurantRoutes = () => {
   if (checking) {
     return <h3>Cargando...</h3>;
   }
+
   return (
     <>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Login />} />
-        {/* <Route path="/" element={<Landing />} /> */}
+        {/* <Route path="/" element={<Login />} /> */}
+        <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
         <Route path="/menu/detail/:id" element={<DetailMenu />} />
         <Route path="/form" element={<FormMenu />} />
+        <Route path="/form/category" element={<FormABMcategory />} />
         <Route path="/cart" element={<ShoppingCart />} />
 
         {/*Añade más rutas aqui...  */}
