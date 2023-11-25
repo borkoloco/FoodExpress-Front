@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getTypesOfFood,
-  postTypesOfFood,
-  updateType,
+  updateSpecialty,
+  postSpecialties,
+  getSpecialties,
 } from "../../../redux/actions/action";
 
-function FormCategories() {
+function FormCategoriesSpecial() {
   const regexName = /^[A-Za-z\s]+$/;
   const dispatch = useDispatch();
-  const allTypesOfFood = useSelector((state) => state.allTypesOfFood);
+  const allSpecialties = useSelector((state) => state.allSpecialties);
   const [newCateg, setNewCateg] = useState("");
   const [errors, setErrors] = useState({});
   const [nameCat, setNameCat] = useState({});
@@ -33,7 +33,7 @@ function FormCategories() {
           errors[property] =
             "La categoría debe contener solo letras y espacios";
         } else if (
-          allTypesOfFood.some(
+          allSpecialties.some(
             (type) =>
               type.name === value && !editingCategories.includes(type.id)
           )
@@ -46,14 +46,14 @@ function FormCategories() {
   };
 
   useEffect(() => {
-    if (allTypesOfFood.length === 0) {
-      dispatch(getTypesOfFood());
+    if (allSpecialties.length === 0) {
+      dispatch(getSpecialties());
     }
   }, []);
 
   useEffect(() => {
     setForce(!force);
-  }, [allTypesOfFood]);
+  }, [allSpecialties]);
 
   const handleChange = (id, name, value) => {
     setNameCat((prevNameCat) => ({ ...prevNameCat, [name]: value }));
@@ -84,8 +84,8 @@ function FormCategories() {
     // Aquí puedes implementar la lógica para guardar la edición
     // Por ejemplo, puedes llamar a tu acción de Redux updateType
     // y luego remover la categoría de la lista de edición
-    await dispatch(updateType(id, name));
-    await dispatch(getTypesOfFood());
+    await dispatch(updateSpecialty(id, name));
+    await dispatch(getSpecialties());
     // dispatch(getTypesOfFood());
     setForce(!force);
     // Remueve el ID de la lista de categorías en modo de edición
@@ -96,8 +96,8 @@ function FormCategories() {
 
   const handleGuardar = async (id, newCateg) => {
     if (newCateg) {
-      await dispatch(postTypesOfFood(newCateg));
-      await dispatch(getTypesOfFood());
+      await dispatch(postSpecialties(newCateg));
+      await dispatch(getSpecialties());
       // dispatch(getTypesOfFood());
       // Limpiar el input y reiniciar el estado de errores
       setNewCateg("");
@@ -110,7 +110,7 @@ function FormCategories() {
 
   return (
     <div>
-      <h3>Tipos de comidas</h3>
+      <h3>Especialidades</h3>
       <table>
         <thead>
           <tr>
@@ -120,7 +120,7 @@ function FormCategories() {
           </tr>
         </thead>
         <tbody>
-          {allTypesOfFood.map((type) => (
+          {allSpecialties.map((type) => (
             <tr key={type.id}>
               <td>{type.id}</td>
               <td>
@@ -199,4 +199,4 @@ function FormCategories() {
   );
 }
 
-export default FormCategories;
+export default FormCategoriesSpecial;

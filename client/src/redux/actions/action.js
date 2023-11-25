@@ -81,11 +81,12 @@ export const updateType = (id, nameTipo) => {
 };
 
 //actualizar especialidad en categorías
-export const updateSpecialty = (id, nameSpecialty) => {
-  const endPointUpdateType = endPoint + "/updatespecialty" + id;
+export const updateSpecialty = (id, nuevoNombre) => {
+  const dataSend = { nuevoNombre };
+  const endPointUpdateType = endPoint + "/updateespecialidad/" + id;
   return async (dispatch) => {
     try {
-      const { data } = await axios.patch(endPointUpdateType, nameSpecialty);
+      const { data } = await axios.patch(endPointUpdateType, dataSend);
 
       return dispatch({
         type: "",
