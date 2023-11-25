@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { startGoogleAuth } from "../../redux/actions/action";
+import { startGoogleAuth, startGoogleLogout } from "../../redux/actions/action";
 
 function Login() {
   const dispatch = useDispatch();
@@ -9,10 +9,15 @@ function Login() {
     dispatch(startGoogleAuth());
   };
 
+  const handleLogout = () => {
+    dispatch(startGoogleLogout());
+  };
+
   return (
     <div>
       Login
       <button onClick={handleGoogleAuth}>Login con Google</button>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }

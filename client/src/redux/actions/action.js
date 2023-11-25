@@ -56,6 +56,12 @@ export const startGoogleAuth = () => {
       .catch((e) => console.log(e));
   };
 };
+export const startGoogleLogout = () => {
+  return async (dispatch) => {
+    await firebase.auth().signOut();
+    dispatch(logout());
+  };
+};
 
 //actualizar un tipo de comida en categorías
 export const updateType = (id, nameTipo) => {
