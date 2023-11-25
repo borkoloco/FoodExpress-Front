@@ -11,6 +11,7 @@ import style from "./DetailMenu.module.css";
 
 const DetailMenu = () => {
   const { id } = useParams();
+  
 
   const menuDetail = useSelector((state) => state.menuDetail);
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const DetailMenu = () => {
           <div className="row">
             {/* Imagen y galería del menu */}
             <div className="col-md-5">
-              <div id="carouselExampleIndicators" class="carousel slide">
+              <div id="carouselExampleIndicators" className="carousel slide">
                 <div className="carousel-indicators">
                   <button
                     type="button"

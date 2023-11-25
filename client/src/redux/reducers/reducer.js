@@ -132,13 +132,10 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, input: payload };
 
     case GET_MENUS_BY_NAME:
-      const filteredMenus = state.allMenuOriginal.filter(menu =>
-        menu.nameMenu.toLowerCase().includes(payload.toLowerCase())
-      );
       return {
         ...state,
-        allMenu: filteredMenus,
-        allMenuOriginal: state.allMenuOriginal, // Mantener el original
+        allMenu: payload,
+        allMenuOriginal: payload,
       };
 
       

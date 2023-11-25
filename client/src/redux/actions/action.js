@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { formatData } from "../../utils/formatData";
 /*
 import menu, { postMenu } from "../../Views/Home/menu";
 import {
@@ -30,23 +30,9 @@ export const getAllMenu = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endPoint + "/menus");
-
-      const newData = data
-        .map((dat) => ({
-          idMenu: dat.idMenu,
-          nameMenu: dat.nameMenu,
-          description: dat.description,
-          imageUrl: dat.imageUrl,
-          price: dat.price,
-          available: dat.available,
-          typeMenu: dat.typeMenu.nameTipo,
-          specialtyMenu: dat.specialtyMenu.NameEspecialidad,
-        }))
-        .sort((a, b) => a.nameMenu.localeCompare(b.nameMenu));
-
       return dispatch({
         type: ALL_MENU,
-        payload: newData,
+        payload: formatData(data),
       });
     } catch (error) {
       console.log(error.message);
@@ -233,23 +219,17 @@ export const setCurrentPage = (page) => ({
 export const setInput = (valor) => {
   return { type: SEARCH_INPUT, payload: valor };
 };
-export const getMenusByName = (name) => {
-  return { type: GET_MENUS_BY_NAME, payload: name };
+
+export const getMenusByName= (name) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get(endPoint + `/menu/?name=${name}`);
+      return dispatch({
+        type: GET_MENUS_BY_NAME,
+        payload: formatData(data),
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 };
-
-
-
-/* DESCOMENTAR AQUI SI YA ESTÁ HECHO EL ENDPOINT PARA BUSCAR BYQUERY */
-// export const getMenus = (name) => {
-//   return async (dispatch) => {
-//     try {
-//       const {data} = await axios.get(endPoint + `/menus/?name=${name}`);
-//       return dispatch({
-//         type: GET_MENUS_BY_NAME,
-//         payload: data,
-//       });
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   };
-// };
