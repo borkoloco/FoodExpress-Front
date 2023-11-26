@@ -110,7 +110,7 @@ function FormCategoriesSpecial() {
 
   return (
     <div>
-      <h3>Especialidades</h3>
+      <h3 className="fs-5">Especialidades</h3>
       <table>
         <thead>
           <tr>

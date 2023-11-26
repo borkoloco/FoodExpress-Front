@@ -38,8 +38,8 @@ export const NavBar = () => {
                 </NavLink>
               </li> */}
               <li className="nav-item">
-                <NavLink className="nav-link" to="/form">
-                  Form
+                <NavLink className="nav-link" >
+                  About
                 </NavLink>
               </li>
             </ul>

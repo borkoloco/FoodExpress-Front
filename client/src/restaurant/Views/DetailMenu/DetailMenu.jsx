@@ -112,10 +112,7 @@ const DetailMenu = () => {
               <p>Product id: IDSR2344</p>
               <p>⭐⭐⭐⭐⭐</p>
               <p>
-                {menuDetail.description} Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Similique reprehenderit aperiam sint ad ipsa
-                deleniti, repellendus molestias saepe blanditiis commodi
-                repudiandae ratione qui sit nostrum, sed totam est nam fugiat.
+                {menuDetail.description}
               </p>
               <p>
                 <b>Tipo: </b>

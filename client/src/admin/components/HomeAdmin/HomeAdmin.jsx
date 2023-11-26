@@ -8,7 +8,7 @@ export const HomeAdmin = () => {
   return (
     <div className="container-fluid">
     <div className="row">
-    <caption className="text-black fs-4">Statistics</caption>
+    <h1 className="text-black fs-4 mt-2">Statistics</h1>
       <div className="col-md-3 p-1">
         <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
           <div>

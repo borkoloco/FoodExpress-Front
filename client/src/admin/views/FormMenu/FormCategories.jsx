@@ -110,7 +110,7 @@ function FormCategories() {
 
   return (
     <div>
-      <h3>Tipos de comidas</h3>
+      <h3 className="fs-5">Tipos de comidas</h3>
       <table>
         <thead>
           <tr>
