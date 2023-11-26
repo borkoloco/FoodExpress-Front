@@ -1,0 +1,24 @@
+/* .container_{
+
+} */
+
+
+.bigDiv {
+    /* border: 2px solid white;
+    background: green; */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 30px 30px;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    /* margin-top: 3.9em; */
+    width: 80%;
+}
+
+.item {
+    width: 25%;
+    box-sizing: border-box;
+    padding: 1em;
+}
+

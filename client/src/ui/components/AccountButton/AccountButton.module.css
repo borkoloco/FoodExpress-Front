@@ -1,0 +1,18 @@
+
+
+.btnAccount {
+    border: none;
+    background: sandybrown;
+    color: white;
+    font-weight: 600;
+    border-radius: 25px;
+    padding: 4px 9px;
+    
+}
+
+
+.imgAccount {
+    margin-right: 7px;
+    width: 1.5rem;
+}
+

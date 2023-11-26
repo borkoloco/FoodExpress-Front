@@ -1,0 +1,16 @@
+
+
+.image {
+    width: 6rem;
+    height: 5rem;
+}
+
+
+.containerCard {
+    display: flex;
+    width: auto;
+}
+
+.features {
+    margin-left: 1rem;
+}
