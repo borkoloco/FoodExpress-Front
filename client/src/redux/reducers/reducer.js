@@ -10,6 +10,10 @@ import {
   CLEAN_DETAIL_MENU,
   SEARCH_INPUT,
   GET_MENUS_BY_NAME,
+  LOGIN,
+  LOGOUT,
+  UISTARTLOADING,
+  UIFINISHLOADING,
 } from "../actions/action";
 
 const initialState = {
@@ -22,10 +26,25 @@ const initialState = {
   currentPage: 1,
   itemsPerPage: 3,
   input: "",
+  uid: null,
+  displayName: null,
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
   switch (action.type) {
+    case LOGIN:
+      return {
+        ...state,
+        uid: payload.uid,
+        displayName: payload.displayName,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        uid: null,
+        displayName: null,
+      };
+
     case SET_CURRENT_PAGE: //paginacion
       return {
         ...state,
@@ -127,7 +146,7 @@ const rootReducer = (state = initialState, action) => {
         };
       }
 
-    /* Menú SearchBar */  
+    /* Menú SearchBar */
     case SEARCH_INPUT:
       return { ...state, input: payload };
 
@@ -138,8 +157,6 @@ const rootReducer = (state = initialState, action) => {
         allMenuOriginal: payload,
       };
 
-      
-
     default:
       return state;
       break;
@@ -147,5 +164,3 @@ const rootReducer = (state = initialState, action) => {
 };
 
 export default rootReducer;
-
-
