@@ -30,10 +30,12 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const UISTARTLOADING = "UISTARTLOADING";
 export const UIFINISHLOADING = "UIFINISHLOADING";
+export const LOGIN_BY_USER = "LOGIN_BY_USER";
+export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 
 const endPoint = "http://localhost:3001";
 
-//funciones para el logueo
+//funciones para el logueo con Google
 export const login = (uid, displayName) => {
   return {
     type: LOGIN,
@@ -309,3 +311,26 @@ export const getMenusByName= (name) => {
     }
   };
 };
+
+
+/* ACTIONS PARA EL LOGIN CON usuario: Email Y Password */
+export const loginByUser = (user) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.post(endPoint + "/login",user);
+      window.alert(data.message);
+      return dispatch({
+        type: LOGIN_BY_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      window.alert(error.response.data);
+    }
+  };
+};
+
+export const logoutByUser = () => {
+  return { type: LOGOUT_BY_USER };
+};
+

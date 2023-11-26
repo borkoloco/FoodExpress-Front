@@ -1,3 +1,4 @@
+
 import { NavLink } from "react-router-dom";
 import logo from "../../../assets/logo-FE.svg";
 import { AccountButton } from "../AccountButton/AccountButton";
@@ -51,9 +52,9 @@ export const NavBar = () => {
               </li>
 
               <li className="nav-item">
-                <NavLink to="/login" className="nav-link" href="#">
+                <div className="nav-link" >
                   <AccountButton />
-                </NavLink>
+                </div>
               </li>
             </ul>
           </div>

@@ -48,11 +48,18 @@ const usernamePattern = /^[a-zA-Z0-9]{5,}$/;
   }
 
   // Validar el formato de la contraseña
-  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+  const passwordPattern = /^.{5,}$/;
   if (inputForm.password && !passwordPattern.test(inputForm.password)) {
     errors.password =
-      'Incluye mayúsculas, letras y números';
+      'Mínimo 5 caracteres';
   }
+  // const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+  // if (inputForm.password && !passwordPattern.test(inputForm.password)) {
+  //   errors.password =
+  //     'Incluye mayúsculas, letras y números';
+  // }
+
+  
 
   return errors;
 }

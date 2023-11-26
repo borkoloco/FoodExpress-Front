@@ -2,7 +2,7 @@ export const ProductsAdmin = () => {
   return (
     <>
       <button className="btn btn-success">Add</button>
-      <table class="table caption-top bg-white rounded mt-2">
+      <table className="table caption-top bg-white rounded mt-2">
         <caption className="text-black fs-4">Products</caption>
         <thead>
           <tr>
