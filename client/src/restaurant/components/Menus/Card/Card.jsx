@@ -11,7 +11,7 @@ function Card({ idMenu, nameMenu, description, imageUrl, price, available, typeM
             <Link to={`/menu/detail/${idMenu}`}>
                 <img className={Style.image} src={imageUrl} alt={nameMenu} />
             </Link>
-            <Link className={Style.deleteDecoration} to={`/menu/detail/${nameMenu}`}>
+            <Link className={Style.deleteDecoration} to={`/menu/detail/${idMenu}`}>
                 <h3 className={Style.textName}>{nameMenu}</h3>
             </Link>
             <h3 className={Style.text}>Descripcion: {description}</h3>

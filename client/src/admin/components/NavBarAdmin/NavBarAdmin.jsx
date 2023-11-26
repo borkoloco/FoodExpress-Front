@@ -27,7 +27,6 @@ export const NavBarAdmin = ({Toggle}) => {
         <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
           
           <li className="nav-item dropdown">
-            
             <a
               className="nav-link dropdown-toggle text-black"
               href="#"
@@ -38,7 +37,7 @@ export const NavBarAdmin = ({Toggle}) => {
             >
               Andrés
             </a>
-            <div className="dropdown-menu" aria-labelledby="dropdownId">
+            <div className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownId">
               
               <a className="dropdown-item" href="#">
                 Profile
@@ -47,9 +46,11 @@ export const NavBarAdmin = ({Toggle}) => {
                 Setting
               </a>
               <a className="dropdown-item" href="#">
-                Logout
+                <strong>Logout</strong>
               </a>
             </div>
+
+
           </li>
         </ul>
       </div>

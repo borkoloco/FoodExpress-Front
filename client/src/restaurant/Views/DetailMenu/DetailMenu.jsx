@@ -11,6 +11,7 @@ import style from "./DetailMenu.module.css";
 
 const DetailMenu = () => {
   const { id } = useParams();
+  
 
   const menuDetail = useSelector((state) => state.menuDetail);
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const DetailMenu = () => {
           <div className="row">
             {/* Imagen y galería del menu */}
             <div className="col-md-5">
-              <div id="carouselExampleIndicators" class="carousel slide">
+              <div id="carouselExampleIndicators" className="carousel slide">
                 <div className="carousel-indicators">
                   <button
                     type="button"
@@ -111,10 +112,7 @@ const DetailMenu = () => {
               <p>Product id: IDSR2344</p>
               <p>⭐⭐⭐⭐⭐</p>
               <p>
-                {menuDetail.description} Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Similique reprehenderit aperiam sint ad ipsa
-                deleniti, repellendus molestias saepe blanditiis commodi
-                repudiandae ratione qui sit nostrum, sed totam est nam fugiat.
+                {menuDetail.description}
               </p>
               <p>
                 <b>Tipo: </b>
@@ -127,7 +125,7 @@ const DetailMenu = () => {
               <p>
                 <b>Disponibilidad: </b>5
               </p>
-              <p className={style.price}>$. {menuDetail.price}.00</p>
+              <p className={style.price}>$ {menuDetail.price}.00</p>
               <label>
                 <b>Cantidad: </b>
               </label>

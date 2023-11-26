@@ -1,5 +1,8 @@
 import axios from "axios";
+
+import { formatData } from "../../utils/formatData";
 import { firebase, googleAuthProvider } from "../../utils/firebase";
+
 
 /*
 import menu, { postMenu } from "../../Views/Home/menu";
@@ -27,10 +30,12 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const UISTARTLOADING = "UISTARTLOADING";
 export const UIFINISHLOADING = "UIFINISHLOADING";
+export const LOGIN_BY_USER = "LOGIN_BY_USER";
+export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 
 const endPoint = "http://localhost:3001";
 
-//funciones para el logueo
+//funciones para el logueo con Google
 export const login = (uid, displayName) => {
   return {
     type: LOGIN,
@@ -103,23 +108,9 @@ export const getAllMenu = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endPoint + "/menus");
-
-      const newData = data
-        .map((dat) => ({
-          idMenu: dat.idMenu,
-          nameMenu: dat.nameMenu,
-          description: dat.description,
-          imageUrl: dat.imageUrl,
-          price: dat.price,
-          available: dat.available,
-          typeMenu: dat.typeMenu.nameTipo,
-          specialtyMenu: dat.specialtyMenu.NameEspecialidad,
-        }))
-        .sort((a, b) => a.nameMenu.localeCompare(b.nameMenu));
-
       return dispatch({
         type: ALL_MENU,
-        payload: newData,
+        payload: formatData(data),
       });
     } catch (error) {
       console.log(error.message);
@@ -306,21 +297,40 @@ export const setCurrentPage = (page) => ({
 export const setInput = (valor) => {
   return { type: SEARCH_INPUT, payload: valor };
 };
-export const getMenusByName = (name) => {
-  return { type: GET_MENUS_BY_NAME, payload: name };
+
+export const getMenusByName= (name) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get(endPoint + `/menu/?name=${name}`);
+      return dispatch({
+        type: GET_MENUS_BY_NAME,
+        payload: formatData(data),
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 };
 
-/* DESCOMENTAR AQUI SI YA ESTÁ HECHO EL ENDPOINT PARA BUSCAR BYQUERY */
-// export const getMenus = (name) => {
-//   return async (dispatch) => {
-//     try {
-//       const {data} = await axios.get(endPoint + `/menus/?name=${name}`);
-//       return dispatch({
-//         type: GET_MENUS_BY_NAME,
-//         payload: data,
-//       });
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   };
-// };
+
+/* ACTIONS PARA EL LOGIN CON usuario: Email Y Password */
+export const loginByUser = (user) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.post(endPoint + "/login",user);
+      window.alert(data.message);
+      return dispatch({
+        type: LOGIN_BY_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      window.alert(error.response.data);
+    }
+  };
+};
+
+export const logoutByUser = () => {
+  return { type: LOGOUT_BY_USER };
+};
+

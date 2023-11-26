@@ -14,6 +14,8 @@ import {
   LOGOUT,
   UISTARTLOADING,
   UIFINISHLOADING,
+  LOGIN_BY_USER,
+  LOGOUT_BY_USER
 } from "../actions/action";
 
 const initialState = {
@@ -28,6 +30,7 @@ const initialState = {
   input: "",
   uid: null,
   displayName: null,
+  userAuth:{}
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -151,13 +154,23 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, input: payload };
 
     case GET_MENUS_BY_NAME:
-      const filteredMenus = state.allMenuOriginal.filter((menu) =>
-        menu.nameMenu.toLowerCase().includes(payload.toLowerCase())
-      );
       return {
         ...state,
-        allMenu: filteredMenus,
-        allMenuOriginal: state.allMenuOriginal, // Mantener el original
+        allMenu: payload,
+        allMenuOriginal: payload,
+      };
+
+
+    /* Login con Usuario: Email y password */
+    case LOGIN_BY_USER:
+      return {
+        ...state,
+        userAuth:payload,
+      };
+    case LOGOUT_BY_USER:
+      return {
+        ...state,
+        userAuth:{},
       };
 
     default:

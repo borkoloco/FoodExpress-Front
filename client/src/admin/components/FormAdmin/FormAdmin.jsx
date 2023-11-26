@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Switch from "react-switch";
 import validations from "../../../utils/validations";
-import style from "./FormMenu.module.css";
+import style from "./FormAdmin.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postProduct,
@@ -13,7 +13,7 @@ import {
 import { BackButton } from "../../../ui/components/BackButton/BackButton";
 import Swal from "sweetalert2";
 
-const FormMenu = () => {
+const FormAdmin = () => {
   const imgDefault =
     "https://res.cloudinary.com/foodexpressimg/image/upload/v1700339341/FoodExpressImg/FoodLogo_nsnkjw.png";
   const [menuData, setMenuData] = useState({
@@ -29,6 +29,7 @@ const FormMenu = () => {
 
   const [errors, setErrors] = useState({ initial: "initial" });
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const dispatch = useDispatch();
   const allSpecialties = useSelector((state) => state.allSpecialties);
   const allTypesOfFood = useSelector((state) => state.allTypesOfFood);
@@ -194,6 +195,11 @@ const FormMenu = () => {
       price: 0,
     });
     setErrors({ initial: "initial" });
+
+    setShowSuccessMessage(true); 
+    setTimeout(() => {
+        setShowSuccessMessage(false);
+    }, 5000);
   };
 
   //*cloudinary
@@ -220,13 +226,13 @@ const FormMenu = () => {
 
   return (
     <>
-      <BackButton />
+    {showSuccessMessage && (
+        <div className="alert alert-success" role="alert">
+          ¡Plato agregado correctamente!
+        </div>
+      )}
       <div className={style.container_form}>
-        <h2>Crea tu nuevo plato</h2>
         <div className="mb-3">
-          <label className="form-label" htmlFor="nameMenu">
-            Plato:{" "}
-          </label>
           <input
             className="form-control"
             type="text"
@@ -239,9 +245,6 @@ const FormMenu = () => {
           <span className="form-text text-danger">{errors.nameMenu}</span>
         </div>
         <div className="mb-3">
-          <label className="form-label" htmlFor="description">
-            Descripción:{" "}
-          </label>
           <textarea
             className="form-control"
             rows="3"
@@ -254,35 +257,41 @@ const FormMenu = () => {
           />
           <span className="form-text text-danger">{errors.description}</span>
         </div>
-        <div className="mb-3">
-          <label className="form-label" htmlFor="price">
-            Precio:{" "}
-          </label>
-          <input
-            className="form-control"
-            type="number"
-            name="price"
-            id="price"
-            placeholder="Precio del plato"
-            value={menuData.price}
-            onChange={handleChange}
-          />
-          <span className="form-text text-danger">{errors.price}</span>
+
+        <div className="row g-2">
+            <div className="col-md-4 flex-column ">
+              <div className="d-flex align-items-center">
+                  <label className="form-label" htmlFor="price">
+                    Precio:
+                  </label>
+                  <input
+                    className="form-control"
+                    type="number"
+                    name="price"
+                    id="price"
+                    placeholder="Precio del plato"
+                    value={menuData.price}
+                    onChange={handleChange}
+                  />
+              </div>
+              <span className="form-text text-danger">{errors.price}</span>
+            </div>
+            <div className="col-md-4 mt-3 mb-3 ">
+              <label className="form-label d-flex  align-items-center ">
+                Disponible:
+                <Switch
+                  onChange={handleChangeAvailable}
+                  checked={menuData.available}
+                />
+              </label>
+            </div>
         </div>
-        <div className="mb-3">
-          <label className="form-label">
-            Disponible:{"  "}
-            <Switch
-              onChange={handleChangeAvailable}
-              checked={menuData.available}
-            />
-          </label>
-        </div>
+
         {/*options*/}
         <div>
-          <div className="mb-3">
-            <label className="form-label">Tipos de Platos:</label>{" "}
-            <button onClick={handleAddTipoComida}>Agregar</button>
+          <div className="mb-3 d-flex  align-items-center">
+            <label className="form-label">Tipos de Platos:</label>
+
             <select
               className="form-select"
               value={menuData.tipeMenu}
@@ -294,10 +303,11 @@ const FormMenu = () => {
                 </option>
               ))}
             </select>
+            <button className="btn btn-dark text-white" onClick={handleAddTipoComida}>Agregar</button>
           </div>
-          <div className="mb-3">
-            <label className="form-label">Especialidades:</label>{" "}
-            <button onClick={handleAddSpecial}>Agregar</button>
+
+          <div className="mb-3 d-flex  align-items-center ">
+            <label className="form-label">Especialidades:</label>
             <select
               className="form-select"
               value={menuData.specialtyMenu}
@@ -309,33 +319,39 @@ const FormMenu = () => {
                 </option>
               ))}
             </select>
+            <button className="btn btn-dark text-white" onClick={handleAddSpecial}>Agregar</button>
+
           </div>
         </div>
-        <div className="mb-3">
-          <button className="btn btn-success" onClick={handleUploadButtonClick}>
-            Upload
-          </button>
-          {imgUrl && (
-            <img
-              src={imgUrl}
-              alt="Uploaded"
-              style={{ marginLeft: "10px", maxWidth: "150px" }}
-            />
-          )}
+
+        <div className="d-flex justify-content-end">
+            <div className="mb-3 mx-2">
+              <button className="btn btn-warning text-white" onClick={handleUploadButtonClick}>
+                Upload
+              </button>
+              {imgUrl && (
+                <img
+                  src={imgUrl}
+                  alt="Uploaded"
+                  style={{ marginLeft: "10px", maxWidth: "150px" }}
+                />
+              )}
+            </div>
+            <div className="mb-3">
+              <button
+                className="btn btn-success px-5"
+                type="button"
+                onClick={handleSubmit}
+                disabled={isSubmitButtonDisabled}
+              >
+                CREAR
+              </button>
+            </div>
         </div>
-        <div className="mb-3">
-          <button
-            className="btn btn-success"
-            type="button"
-            onClick={handleSubmit}
-            disabled={isSubmitButtonDisabled}
-          >
-            Agregar
-          </button>
-        </div>
+
       </div>
     </>
   );
 };
 
-export default FormMenu;
+export default FormAdmin;

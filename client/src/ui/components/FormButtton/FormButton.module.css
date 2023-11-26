@@ -1,0 +1,17 @@
+
+.btnForms {
+    border: none;
+    background: sandybrown;
+    color: white;
+    font-weight: 500;
+    border-radius: 25px;
+    padding: 10px;
+    width: 100%;
+}
+
+.btnOutline {
+    border: 1px solid sandybrown;
+    background: transparent;
+    color: sandybrown;
+}
+  
