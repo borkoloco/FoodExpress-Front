@@ -1,19 +1,26 @@
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FormButton } from '../../../ui/components/FormButtton/FormButton';
 import { useForm } from '../../../restaurant/hooks/useForm';
 import { useDispatch } from "react-redux";
-import { startGoogleAuth, startGoogleLogout } from "../../../redux/actions/action";
+import { startGoogleAuth, startGoogleLogout, registerByUser } from "../../../redux/actions/action";
 import style from './Register.module.css'
 
 const Register = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { formState, onInputChange, errors } = useForm({
-      username:"",
+      nameUser:"",
       email: "",
       password:"",
+      idRole:1 // Envío manual del rol del cliente
   })
+
+  const handleRegisterByUser = () => {
+    dispatch(registerByUser(formState));
+    navigate('/login')
+  }
 
   const handleGoogleAuth = () => {
     dispatch(startGoogleAuth());
@@ -34,13 +41,13 @@ const Register = () => {
           <input
             type="text"
             placeholder="Username"
-            className={`form-control ${errors.username ? 'is-invalid' : formState.username ? 'is-valid' : ''}`}
-            name="username"
-            value={formState.username}
+            className={`form-control ${errors.nameUser ? 'is-invalid' : formState.nameUser ? 'is-valid' : ''}`}
+            name="nameUser"
+            value={formState.nameUser}
             onChange={onInputChange}
           />
-          {errors.username &&
-          (<p className={`text-danger ${style.errorsSize}`}>{errors.username}</p>)}
+          {errors.nameUser &&
+          (<p className={`text-danger ${style.errorsSize}`}>{errors.nameUser}</p>)}
         </div>
         <div className="mb-3">
           <input
@@ -68,7 +75,7 @@ const Register = () => {
           (<p className={`text-danger ${style.errorsSize}`}>{errors.password}</p>)}
         </div>
 
-        <FormButton nameButton="Sing up" />
+        <FormButton  eventHandler={handleRegisterByUser} nameButton="Sing up"/>
         <NavLink to="/login">
             <FormButton nameButton="Login" outline={true} />
         </NavLink>
