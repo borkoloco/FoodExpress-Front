@@ -41,7 +41,10 @@ function Cards({ props }) {
 
   /*Ubica en la pagina 1 cuando se busca */
   useEffect(() => {
-    dispatch(setCurrentPage(1));
+    if (input.length > 2) {
+      dispatch(setCurrentPage(1));
+
+    }
   }, [input]);
 
   return (
@@ -98,7 +101,7 @@ function Cards({ props }) {
           </li>
         </ul>
       </nav>
-      
+
     </div>
   );
 }

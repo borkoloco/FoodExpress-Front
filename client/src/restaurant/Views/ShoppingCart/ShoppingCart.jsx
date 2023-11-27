@@ -13,6 +13,7 @@ const ShoppingCart = () => {
   const [filterMenu, setFilterMenu] = useState([])
   const [subTotal, setSubtotal] = useState(0)
 
+  const allMenuOriginal = useSelector((state) => state.allMenuOriginal);
   const allMenu = useSelector((state) => state.allMenu);
   const dispatch = useDispatch()
   useEffect(() => {
@@ -46,8 +47,8 @@ const ShoppingCart = () => {
 
 
   useEffect(() => {
-    if (cartProducts.length > 0 && allMenu.length > 0) {
-      const filteredMenu = allMenu.filter(menu => {
+    if (cartProducts.length > 0 && allMenuOriginal.length > 0) {
+      const filteredMenu = allMenuOriginal.filter(menu => {
         return cartProducts.some(cart => menu.idMenu === cart.id);
       });
 
@@ -57,7 +58,7 @@ const ShoppingCart = () => {
         setFilterMenu(filteredMenu)
       }
     }
-  }, [allMenu])
+  }, [allMenuOriginal])
 
   // useEffect(() => {
   //   let addSubtotal = 0
