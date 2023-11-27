@@ -1,6 +1,6 @@
 
 import { useDispatch, useSelector } from "react-redux";
-import { setInput,getMenusByName } from '../../../redux/actions/action'
+import { setInput, getMenusByName } from '../../../redux/actions/action'
 import { useEffect } from "react";
 
 
@@ -10,7 +10,7 @@ export const Search = () => {
   const distpatch = useDispatch();
 
 
-  const handleChange = ( event ) => {
+  const handleChange = (event) => {
     const { value } = event.target;
     distpatch(setInput(value));
     distpatch(getMenusByName(input));
@@ -21,12 +21,8 @@ export const Search = () => {
     }
   };
 
-  useEffect(() => {
-    if (input.length === 0){
-        distpatch(getMenusByName(input));
-    }
-  }, [input])
-  
+
+
 
   return (
     <div className="d-flex" role="search">
@@ -38,7 +34,7 @@ export const Search = () => {
         onChange={handleChange}
         onKeyUp={handleKeyPress}
         value={input}
-        // name="name"
+      // name="name"
       />
     </div>
   );
