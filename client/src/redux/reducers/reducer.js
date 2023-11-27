@@ -15,7 +15,8 @@ import {
   UISTARTLOADING,
   UIFINISHLOADING,
   LOGIN_BY_USER,
-  LOGOUT_BY_USER
+  LOGOUT_BY_USER,
+  REGISTER_BY_USER
 } from "../actions/action";
 
 const initialState = {
@@ -30,13 +31,15 @@ const initialState = {
   input: "",
   uid: null,
   displayName: null,
-  userAuth: {},
+  userAuth:{},
+  userRegistered:{},
   filterGlobalState: {
     specialties: 'all',
     typesOfFood: 'all',
     availability: 'all'
     
   }
+
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -188,6 +191,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userAuth:{},
       };
+
+
+    /* Registro con usuario, email y password */
+    case REGISTER_BY_USER:
+      return {
+        ...state,
+        userRegistered:payload,
+      };
+
+    
 
     default:
       return state;

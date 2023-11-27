@@ -32,6 +32,7 @@ export const UISTARTLOADING = "UISTARTLOADING";
 export const UIFINISHLOADING = "UIFINISHLOADING";
 export const LOGIN_BY_USER = "LOGIN_BY_USER";
 export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
+export const REGISTER_BY_USER = "REGISTER_BY_USER";
 
 const endPoint = "http://localhost:3001";
 
@@ -338,3 +339,20 @@ export const logoutByUser = () => {
   return { type: LOGOUT_BY_USER };
 };
 
+/* ACTIONS PARA EL REGISTRO CON usuario, email y password */
+export const registerByUser = (user) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.post(endPoint + "/register",user);
+      window.alert('Usted se ha registrado correctamente');
+      console.log(data);
+      return dispatch({
+        type: REGISTER_BY_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      window.alert(error.response.data);
+    }
+  };
+};

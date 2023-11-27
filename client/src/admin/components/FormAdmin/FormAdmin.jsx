@@ -327,7 +327,7 @@ const FormAdmin = () => {
         <div className="d-flex justify-content-end">
             <div className="mb-3 mx-2">
               <button className="btn btn-warning text-white" onClick={handleUploadButtonClick}>
-                Upload
+                Upload Image
               </button>
               {imgUrl && (
                 <img

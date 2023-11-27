@@ -1,7 +1,7 @@
 
 import { NavLink } from "react-router-dom";
 import logo from "../../../assets/logo-FE.svg";
-import { AccountButton } from "../AccountButton/AccountButton";
+import { AccountButton } from "../../../auth/components/AccountButton/AccountButton";
 import { CartButton } from "../CartButton/CartButton";
 
 export const NavBar = () => {

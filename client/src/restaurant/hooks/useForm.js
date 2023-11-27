@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 export const useForm = (initialForm = {}) => {
@@ -19,6 +19,14 @@ export const useForm = (initialForm = {}) => {
     }));
   };
 
+  useEffect(() => {
+    setErrors(validate({
+      ...formState,
+  }))
+  
+  }, [])
+  
+
 
 //   const onResetForm = () => {
 //     setFormState(initialForm);
@@ -33,33 +41,34 @@ export const useForm = (initialForm = {}) => {
 
 
 const validate = (inputForm) => {
-    const errors = {};
+  const errors = {};
 
-// Validar el formato del username
-const usernamePattern = /^[a-zA-Z0-9]{5,}$/;
-  if (inputForm.username && !usernamePattern.test(inputForm.username)) {
-    errors.username = 'Mínimo 5 caracteres';
+  if ('nameUser' in inputForm) {
+    const usernamePattern = /^[a-zA-Z0-9]{5,}$/;
+    if (inputForm.nameUser.trim() === '') {
+      errors.nameUser = 'Ingrese un nombre';
+    } else if (!usernamePattern.test(inputForm.nameUser)) {
+      errors.nameUser = 'Mínimo 5 caracteres';
+    }
   }
 
-  // Validar el formato del email
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (inputForm.email && !emailPattern.test(inputForm.email)) {
-    errors.email = 'Email no válido';
+  if ('email' in inputForm) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (inputForm.email.trim() === '') {
+      errors.email = 'Ingrese un email';
+    } else if (!emailPattern.test(inputForm.email)) {
+      errors.email = 'Email no válido';
+    }
   }
 
-  // Validar el formato de la contraseña
-  const passwordPattern = /^.{5,}$/;
-  if (inputForm.password && !passwordPattern.test(inputForm.password)) {
-    errors.password =
-      'Mínimo 5 caracteres';
+  if ('password' in inputForm) {
+    const passwordPattern = /^.{5,}$/;
+    if (inputForm.password.trim() === '') {
+      errors.password = 'Ingrese una password';
+    } else if (!passwordPattern.test(inputForm.password)) {
+      errors.password = 'Mínimo 5 caracteres';
+    }
   }
-  // const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
-  // if (inputForm.password && !passwordPattern.test(inputForm.password)) {
-  //   errors.password =
-  //     'Incluye mayúsculas, letras y números';
-  // }
-
-  
 
   return errors;
-}
+};
