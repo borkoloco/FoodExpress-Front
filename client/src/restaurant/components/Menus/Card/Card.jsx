@@ -4,7 +4,7 @@ import Style from './Card.module.css'
 import { AddCart } from '../../../../ui/components/AddCart/AddCart'
 
 function Card({ idMenu, nameMenu, description, imageUrl, price, available, typeMenu, specialtyMenu }) {
-    
+
     return (
 
         <div className={Style.bigDiv}>
@@ -18,7 +18,7 @@ function Card({ idMenu, nameMenu, description, imageUrl, price, available, typeM
             <h3 className={Style.text}>Precio: {price}</h3>
             <h3 className={Style.text}>Tipo: {typeMenu}</h3>
             <h3 className={Style.text}>Menu especial: {specialtyMenu}</h3>
-            <AddCart/>
+            <AddCart amount={1} id={idMenu} />
 
         </div>
 

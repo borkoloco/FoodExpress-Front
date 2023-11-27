@@ -208,7 +208,11 @@ export const filters = (props) => {
   if (availability === "") {
     availability = "all";
   }
-
+  console.log({
+    specialties: specialties,
+    typesOfFood: types,
+    availability: availability,
+  });
   return (dispatch) => {
     return dispatch({
       type: FILTERS,
