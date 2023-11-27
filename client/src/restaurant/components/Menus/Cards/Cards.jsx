@@ -76,22 +76,28 @@ function Cards({ props }) {
       </div>
 
       {/* Paginación */}
-      
-        <button onClick={goToPreviousPage} disabled={currentPage === 1}>
-          {"<"}
-        </button>
-        {pages.map((page) => (
-          <button
-            key={page}
-            onClick={() => handlePageChange(page)}
-            disabled={page === currentPage}
-          >
-            {page}
-          </button>
-        ))}
-        <button onClick={goToNextPage} disabled={currentPage === totalPages}>
-          {">"}
-        </button>
+      <nav aria-label="...">
+        <ul className="pagination">
+          <li className="page-item">
+            <button className="page-link" onClick={goToPreviousPage} disabled={currentPage === 1}>{"<"}</button>
+          </li>
+          {pages.map((page) => (
+            <li className={`page-item ${currentPage === page ? "active" : ""}`} aria-current="page">
+              <button
+                className="page-link"
+                key={page}
+                onClick={() => handlePageChange(page)}
+                disabled={page === currentPage}
+              >
+                {page}
+              </button>
+            </li>
+          ))}
+          <li className="page-item">
+            <button className="page-link" onClick={goToNextPage} disabled={currentPage === totalPages}>{">"}</button>
+          </li>
+        </ul>
+      </nav>
       
     </div>
   );

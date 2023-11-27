@@ -42,11 +42,18 @@ const FormAdmin = () => {
   //!modal
   const regexName = /^[A-Za-z\s]+$/;
   const handleAddSpecial = async () => {
-    const inputValue = window.prompt("Ingresa una especialidad:");
-    if (!(inputValue === null || inputValue === "")) {
-      // El usuario hizo clic en "Aceptar" y proporcionó un valor
-      if (validationsCategories(inputValue)) {
-        await dispatch(postSpecialties(inputValue));
+    const { value: text } = await Swal.fire({
+      input: "text",
+      inputLabel: "Especialidades",
+      inputPlaceholder: "Ingresa una especialidad aquí...",
+      inputAttributes: {
+        "aria-label": "Ingresa una especialidad aquí...",
+      },
+      showCancelButton: true,
+    });
+    if (text) {
+      if (validationsCategories(text)) {
+        await dispatch(postSpecialties(text));
         await dispatch(getSpecialties());
         setForce(!force);
       }
@@ -54,13 +61,19 @@ const FormAdmin = () => {
   };
 
   const handleAddTipoComida = async () => {
-    const inputValue = window.prompt("Ingresa un tipo de comida:");
-    if (!(inputValue === null || inputValue === "")) {
-      // El usuario hizo clic en "Aceptar" y proporcionó un valor
-      if (validationsCategories(inputValue)) {
-        await dispatch(postTypesOfFood(inputValue));
+    const { value: text } = await Swal.fire({
+      input: "text",
+      inputLabel: "Tipo de plato",
+      inputPlaceholder: "Ingresa un tipo aquí...",
+      inputAttributes: {
+        "aria-label": "Ingresa un tipo aquí...",
+      },
+      showCancelButton: true,
+    });
+    if (text) {
+      if (validationsCategories(text)) {
+        await dispatch(postTypesOfFood(text));
         await dispatch(getTypesOfFood());
-        console.log(allTypesOfFood);
         setForce(!force);
       }
     }
@@ -68,16 +81,16 @@ const FormAdmin = () => {
 
   const validationsCategories = (value) => {
     if (value === "") {
-      window.alert("Debes ingresar una categoria");
+      Swal.fire("Debes ingresar una categoria");
       return false;
     } else if (value.trim() === "") {
-      window.alert("No uses cadenas de espacios");
+      Swal.fire("No uses cadenas de espacios");
       return false;
     } else if (value.length < 2 || value.length > 30) {
-      window.alert("Usa entre 2 y 30 caracteres");
+      Swal.fire("Usa entre 2 y 30 caracteres");
       return false;
     } else if (!regexName.test(value)) {
-      window.alert("Usa solo letras y espacios");
+      Swal.fire("Usa solo letras y espacios");
       return false;
     }
     return true;
@@ -143,12 +156,20 @@ const FormAdmin = () => {
     }
   }, [imgUrl]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (!imgUrl) {
-      const result = window.confirm("Crear un plato sin imagen?");
-      if (result) {
-        //datos que se envian
+      const result = await Swal.fire({
+        title: "Crear un plato sin imagen?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Okey",
+        denyButtonText: `Cancelar`,
+      });
+
+      if (result.isConfirmed) {
+        // Swal.fire("Saved!", "", "success");
         const sendData = {
           nameMenu: menuData.nameMenu,
           description: menuData.description,
@@ -158,7 +179,7 @@ const FormAdmin = () => {
           tipo: menuData.tipeMenu,
           especialidad: menuData.specialtyMenu,
         };
-        dispatch(postProduct(sendData));
+        await dispatch(postProduct(sendData));
         //* limpiar formulario
         setMenuData({
           ...menuData,
@@ -170,7 +191,8 @@ const FormAdmin = () => {
         });
         setErrors({ initial: "initial" });
         return;
-      } else {
+      } else if (result.isDenied) {
+        // Swal.fire("Changes are not saved", "", "info");
         return;
       }
     }
@@ -196,9 +218,9 @@ const FormAdmin = () => {
     });
     setErrors({ initial: "initial" });
 
-    setShowSuccessMessage(true); 
+    setShowSuccessMessage(true);
     setTimeout(() => {
-        setShowSuccessMessage(false);
+      setShowSuccessMessage(false);
     }, 5000);
   };
 
@@ -226,7 +248,7 @@ const FormAdmin = () => {
 
   return (
     <>
-    {showSuccessMessage && (
+      {showSuccessMessage && (
         <div className="alert alert-success" role="alert">
           ¡Plato agregado correctamente!
         </div>
@@ -259,32 +281,32 @@ const FormAdmin = () => {
         </div>
 
         <div className="row g-2">
-            <div className="col-md-4 flex-column ">
-              <div className="d-flex align-items-center">
-                  <label className="form-label" htmlFor="price">
-                    Precio:
-                  </label>
-                  <input
-                    className="form-control"
-                    type="number"
-                    name="price"
-                    id="price"
-                    placeholder="Precio del plato"
-                    value={menuData.price}
-                    onChange={handleChange}
-                  />
-              </div>
-              <span className="form-text text-danger">{errors.price}</span>
-            </div>
-            <div className="col-md-4 mt-3 mb-3 ">
-              <label className="form-label d-flex  align-items-center ">
-                Disponible:
-                <Switch
-                  onChange={handleChangeAvailable}
-                  checked={menuData.available}
-                />
+          <div className="col-md-4 flex-column ">
+            <div className="d-flex align-items-center">
+              <label className="form-label" htmlFor="price">
+                Precio:
               </label>
+              <input
+                className="form-control"
+                type="number"
+                name="price"
+                id="price"
+                placeholder="Precio del plato"
+                value={menuData.price}
+                onChange={handleChange}
+              />
             </div>
+            <span className="form-text text-danger">{errors.price}</span>
+          </div>
+          <div className="col-md-4 mt-3 mb-3 ">
+            <label className="form-label d-flex  align-items-center ">
+              Disponible:
+              <Switch
+                onChange={handleChangeAvailable}
+                checked={menuData.available}
+              />
+            </label>
+          </div>
         </div>
 
         {/*options*/}
@@ -303,7 +325,12 @@ const FormAdmin = () => {
                 </option>
               ))}
             </select>
-            <button className="btn btn-dark text-white" onClick={handleAddTipoComida}>Agregar</button>
+            <button
+              className="btn btn-dark text-white"
+              onClick={handleAddTipoComida}
+            >
+              Agregar
+            </button>
           </div>
 
           <div className="mb-3 d-flex  align-items-center ">
@@ -319,36 +346,42 @@ const FormAdmin = () => {
                 </option>
               ))}
             </select>
-            <button className="btn btn-dark text-white" onClick={handleAddSpecial}>Agregar</button>
-
+            <button
+              className="btn btn-dark text-white"
+              onClick={handleAddSpecial}
+            >
+              Agregar
+            </button>
           </div>
         </div>
 
         <div className="d-flex justify-content-end">
-            <div className="mb-3 mx-2">
-              <button className="btn btn-warning text-white" onClick={handleUploadButtonClick}>
-                Upload
-              </button>
-              {imgUrl && (
-                <img
-                  src={imgUrl}
-                  alt="Uploaded"
-                  style={{ marginLeft: "10px", maxWidth: "150px" }}
-                />
-              )}
-            </div>
-            <div className="mb-3">
-              <button
-                className="btn btn-success px-5"
-                type="button"
-                onClick={handleSubmit}
-                disabled={isSubmitButtonDisabled}
-              >
-                CREAR
-              </button>
-            </div>
+          <div className="mb-3 mx-2">
+            <button
+              className="btn btn-warning text-white"
+              onClick={handleUploadButtonClick}
+            >
+              Upload Image
+            </button>
+            {imgUrl && (
+              <img
+                src={imgUrl}
+                alt="Uploaded"
+                style={{ marginLeft: "10px", maxWidth: "150px" }}
+              />
+            )}
+          </div>
+          <div className="mb-3">
+            <button
+              className="btn btn-success px-5"
+              type="button"
+              onClick={handleSubmit}
+              disabled={isSubmitButtonDisabled}
+            >
+              CREAR
+            </button>
+          </div>
         </div>
-
       </div>
     </>
   );

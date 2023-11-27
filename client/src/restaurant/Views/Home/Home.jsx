@@ -15,6 +15,7 @@ import {
 function Home() {
   const dispatch = useDispatch();
   const allMenu = useSelector((state) => state.allMenu);
+  const filterGlobalState = useSelector((state) => state.filterGlobalState)
   const allSpecialties = useSelector((state) => state.allSpecialties);
   const allTypesOfFood = useSelector((state) => state.allTypesOfFood);
   const [localFilter, setLocalFilter] = useState({
@@ -40,11 +41,10 @@ function Home() {
       dispatch(getTypesOfFood());
     }
   }, []);
-
   const handleFilters = (element) => {
     const name = element.target.name;
     let value = element.target.value;
-    console.log(value);
+
     setLocalFilter({
       ...localFilter,
       [name]: value,
@@ -79,14 +79,14 @@ function Home() {
               aria-labelledby="headingOne"
               data-bs-parent="#accordionExample"
             >
-              <div className="accordion-body"><Search/></div>
+              <div className="accordion-body"><Search /></div>
               <div className="accordion-body">
                 <p>Especialidades</p>
                 <select
                   className="form-select form-select-sm"
                   aria-label="Small select example"
                   name="specialties"
-                  defaultValue={""}
+                  defaultValue={filterGlobalState.specialties}
                   onChange={(el) => handleFilters(el)}
                 >
                   <option value="all">Todos</option>
@@ -107,7 +107,7 @@ function Home() {
                   className="form-select form-select-sm"
                   aria-label="Small select example"
                   name="types"
-                  defaultValue={""}
+                  defaultValue={filterGlobalState.typesOfFood}
                   onChange={(el) => handleFilters(el)}
                 >
                   <option value="all">Todos</option>
@@ -129,7 +129,7 @@ function Home() {
                   aria-label="Small select example"
                   name="availability"
                   onChange={(el) => handleFilters(el)}
-                  defaultValue={""}
+                  defaultValue={filterGlobalState.availability}
                 >
                   <option value="all">Todos</option>
                   <option value={1}>Disponible</option>
@@ -166,7 +166,7 @@ function Home() {
         )}
       </div>
     </div>
-  
+
   );
 }
 

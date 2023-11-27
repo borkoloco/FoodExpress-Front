@@ -22,3 +22,8 @@
     padding: 1em;
 }
 
+.activePage {
+    background-color: sandybrown;
+    width: 100%;
+}
+

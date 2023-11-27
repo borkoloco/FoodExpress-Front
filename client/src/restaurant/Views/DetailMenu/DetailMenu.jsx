@@ -8,14 +8,16 @@ import {
 import { BackButton } from "../../../ui/components/BackButton/BackButton";
 import { AddCart } from "../../../ui/components/AddCart/AddCart";
 import style from "./DetailMenu.module.css";
+import { useLocalStorage } from "../../../utils/useLocalStorage";
+import { useState } from "react";
 
 const DetailMenu = () => {
   const { id } = useParams();
-  
+
 
   const menuDetail = useSelector((state) => state.menuDetail);
   const dispatch = useDispatch();
-  
+  const [amountValue, setAmountValue] = useState(1)
 
   useEffect(() => {
     dispatch(getMenuDetailById(id));
@@ -23,6 +25,13 @@ const DetailMenu = () => {
       dispatch(cleanDetailMenu());
     };
   }, [id]);
+
+  const handleInputCart = (value) => {
+    setAmountValue(value)
+  }
+  useEffect(() => { console.log(amountValue); }, [amountValue])
+  const [cartProducts, setCartProducts] = useLocalStorage('cart', '[]')
+  console.log(cartProducts);
 
   return (
     <>
@@ -129,10 +138,9 @@ const DetailMenu = () => {
               <label>
                 <b>Cantidad: </b>
               </label>
-              <input className={style.quantityInput} type="number" value={1} />
-              <NavLink to='/cart'>
-                <AddCart />
-              </NavLink>
+              <input className={style.quantityInput} type="number" onChange={(el) => handleInputCart(el.target.value)} defaultValue={amountValue} />
+
+              <AddCart amount={amountValue} id={id} />
             </div>
           </div>
         </div>

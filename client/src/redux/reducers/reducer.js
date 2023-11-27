@@ -15,7 +15,9 @@ import {
   UISTARTLOADING,
   UIFINISHLOADING,
   LOGIN_BY_USER,
-  LOGOUT_BY_USER
+  LOGOUT_BY_USER,
+  REGISTER_BY_USER,
+  USERLOGUED,
 } from "../actions/action";
 
 const initialState = {
@@ -30,22 +32,37 @@ const initialState = {
   input: "",
   uid: null,
   displayName: null,
-  userAuth:{}
+  displayEmail: null,
+  userLogued: {},
+  userAuth: {},
+  userRegistered: {},
+  filterGlobalState: {
+    specialties: "all",
+    typesOfFood: "all",
+    availability: "all",
+  },
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
   switch (action.type) {
+    case USERLOGUED:
+      return {
+        ...state,
+        userLogued: payload,
+      };
     case LOGIN:
       return {
         ...state,
         uid: payload.uid,
         displayName: payload.displayName,
+        displayEmail: payload.displayEmail,
       };
     case LOGOUT:
       return {
         ...state,
         uid: null,
         displayName: null,
+        displayEmail: null,
       };
 
     case SET_CURRENT_PAGE: //paginacion
@@ -99,6 +116,11 @@ const rootReducer = (state = initialState, action) => {
         return {
           ...state,
           allMenu: state.allMenuOriginal,
+          filterGlobalState: {
+            specialties: "all",
+            typesOfFood: "all",
+            availability: "all",
+          },
         };
       }
 
@@ -115,6 +137,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allMenu: filteredMenu,
         currentPage: 1,
+        filterGlobalState: {
+          specialties: specialties,
+          typesOfFood: typesOfFood,
+          availability: availability,
+        },
       };
 
     case ORDER:
@@ -160,17 +187,23 @@ const rootReducer = (state = initialState, action) => {
         allMenuOriginal: payload,
       };
 
-
     /* Login con Usuario: Email y password */
     case LOGIN_BY_USER:
       return {
         ...state,
-        userAuth:payload,
+        userAuth: payload,
       };
     case LOGOUT_BY_USER:
       return {
         ...state,
-        userAuth:{},
+        userAuth: {},
+      };
+
+    /* Registro con usuario, email y password */
+    case REGISTER_BY_USER:
+      return {
+        ...state,
+        userRegistered: payload,
       };
 
     default:
