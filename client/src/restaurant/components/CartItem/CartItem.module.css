@@ -1,5 +1,3 @@
-
-
 .image {
     width: 6rem;
     height: 5rem;
@@ -9,8 +7,14 @@
 .containerCard {
     display: flex;
     width: auto;
+    overflow: hidden;
+    /* Ocultar el exceso de texto */
+    text-overflow: ellipsis;
 }
 
 .features {
     margin-left: 1rem;
+    overflow: hidden;
+    /* Ocultar el exceso de texto */
+    text-overflow: ellipsis;
 }
