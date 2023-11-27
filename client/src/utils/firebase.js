@@ -21,7 +21,7 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-
+const auth = firebase.auth();
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,4 +33,4 @@ const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 // Initialize Firebase Authentication and get a reference to the service
 // export const auth = getAuth(app);
 // export default app;
-export { db, googleAuthProvider, firebase };
+export { db, googleAuthProvider, firebase, auth };

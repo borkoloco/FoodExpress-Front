@@ -1,8 +1,8 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 
 import { formatData } from "../../utils/formatData";
-import { firebase, googleAuthProvider } from "../../utils/firebase";
-
+import { firebase, googleAuthProvider, auth } from "../../utils/firebase";
 
 /*
 import menu, { postMenu } from "../../Views/Home/menu";
@@ -33,14 +33,116 @@ export const UIFINISHLOADING = "UIFINISHLOADING";
 export const LOGIN_BY_USER = "LOGIN_BY_USER";
 export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 export const REGISTER_BY_USER = "REGISTER_BY_USER";
+export const USERLOGUED = "USERLOGUED";
 
 const endPoint = "http://localhost:3001";
 
+//datos en nuestra BD del usuario logueado
+export const user_logued = (email) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(endPoint + "/users/" + email);
+      console.log(data);
+      return dispatch({
+        type: USERLOGUED,
+        payload: data,
+      });
+    } catch (error) {
+      console.error("Error al obtener el usuario en la BD: ", error.message);
+    }
+  };
+};
+
+//POST DEL NUEVO USUARIO EN NUESTRA BD
+export const postUserBD = (
+  nameUser,
+  email,
+  password,
+  idRole,
+  authProvider,
+  idAuthProvider
+) => {
+  const sendData = {
+    nameUser,
+    email,
+    password,
+    idRole,
+    authProvider,
+    idAuthProvider,
+  };
+  return async (dispatch) => {
+    try {
+      const registerUser = await axios.post(endPoint + "/register", sendData);
+      return dispatch({
+        type: "",
+        payload: registerUser,
+      });
+    } catch (error) {
+      console.error("Error al guardar el usuario en la BD: ", error.message);
+    }
+  };
+};
+
+// Acción para iniciar sesión con correo electrónico y contraseña
+export const startLoginWithEmail = (email, password) => {
+  return async (dispatch) => {
+    try {
+      // Iniciar sesión con correo electrónico y contraseña
+      const userCredential = await auth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // Dispatch de la acción de login con los datos del usuario
+      dispatch(login(user.uid, user.displayName, user.email));
+      //determinar el rol del usuario
+
+      dispatch(user_logued(user.email));
+    } catch (error) {
+      console.error(
+        "Error al iniciar sesión con correo electrónico:",
+        error.message
+      );
+      // Puedes dispatchear otra acción para manejar el error si es necesario
+    }
+  };
+};
+
+// Acción para crear usuario con correo electrónico y contraseña
+export const startWithEmail = (email, password, username) => {
+  return async (dispatch) => {
+    try {
+      const userCredential = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log(user);
+      // Dispatch de la acción de login con los datos del usuario
+      // dispatch(login(user.uid, username, user));
+      dispatch(postUserBD(username, user.email, "without", 1));
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Listo, loguéate",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (error) {
+      console.error(
+        "Error al iniciar sesión con correo electrónico:",
+        error.message
+      );
+    }
+  };
+};
+
 //funciones para el logueo con Google
-export const login = (uid, displayName) => {
+export const login = (uid, displayName, displayEmail) => {
   return {
     type: LOGIN,
-    payload: { uid, displayName },
+    payload: { uid, displayName, displayEmail },
   };
 };
 export const logout = () => {
@@ -48,6 +150,47 @@ export const logout = () => {
     type: LOGOUT,
   };
 };
+
+//comprobar si existe email en nuestra BD, si no, crearlo
+const testEmail = async (nameUser, email) => {
+  try {
+    // Buscar en la BD si matchea el email
+    const user = await axios(endPoint + "/users/" + email);
+    if (user && user.email) {
+      console.log("Usuario ya existe en BD " + user.email);
+    } else {
+      // Dar de alta en BD al usuario si no existe
+      const sendData = {
+        nameUser,
+        email,
+        password: "without",
+        idRole: 1,
+      };
+      await axios.post(endPoint + "/register", sendData);
+      console.log("Usuario dado de alta");
+    }
+  } catch (error) {
+    // Manejar el error de manera controlada
+    console.log("Error al buscar el usuario: " + error.message);
+
+    // Si la petición falla, intenta dar de alta al usuario
+    const sendData = {
+      nameUser,
+      email,
+      password: "without",
+      idRole: 1,
+    };
+    try {
+      await axios.post(endPoint + "/register", sendData);
+      console.log("Usuario dado de alta después del error");
+    } catch (error) {
+      console.log("Error al dar de alta el usuario: " + error.message);
+      // Puedes tomar acciones adicionales si es necesario
+    }
+  }
+};
+
+//iniciar sesion con google
 export const startGoogleAuth = () => {
   return (dispatch) => {
     firebase
@@ -57,7 +200,9 @@ export const startGoogleAuth = () => {
       .then(({ user }) => {
         console.log(user);
         console.log(user.uid + "   " + user.displayName);
-        dispatch(login(user.uid, user.displayName));
+        dispatch(login(user.uid, user.displayName, user.email));
+        testEmail(user.displayName, user.email);
+        dispatch(user_logued(user.email));
       })
       .catch((e) => console.log(e));
   };
@@ -245,6 +390,13 @@ export const postProduct = (product) => {
         type: "", //POST_MENU
         payload: data,
       });
+      Swal.fire({
+        position: "center-center",
+        icon: "success",
+        title: "Guardado con éxito",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -303,10 +455,10 @@ export const setInput = (valor) => {
   return { type: SEARCH_INPUT, payload: valor };
 };
 
-export const getMenusByName= (name) => {
+export const getMenusByName = (name) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get(endPoint + `/menu/?name=${name}`);
+      const { data } = await axios.get(endPoint + `/menu/?name=${name}`);
       return dispatch({
         type: GET_MENUS_BY_NAME,
         payload: formatData(data),
@@ -317,12 +469,11 @@ export const getMenusByName= (name) => {
   };
 };
 
-
 /* ACTIONS PARA EL LOGIN CON usuario: Email Y Password */
 export const loginByUser = (user) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.post(endPoint + "/login",user);
+      const { data } = await axios.post(endPoint + "/login", user);
       window.alert(data.message);
       return dispatch({
         type: LOGIN_BY_USER,
@@ -343,8 +494,8 @@ export const logoutByUser = () => {
 export const registerByUser = (user) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.post(endPoint + "/register",user);
-      window.alert('Usted se ha registrado correctamente');
+      const { data } = await axios.post(endPoint + "/register", user);
+      window.alert("Usted se ha registrado correctamente");
       console.log(data);
       return dispatch({
         type: REGISTER_BY_USER,
