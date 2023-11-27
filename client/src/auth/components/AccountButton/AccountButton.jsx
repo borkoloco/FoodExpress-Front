@@ -36,7 +36,6 @@ export const AccountButton = () => {
     }
   }, [userAuth]);
 
-  console.log(authenticated);
   
 
   return (

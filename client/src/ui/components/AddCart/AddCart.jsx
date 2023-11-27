@@ -1,6 +1,8 @@
 
 import style from "./AddCart.module.css";
 import { useLocalStorage } from "../../../utils/useLocalStorage";
+import { Alert } from "../Alert/Alert";
+import { useState } from "react";
 
 export const AddCart = ({ amount, id }) => {
   const numAmount = parseInt(amount)
@@ -9,8 +11,8 @@ export const AddCart = ({ amount, id }) => {
     window.alert('La cantidad minima es 1')
   }
 
-  const [cartProducts, setCartProducts] = useLocalStorage('cart', '[]')
-
+  const [cartProducts, setCartProducts] = useLocalStorage('cart', [])
+  const [showAlert, setShowAlert] = useState(false);
 
   const addInput = () => {
 
@@ -40,8 +42,12 @@ export const AddCart = ({ amount, id }) => {
     }
 
 
-
-
+    /* Esto es para desplegar una pequeña alerta abajo a la derecha
+    cuando se agrega algo al carrito */
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 1500);
   }
 
 
@@ -54,8 +60,8 @@ export const AddCart = ({ amount, id }) => {
 
   return (
     <div>
-      <button className={`card-link ${style.btnAdd}`} onClick={addInput}>Add to Car</button>
-
+      <button className={`card-link ${style.btnAdd}`} onClick={addInput}>Add to Cart</button>
+      <Alert show={showAlert} message="¡Producto agregado al carrito!"/>
     </div>
   )
 };

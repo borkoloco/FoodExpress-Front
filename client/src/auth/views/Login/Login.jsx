@@ -3,6 +3,7 @@ import { FormButton } from "../../../ui/components/FormButtton/FormButton";
 import { useForm } from "../../../restaurant/hooks/useForm";
 import { useDispatch } from "react-redux";
 import { startGoogleAuth, startGoogleLogout, loginByUser } from "../../../redux/actions/action";
+import { areThereErrors } from "../../../utils/areThereErrors";
 import style from "./Login.module.css";
 
 
@@ -68,12 +69,12 @@ export const Login = () => {
           </a>
         </p>
 
-        <FormButton eventHandler={handleLoginByUser} nameButton="Login" />
+        <FormButton eventHandler={handleLoginByUser} nameButton="Login" disabled={ !areThereErrors(errors) } />
         <NavLink to="/register">
             <FormButton nameButton="Sign up" outline={true} />
         </NavLink>
         <FormButton eventHandler={handleGoogleAuth} nameButton="Continue with Google" outline={true} />
-        <FormButton eventHandler={handleLogout} nameButton="Logout Google" outline={true} />
+        {/* <FormButton eventHandler={handleLogout} nameButton="Logout Google" outline={true} /> */}
       </div>
     </div>
   );

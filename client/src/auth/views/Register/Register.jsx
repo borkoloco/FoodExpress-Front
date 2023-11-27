@@ -5,6 +5,7 @@ import { useForm } from '../../../restaurant/hooks/useForm';
 import { useDispatch } from "react-redux";
 import { startGoogleAuth, startGoogleLogout, registerByUser } from "../../../redux/actions/action";
 import style from './Register.module.css'
+import { areThereErrors } from '../../../utils/areThereErrors';
 
 const Register = () => {
 
@@ -40,7 +41,7 @@ const Register = () => {
         <div className="mb-3">
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Nombre"
             className={`form-control ${errors.nameUser ? 'is-invalid' : formState.nameUser ? 'is-valid' : ''}`}
             name="nameUser"
             value={formState.nameUser}
@@ -75,12 +76,12 @@ const Register = () => {
           (<p className={`text-danger ${style.errorsSize}`}>{errors.password}</p>)}
         </div>
 
-        <FormButton  eventHandler={handleRegisterByUser} nameButton="Sing up"/>
+        <FormButton  eventHandler={handleRegisterByUser} nameButton="Sing up" disabled={!areThereErrors(errors)}/>
         <NavLink to="/login">
             <FormButton nameButton="Login" outline={true} />
         </NavLink>
         <FormButton eventHandler={handleGoogleAuth} nameButton="Continue with Google" outline={true} />
-        <FormButton eventHandler={handleLogout} nameButton="Logout Google" outline={true} />
+        {/* <FormButton eventHandler={handleLogout} nameButton="Logout Google" outline={true} /> */}
       </div>
     </div>
   )

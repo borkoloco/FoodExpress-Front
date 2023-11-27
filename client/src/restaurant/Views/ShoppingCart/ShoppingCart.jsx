@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { getAllMenu } from "../../../redux/actions/action";
 
 const ShoppingCart = () => {
-  const [cartProducts, setCartProducts] = useLocalStorage('cart', '[]')
+  const [cartProducts, setCartProducts] = useLocalStorage('cart', [])
   const [filterMenu, setFilterMenu] = useState([])
   const [subTotal, setSubtotal] = useState(0)
 
