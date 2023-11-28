@@ -13,7 +13,7 @@ export const Search = () => {
   const handleChange = (event) => {
     const { value } = event.target;
     distpatch(setInput(value));
-    distpatch(getMenusByName(input));
+    distpatch(getMenusByName(value));
   }
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
