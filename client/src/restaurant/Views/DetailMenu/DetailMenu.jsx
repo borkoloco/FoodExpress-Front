@@ -118,27 +118,24 @@ const DetailMenu = () => {
             <div className="col-md-7">
               <p className={`${style.newArrival} text-center`}>NEW</p>
               <h2>{menuDetail.nameMenu}</h2>
-              <p>Product id: IDSR2344</p>
-              <p>⭐⭐⭐⭐⭐</p>
+              <span>Product ID: MEN{menuDetail.idMenu}U</span>
+              {/* <p>⭐⭐⭐⭐⭐</p> */}
+              <p className={style.price}>$ {menuDetail.price}</p>
+              <p><b>Description:</b> {menuDetail.description}</p>
               <p>
-                {menuDetail.description}
+                {menuDetail.typeMenu} - {menuDetail.specialtyMenu}
               </p>
               <p>
-                <b>Tipo: </b>
-                {menuDetail.typeMenu}
+                <b>Available: </b> 5
               </p>
-              <p>
-                <b>Especial: </b>
-                {menuDetail.specialtyMenu}
-              </p>
-              <p>
-                <b>Disponibilidad: </b>5
-              </p>
-              <p className={style.price}>$ {menuDetail.price}.00</p>
+             
+              
               <label>
-                <b>Cantidad: </b>
+                <b>Quantity: </b>&nbsp;
+                <input className={style.quantityInput} type="number" onChange={(el) => handleInputCart(el.target.value)} defaultValue={amountValue} />
               </label>
-              <input className={style.quantityInput} type="number" onChange={(el) => handleInputCart(el.target.value)} defaultValue={amountValue} />
+                
+          
 
               <AddCart amount={amountValue} id={id} />
             </div>

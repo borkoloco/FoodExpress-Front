@@ -3,8 +3,13 @@ import style from "./AddCart.module.css";
 import { useLocalStorage } from "../../../utils/useLocalStorage";
 import { Alert } from "../Alert/Alert";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../redux/actions/action";
 
 export const AddCart = ({ amount, id }) => {
+  const dispatch = useDispatch();
+
+  /* Funcionalidad de la página del carrito */
   const numAmount = parseInt(amount)
   if (numAmount < 1) {
 
@@ -41,15 +46,16 @@ export const AddCart = ({ amount, id }) => {
       }
     }
 
+    /*Funcionalidad del icono del carrito */
+    dispatch(addToCart(data));
 
     /* Esto es para desplegar una pequeña alerta abajo a la derecha
     cuando se agrega algo al carrito */
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
-    }, 1500);
+    }, 2000);
   }
-
 
 
 
@@ -61,7 +67,7 @@ export const AddCart = ({ amount, id }) => {
   return (
     <div>
       <button className={`card-link ${style.btnAdd}`} onClick={addInput}>Add to Cart</button>
-      <Alert show={showAlert} message="¡Producto agregado al carrito!"/>
+      <Alert show={showAlert} message="Added to your cart" />
     </div>
   )
 };

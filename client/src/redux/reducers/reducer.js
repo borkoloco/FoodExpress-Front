@@ -18,7 +18,9 @@ import {
   LOGOUT_BY_USER,
   REGISTER_BY_USER,
   USERLOGUED,
-  UPDATE_CART
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  UPDATE_MENU_AVAILABILITY
 } from "../actions/action";
 
 
@@ -43,7 +45,7 @@ const initialState = {
     typesOfFood: "all",
     availability: "all",
   },
-  cart: JSON.parse(localStorage.getItem('cart')) || [],
+  cartItems: JSON.parse(localStorage.getItem('cart')) || [],
 
 };
 const rootReducer = (state = initialState, action) => {
@@ -211,11 +213,58 @@ const rootReducer = (state = initialState, action) => {
         userRegistered: payload,
       };
 
-    case UPDATE_CART:
+    /** Add to cart icono del carrito */
+    case ADD_TO_CART:
+      const newItem = action.payload;
+      const existingItemIndex = state.cartItems.findIndex(item => item.id === newItem.id);
+
+      let updatedCart;
+      if (existingItemIndex !== -1) {
+        const updatedItem = { ...state.cartItems[existingItemIndex] };
+        updatedItem.amount += newItem.amount;
+        updatedCart = [...state.cartItems];
+        updatedCart[existingItemIndex] = updatedItem;
+      } else {
+        updatedCart = [...state.cartItems, newItem];
+      }
+
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
       return {
         ...state,
-        cart: payload,
+        cartItems: updatedCart,
       };
+    
+    case REMOVE_FROM_CART:
+      const itemToRemove = action.payload;
+      const itemIndexToRemove = state.cartItems.findIndex(item => item.id === itemToRemove.id);
+
+      if (itemIndexToRemove !== -1) {
+        const updatedCart = [...state.cartItems];
+        updatedCart.splice(itemIndexToRemove, 1);
+
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+        return {
+          ...state,
+          cartItems: updatedCart,
+        };
+      }
+
+      // borrado logico
+    case UPDATE_MENU_AVAILABILITY:
+      return {
+        ...state,
+        allMenu: state.allMenu.map(menu => {
+          if (menu.idMenu === action.payload.menuId) {
+            return {
+              ...menu,
+              available: action.payload.newAvailability,
+            };
+          }
+          return menu;
+        }),
+      };
+
 
     default:
       return state;

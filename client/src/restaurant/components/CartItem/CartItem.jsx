@@ -7,24 +7,25 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "../../../utils/useLocalStorage"
-
+import { addToCart } from "../../../redux/actions/action";
+import { removeFromCart } from "../../../redux/actions/action";
 
 export const CartItem = ({ id, amount, description, nameMenu, price, specialtyMenu, typeMenu, imageUrl }) => {
 
   const [cartProducts, setCartProducts] = useLocalStorage('cart', '[]')
   let subTotal = price * amount
-
-
+  const dispatch = useDispatch()
+  const prueba = { id: parseFloat(id), amount: parseFloat(amount) }
 
   const removeButton = () => {
 
     const updatedProducts = cartProducts.filter((cart) => cart.id !== id)
     console.log(updatedProducts);
-    setCartProducts(updatedProducts)
-    window.location.reload()
+
+    dispatch(removeFromCart(prueba))
+
+
   }
-
-
 
 
   return (

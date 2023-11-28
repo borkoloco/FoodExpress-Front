@@ -14,10 +14,10 @@ function Card({ idMenu, nameMenu, description, imageUrl, price, available, typeM
             <Link className={Style.deleteDecoration} to={`/menu/detail/${idMenu}`}>
                 <h3 className={Style.textName}>{nameMenu}</h3>
             </Link>
-            <h3 className={Style.text}>Descripcion: {description}</h3>
-            <h3 className={Style.text}>Precio: {price}</h3>
-            <h3 className={Style.text}>Tipo: {typeMenu}</h3>
-            <h3 className={Style.text}>Menu especial: {specialtyMenu}</h3>
+            <h3 className={Style.text}>Description: {description}</h3>
+            <h3 className={Style.text}>$ {price}.00</h3>
+            <h3 className={Style.text}>{typeMenu}</h3>
+            <h3 className={Style.text}>Special Menu: {specialtyMenu}</h3>
             <AddCart amount={1} id={idMenu} />
 
         </div>
