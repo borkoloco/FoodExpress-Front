@@ -18,6 +18,7 @@ import {
   LOGOUT_BY_USER,
   REGISTER_BY_USER,
   USERLOGUED,
+  UPDATE_CART
 } from "../actions/action";
 
 
@@ -42,6 +43,8 @@ const initialState = {
     typesOfFood: "all",
     availability: "all",
   },
+  cart: JSON.parse(localStorage.getItem('cart')) || [],
+
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -206,6 +209,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userRegistered: payload,
+      };
+
+    case UPDATE_CART:
+      return {
+        ...state,
+        cart: payload,
       };
 
     default:

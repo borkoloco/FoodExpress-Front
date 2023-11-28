@@ -34,6 +34,7 @@ export const LOGIN_BY_USER = "LOGIN_BY_USER";
 export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
+export const UPDATE_CART  = "UPDATE_CART ";
 
 const endPoint = "http://localhost:3001";
 
@@ -533,3 +534,10 @@ export const registerByUser = (user) => {
   };
 };
 
+/** Carrito icono */
+export const updateCart = (cartData) => {
+  return {
+    type: UPDATE_CART,
+    payload: cartData,
+  };
+};
