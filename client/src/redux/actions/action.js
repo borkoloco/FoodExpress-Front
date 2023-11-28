@@ -35,7 +35,8 @@ export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
 export const ADD_TO_CART = "ADD_TO_CART  ";
-export const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
@@ -550,3 +551,27 @@ export const removeFromCart = ({ id, amount }) => {
     payload: {id, amount}
   }
 }
+
+//Action para el borrado lógico
+export const updateMenuAvailability = (menuId, newAvailability) => {
+  console.log(menuId,newAvailability)
+  return async (dispatch) => {
+    try {
+      const response = await axios.patch(`${endPoint}/menu/${menuId}`, {
+        available: newAvailability,
+      });
+
+      if (response.status !== 200) {
+        throw new Error('Error al actualizar la disponibilidad del menú');
+      }
+
+      dispatch({
+        type: UPDATE_MENU_AVAILABILITY,
+        payload: { menuId, newAvailability },
+      });
+    } catch (error) {
+      console.error('Error al actualizar la disponibilidad del menú:', error);
+      // Manejar errores, como dispatch de una acción de error
+    }
+  };
+};

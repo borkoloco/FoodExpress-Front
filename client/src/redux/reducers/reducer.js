@@ -19,7 +19,8 @@ import {
   REGISTER_BY_USER,
   USERLOGUED,
   ADD_TO_CART,
-  REMOVE_FROM_CART
+  REMOVE_FROM_CART,
+  UPDATE_MENU_AVAILABILITY
 } from "../actions/action";
 
 
@@ -235,19 +236,34 @@ const rootReducer = (state = initialState, action) => {
     
     case REMOVE_FROM_CART:
       const itemToRemove = action.payload;
-  const itemIndexToRemove = state.cartItems.findIndex(item => item.id === itemToRemove.id);
+      const itemIndexToRemove = state.cartItems.findIndex(item => item.id === itemToRemove.id);
 
-  if (itemIndexToRemove !== -1) {
-    const updatedCart = [...state.cartItems];
-    updatedCart.splice(itemIndexToRemove, 1);
+      if (itemIndexToRemove !== -1) {
+        const updatedCart = [...state.cartItems];
+        updatedCart.splice(itemIndexToRemove, 1);
 
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
 
-    return {
-      ...state,
-      cartItems: updatedCart,
-    };
-  }
+        return {
+          ...state,
+          cartItems: updatedCart,
+        };
+      }
+
+      // borrado logico
+    case UPDATE_MENU_AVAILABILITY:
+      return {
+        ...state,
+        allMenu: state.allMenu.map(menu => {
+          if (menu.idMenu === action.payload.menuId) {
+            return {
+              ...menu,
+              available: action.payload.newAvailability,
+            };
+          }
+          return menu;
+        }),
+      };
 
 
     default:
