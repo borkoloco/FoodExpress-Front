@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { getAllMenu } from "../../../redux/actions/action";
 
 const ShoppingCart = () => {
-  const [cartProducts, setCartProducts] = useLocalStorage('cart', [])
+  const cartItems = useSelector((state) => state.cartItems)
   const [filterMenu, setFilterMenu] = useState([])
   const [subTotal, setSubtotal] = useState(0)
 
@@ -21,35 +21,19 @@ const ShoppingCart = () => {
       dispatch(getAllMenu());
     }
 
-    // allMenu.map((el) => {
-    //   const idCart = cartProducts.map((cart) => {
-    //     if (el.idMenu === cart.id) {
-    //       filterMenu.push(el)
-    //     }
-    //   })
-    // })
-    // if (cartProducts.length > 0 && allMenu.length > 0) {
-    //   const filteredMenu = allMenu.filter(menu => {
-    //     return cartProducts.some(cart => menu.idMenu === cart.id);
-    //   });
-
-
-    //   if (filteredMenu.length > 0) {
-
-    //     setFilterMenu(filteredMenu)
-    //   }
-    // }
-
-
-
-
   }, []);
 
+  useEffect(() => {
+    console.log('Componente renderizado');
+  }, [filterMenu]);
 
   useEffect(() => {
-    if (cartProducts.length > 0 && allMenuOriginal.length > 0) {
+    if (cartItems.length === 0) {
+      setFilterMenu([])
+    }
+    if (cartItems.length > 0 && allMenuOriginal.length > 0) {
       const filteredMenu = allMenuOriginal.filter(menu => {
-        return cartProducts.some(cart => menu.idMenu === cart.id);
+        return cartItems.some(cart => menu.idMenu === cart.id);
       });
 
 
@@ -58,25 +42,15 @@ const ShoppingCart = () => {
         setFilterMenu(filteredMenu)
       }
     }
-  }, [allMenuOriginal])
+  }, [allMenuOriginal, cartItems])
 
-  // useEffect(() => {
-  //   let addSubtotal = 0
-  //   filterMenu && filterMenu.length > 0 && filterMenu.map((el) => {
-  //     const amountId = cartProducts.filter((cart) => el.idMenu === cart.id)
-  //     addSubtotal += parseFloat(el.price) * parseFloat(amountId.amount)
-  //   })
 
-  //   setSubtotal(addSubtotal)
-  //   console.log(addSubtotal);
-  //   return (addSubtotal)
-  // }, [cartProducts])
 
   useEffect(() => {
     let addSubtotal = 0;
 
     filterMenu && filterMenu.length > 0 && filterMenu.forEach((el) => {
-      const cartItem = cartProducts.find((cart) => el.idMenu === cart.id);
+      const cartItem = cartItems.find((cart) => el.idMenu === cart.id);
 
       if (cartItem) {
         addSubtotal += parseFloat(el.price) * parseFloat(cartItem.amount);
@@ -84,7 +58,7 @@ const ShoppingCart = () => {
     });
 
     setSubtotal(addSubtotal); // Redondear a dos decimales
-  }, [cartProducts, filterMenu]);
+  }, [cartItems, filterMenu]);
 
 
   return (
@@ -108,12 +82,12 @@ const ShoppingCart = () => {
                 <tbody>
                   {
                     filterMenu && filterMenu.length > 0 && filterMenu.map((el) => {
-                      const amountId = cartProducts.filter((cart) => el.idMenu === cart.id)
-
+                      const amountId = cartItems.filter((cart) => el.idMenu === cart.id)
+                      const amount = amountId[0]?.amount || 0;
                       return <CartItem
                         key={el.idMenu}
                         id={el.idMenu}
-                        amount={amountId[0].amount}
+                        amount={amount}
                         imageUrl={el.imageUrl}
                         nameMenu={el.nameMenu}
                         price={el.price}

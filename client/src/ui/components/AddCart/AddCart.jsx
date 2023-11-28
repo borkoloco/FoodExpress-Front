@@ -67,7 +67,7 @@ export const AddCart = ({ amount, id }) => {
   return (
     <div>
       <button className={`card-link ${style.btnAdd}`} onClick={addInput}>Add to Cart</button>
-      <Alert show={showAlert} message="Added to your cart"/>
+      <Alert show={showAlert} message="Added to your cart" />
     </div>
   )
 };

@@ -37,6 +37,7 @@ export const USERLOGUED = "USERLOGUED";
 export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
 //export const GET_AVAILABLE_MENU= " GET_AVAILABLE_MENU";
 export const ADD_TO_CART   = "ADD_TO_CART  ";
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
@@ -595,4 +596,13 @@ export const addToCart = (item) => {
     payload: item,
   };
 };
+
+
+
+export const removeFromCart = ({ id, amount }) => {
+  return {
+    type: REMOVE_FROM_CART,
+    payload: {id, amount}
+  }
+}
 
