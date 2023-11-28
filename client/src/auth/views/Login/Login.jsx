@@ -14,35 +14,34 @@ import style from "./Login.module.css";
 
 export const Login = () => {
   const dispatch = useDispatch();
-  const userLogued = useSelector((state) => state.userLogued);
+  // const userLogued = useSelector((state) => state.userLogued);
   const navigate = useNavigate();
   const { formState, onInputChange, errors } = useForm({
     email: "",
     password: "",
   });
 
-  useEffect(() => {
-    if (userLogued.idRole === 1) {
-      //es un usuario
-      navigate("/");
-    } else if (userLogued.idRole === 2) {
-      //es un admin
-      navigate("/dashboard");
-    }
-  }, [userLogued]);
 
+  //Login forma 1
   const handleLoginByUser = () => {
-    const { email, password } = formState;
-    dispatch(startLoginWithEmail(email, password));
+    dispatch(loginByUser(formState));
   };
 
+   //Login forma 2
+  // const handleLoginByUser = () => {
+  //   const { email, password } = formState;
+  //   dispatch(startLoginWithEmail(email, password));
+  // };
+
+  //Login con Google
   const handleGoogleAuth = () => {
     dispatch(startGoogleAuth());
   };
 
-  const handleLogout = () => {
-    dispatch(startGoogleLogout());
-  };
+
+  // const handleLogout = () => {
+  //   dispatch(startGoogleLogout());
+  // };
 
   return (
     <div
@@ -117,3 +116,5 @@ export const Login = () => {
 };
 
 export default Login;
+
+
