@@ -34,7 +34,7 @@ export const LOGIN_BY_USER = "LOGIN_BY_USER";
 export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
-export const UPDATE_CART  = "UPDATE_CART ";
+export const ADD_TO_CART   = "ADD_TO_CART  ";
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
@@ -535,9 +535,9 @@ export const registerByUser = (user) => {
 };
 
 /** Carrito icono */
-export const updateCart = (cartData) => {
+export const addToCart = (item) => {
   return {
-    type: UPDATE_CART,
-    payload: cartData,
+    type: ADD_TO_CART,
+    payload: item,
   };
 };

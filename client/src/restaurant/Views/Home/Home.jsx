@@ -70,7 +70,7 @@ function Home() {
                 aria-expanded="true"
                 aria-controls="collapseOne"
               >
-                Filtros
+                Filter
               </button>
             </h2>
             <div
@@ -81,7 +81,7 @@ function Home() {
             >
               <div className="accordion-body"><Search /></div>
               <div className="accordion-body">
-                <p>Especialidades</p>
+                <p>Specialties</p>
                 <select
                   className="form-select form-select-sm"
                   aria-label="Small select example"
@@ -89,7 +89,7 @@ function Home() {
                   defaultValue={filterGlobalState.specialties}
                   onChange={(el) => handleFilters(el)}
                 >
-                  <option value="all">Todos</option>
+                  <option value="all">All</option>
                   {allSpecialties &&
                     allSpecialties.map((special, index) => {
                       return (
@@ -102,7 +102,7 @@ function Home() {
               </div>
 
               <div className="accordion-body">
-                <p>Tipos</p>
+                <p>Types</p>
                 <select
                   className="form-select form-select-sm"
                   aria-label="Small select example"
@@ -110,7 +110,7 @@ function Home() {
                   defaultValue={filterGlobalState.typesOfFood}
                   onChange={(el) => handleFilters(el)}
                 >
-                  <option value="all">Todos</option>
+                  <option value="all">All</option>
                   {allTypesOfFood &&
                     allTypesOfFood.map((typeFood, index) => {
                       return (
@@ -123,7 +123,7 @@ function Home() {
               </div>
 
               <div className="accordion-body">
-                <p>Disponibilidad</p>
+                <p>Availables</p>
                 <select
                   className="form-select form-select-sm"
                   aria-label="Small select example"
@@ -131,13 +131,13 @@ function Home() {
                   onChange={(el) => handleFilters(el)}
                   defaultValue={filterGlobalState.availability}
                 >
-                  <option value="all">Todos</option>
-                  <option value={1}>Disponible</option>
-                  <option value={0}>No disponible</option>
+                  <option value="all">All</option>
+                  <option value={1}>Available</option>
+                  <option value={0}>No Available</option>
                 </select>
               </div>
               <div className="accordion-body">
-                <p>Ordenar por:</p>
+                <p>Order by:</p>
                 <select
                   className="form-select form-select-sm"
                   aria-label="Small select example"
@@ -145,8 +145,8 @@ function Home() {
                 >
                   <option value="nameUp">AZ</option>
                   <option value="nameDown">ZA</option>
-                  <option value="priceUp">Precio &uarr;</option>
-                  <option value="priceDown">Precio &darr;</option>
+                  <option value="priceUp">Price &uarr;</option>
+                  <option value="priceDown">Price &darr;</option>
                 </select>
               </div>
             </div>

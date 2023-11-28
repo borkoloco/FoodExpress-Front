@@ -29,7 +29,7 @@ export const Search = () => {
       <input
         className="form-control "
         type="search"
-        placeholder="Buscar"
+        placeholder="Search"
         aria-label="Search"
         onChange={handleChange}
         onKeyUp={handleKeyPress}
