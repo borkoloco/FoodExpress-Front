@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutByUser } from "../../../redux/actions/action";
+import { logoutByUser, startGoogleLogout } from "../../../redux/actions/action";
 import style from "./AccountButton.module.css";
 import iconAccount from "../../../assets/icons/user-account.svg";
+import { validateSesion } from "../../../utils/validateSesion";
 
 export const AccountButton = () => {
-  const userAuth = useSelector((state) => state.userAuth);
-  // const [aux, setAux] = useState(true)
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userAuth = useSelector((state) => state.userAuth);   //Estado del logeo manual
+  const userLogued = useSelector((state) => state.userLogued); //Estado del logeo con google
 
-  const authenticated = !!userAuth.data; //True: autenticado; false: no autenticado
+  /** Te trae los datos de inicio de sesión */
+  const dataLoginUser = JSON.parse(localStorage.getItem('sesion'));
+  const authenticated = validateSesion(dataLoginUser); //True: autenticado; false: no autenticado
+  // console.log("En local storage:",dataLoginUser);
 
   /* Inicialmente sin autenticarse te redirige a "/login" */
   const handleLogin = () => {
@@ -22,27 +26,31 @@ export const AccountButton = () => {
 
   /* Cierra sesión y redirige a "/login"  */
   const handleLogout = () => {
-    if (authenticated) {
-      dispatch(logoutByUser());
+      dispatch(logoutByUser());       //limpia el estado global userLogued y userAuth
+      dispatch(startGoogleLogout());  //limpia el uid, displaName y displayEmail por si acaso
       navigate("/login");
-    }
   }
 
-  /* Luego de autenticarse te redirige a "/home" */
+  /* Luego de autenticarse manual o con google te redirige a "/home" */
   useEffect(() => {
     if (authenticated) {
-      // setAux(!aux);
       navigate("/home");
     }
   }, [userAuth]);
+  useEffect(() => {
+    if (authenticated) {
+      navigate("/home");
+    }
+  }, [userLogued]);
 
-  
+
+
 
   return (
     <>
       {authenticated ? (
         // Dropdown cuando el usuario está autenticado
-        <div className="btn-group">
+        <div className="btn-group position-relative">
           <button
             type="button"
             data-bs-toggle="dropdown"
@@ -54,9 +62,18 @@ export const AccountButton = () => {
               alt="user-account"
               className={`${style.imgAccount}`}
             />
-            {userAuth.data.nameUser}
+            {authenticated && dataLoginUser.nameUser}
           </button>
           <ul className="dropdown-menu dropdown-menu-end">
+            {
+              dataLoginUser.idRole === 2 && ( <li>
+                <NavLink to="/dashboard">
+                  <button className="dropdown-item" type="button">
+                    DashBoard
+                  </button>
+                </NavLink>
+              </li> )
+            }
             <li>
               <button className="dropdown-item" type="button">
                 My Orders
@@ -92,3 +109,4 @@ export const AccountButton = () => {
     </>
   );
 };
+
