@@ -18,7 +18,8 @@ import {
   LOGOUT_BY_USER,
   REGISTER_BY_USER,
   USERLOGUED,
-  ADD_TO_CART
+  ADD_TO_CART,
+  REMOVE_FROM_CART
 } from "../actions/action";
 
 
@@ -231,6 +232,23 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cartItems: updatedCart,
       };
+    
+    case REMOVE_FROM_CART:
+      const itemToRemove = action.payload;
+  const itemIndexToRemove = state.cartItems.findIndex(item => item.id === itemToRemove.id);
+
+  if (itemIndexToRemove !== -1) {
+    const updatedCart = [...state.cartItems];
+    updatedCart.splice(itemIndexToRemove, 1);
+
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+    return {
+      ...state,
+      cartItems: updatedCart,
+    };
+  }
+
 
     default:
       return state;
