@@ -1,41 +1,36 @@
 import React, { useEffect, useRef, useState } from "react";
 import Switch from "react-switch";
 import validations from "../../../utils/validations";
-import style from "./FormMenu.module.css";
+// import style from "./FormMenu.module.css";
+import style from "../../components/FormAdmin/FormAdmin.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postProduct,
   getSpecialties,
   getTypesOfFood,
-  postSpecialties,
-  postTypesOfFood,
+  updateMenu,
+  getAllMenu,
 } from "../../../redux/actions/action";
 import { BackButton } from "../../../ui/components/BackButton/BackButton";
 import Swal from "sweetalert2";
 
-const FormMenuEdit = ({
-  upName,
-  upDesc,
-  upImg,
-  upPrice,
-  upAvailable,
-  upType,
-  upSpecial,
-}) => {
+const FormMenuEdit = () => {
+  const menuDetail = useSelector((state) => state.menuDetail);
+
   const imgDefault =
     "https://res.cloudinary.com/foodexpressimg/image/upload/v1700339341/FoodExpressImg/FoodLogo_nsnkjw.png";
   const [menuData, setMenuData] = useState({
-    //idMenu sería Integer y autoIncrement
-    nameMenu: upName, //string de unos 30 caracteres
-    description: upDesc, //string de 255 caracteres estimo
-    imageUrl: upImg, //string de 255 caracteres
-    price: upPrice, //Decimal de 2 posiciones flotantes
-    available: upAvailable, //booleano disponible o no disponoble
-    tipeMenu: upType,
-    specialtyMenu: upSpecial,
+    idMenu: null,
+    nameMenu: null,
+    description: null,
+    imageUrl: null,
+    price: null,
+    available: null,
+    tipeMenu: null,
+    specialtyMenu: null,
   });
 
-  const [errors, setErrors] = useState({ initial: "initial" });
+  const [errors, setErrors] = useState({});
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
   const dispatch = useDispatch();
   const allSpecialties = useSelector((state) => state.allSpecialties);
@@ -43,67 +38,8 @@ const FormMenuEdit = ({
   //*cloudinary
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState(menuDetail.imageUrl);
   const [force, setForce] = useState(true);
-
-  //!modal
-  const regexName = /^[A-Za-z\s]+$/;
-  const handleAddSpecial = async () => {
-    const { value: text } = await Swal.fire({
-      input: "text",
-      inputLabel: "Especialidades",
-      inputPlaceholder: "Ingresa una especialidad aquí...",
-      inputAttributes: {
-        "aria-label": "Ingresa una especialidad aquí...",
-      },
-      showCancelButton: true,
-    });
-    if (text) {
-      if (validationsCategories(text)) {
-        await dispatch(postSpecialties(text));
-        await dispatch(getSpecialties());
-        setForce(!force);
-      }
-    }
-  };
-
-  const handleAddTipoComida = async () => {
-    const { value: text } = await Swal.fire({
-      input: "text",
-      inputLabel: "Tipo de plato",
-      inputPlaceholder: "Ingresa un tipo aquí...",
-      inputAttributes: {
-        "aria-label": "Ingresa un tipo aquí...",
-      },
-      showCancelButton: true,
-    });
-    if (text) {
-      if (validationsCategories(text)) {
-        await dispatch(postTypesOfFood(text));
-        await dispatch(getTypesOfFood());
-        setForce(!force);
-      }
-    }
-  };
-
-  const validationsCategories = (value) => {
-    if (value === "") {
-      Swal.fire("Debes ingresar una categoria");
-      return false;
-    } else if (value.trim() === "") {
-      Swal.fire("No uses cadenas de espacios");
-      return false;
-    } else if (value.length < 2 || value.length > 30) {
-      Swal.fire("Usa entre 2 y 30 caracteres");
-      return false;
-    } else if (!regexName.test(value)) {
-      Swal.fire("Usa solo letras y espacios");
-      return false;
-    }
-    return true;
-  };
-
-  //!fin modal
 
   useEffect(() => {
     if (allSpecialties.length === 0) {
@@ -114,23 +50,22 @@ const FormMenuEdit = ({
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (allSpecialties.length !== 0) {
-  //     setMenuData((prevMenuData) => ({
-  //       ...prevMenuData,
-  //       specialtyMenu: allSpecialties[0].name,
-  //     }));
-  //   }
-  // }, [allSpecialties]);
-
-  // useEffect(() => {
-  //   if (allTypesOfFood.length !== 0) {
-  //     setMenuData((prevMenuData) => ({
-  //       ...prevMenuData,
-  //       tipeMenu: allTypesOfFood[0].name,
-  //     }));
-  //   }
-  // }, [allTypesOfFood]);
+  useEffect(() => {
+    // Verifica si menuDetail tiene datos y actualiza menuData con esos datos
+    if (menuDetail.idMenu) {
+      setImgUrl(menuDetail.imageUrl);
+      setMenuData({
+        idMenu: menuDetail.idMenu,
+        nameMenu: menuDetail.nameMenu || "",
+        description: menuDetail.description || "",
+        imageUrl: menuDetail.imageUrl || imgDefault,
+        price: menuDetail.price || 0,
+        available: menuDetail.available || false,
+        tipeMenu: menuDetail.typeMenu || "",
+        specialtyMenu: menuDetail.specialtyMenu || "",
+      });
+    }
+  }, [menuDetail]);
 
   //manejadores de eventos onChange
   const handleChange = (event) => {
@@ -141,13 +76,22 @@ const FormMenuEdit = ({
   };
   const handleChangeAvailable = (chequed) => {
     setMenuData({ ...menuData, available: chequed });
+    checkError();
   };
   const handleTipoPlatoChange = (e) => {
     setMenuData({ ...menuData, tipeMenu: e.target.value });
+    checkError();
   };
 
   const handleEspecialidadChange = (e) => {
     setMenuData({ ...menuData, specialtyMenu: e.target.value });
+    checkError();
+  };
+
+  const checkError = () => {
+    const hasErrors = Object.values(errors).some((error) => !!error);
+    setIsSubmitButtonDisabled(hasErrors);
+    setForce(!force);
   };
 
   // Verificar si hay errores para botón Submit
@@ -156,76 +100,11 @@ const FormMenuEdit = ({
     setIsSubmitButtonDisabled(hasErrors);
   }, [errors]);
 
-  //!logica para el envio del formulario
   useEffect(() => {
     if (imgUrl) {
       setMenuData((prevMenuData) => ({ ...prevMenuData, imageUrl: imgUrl }));
     }
   }, [imgUrl]);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!imgUrl) {
-      const result = await Swal.fire({
-        title: "Crear un plato sin imagen?",
-        showDenyButton: true,
-        showCancelButton: false,
-        confirmButtonText: "Okey",
-        denyButtonText: `Cancelar`,
-      });
-
-      if (result.isConfirmed) {
-        // Swal.fire("Saved!", "", "success");
-        const sendData = {
-          nameMenu: menuData.nameMenu,
-          description: menuData.description,
-          imageUrl: menuData.imageUrl,
-          price: menuData.price,
-          available: menuData.available,
-          tipo: menuData.tipeMenu,
-          especialidad: menuData.specialtyMenu,
-        };
-        await dispatch(postProduct(sendData));
-        //* limpiar formulario
-        setMenuData({
-          ...menuData,
-          nameMenu: "",
-          description: "",
-          imageUrl: imgDefault,
-          available: true,
-          price: 0,
-        });
-        setErrors({ initial: "initial" });
-        return;
-      } else if (result.isDenied) {
-        // Swal.fire("Changes are not saved", "", "info");
-        return;
-      }
-    }
-
-    setMenuData({ ...menuData, imageUrl: imgUrl });
-    const sendData = {
-      nameMenu: menuData.nameMenu,
-      description: menuData.description,
-      imageUrl: imgUrl,
-      price: menuData.price,
-      available: menuData.available,
-      tipo: menuData.tipeMenu,
-      especialidad: menuData.specialtyMenu,
-    };
-    dispatch(postProduct(sendData));
-    //* limpiar formulario
-    setMenuData({
-      ...menuData,
-      nameMenu: "",
-      description: "",
-      imageUrl: imgDefault,
-      available: true,
-      price: 0,
-    });
-    setErrors({ initial: "initial" });
-  };
 
   //*cloudinary
   useEffect(() => {
@@ -248,12 +127,28 @@ const FormMenuEdit = ({
     event.preventDefault();
     widgetRef.current.open();
   };
+  //!logica para el envio del formulario
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const sendData = {
+      nameMenu: menuData.nameMenu,
+      description: menuData.description,
+      imageUrl: imgUrl,
+      price: menuData.price,
+      //available: menuData.available,
+      tipo: menuData.tipeMenu,
+      especialidad: menuData.specialtyMenu,
+    };
+    await dispatch(updateMenu(menuData.idMenu, sendData));
+    await dispatch(getAllMenu());
+  };
 
   return (
     <>
-      <BackButton />
+      {/* <BackButton /> */}
       <div className={style.container_form}>
-        <h2>Edita el plato seleccionado</h2>
+        {/* <h2>Edita el plato seleccionado</h2> */}
         <div className="mb-3">
           <label className="form-label" htmlFor="nameMenu">
             Plato:{" "}
@@ -309,11 +204,11 @@ const FormMenuEdit = ({
             />
           </label>
         </div>
-        {/*options*/}
+        {/options/}
         <div>
           <div className="mb-3">
             <label className="form-label">Tipos de Platos:</label>{" "}
-            <button onClick={handleAddTipoComida}>Agregar</button>
+            {/* <button onClick={handleAddTipoComida}>Agregar</button> */}
             <select
               className="form-select"
               value={menuData.tipeMenu}
@@ -328,7 +223,7 @@ const FormMenuEdit = ({
           </div>
           <div className="mb-3">
             <label className="form-label">Especialidades:</label>{" "}
-            <button onClick={handleAddSpecial}>Agregar</button>
+            {/* <button onClick={handleAddSpecial}>Agregar</button> */}
             <select
               className="form-select"
               value={menuData.specialtyMenu}
@@ -346,9 +241,9 @@ const FormMenuEdit = ({
           <button className="btn btn-success" onClick={handleUploadButtonClick}>
             Upload
           </button>
-          {imgUrl && (
+          {menuData.imageUrl && (
             <img
-              src={imgUrl}
+              src={menuData.imageUrl}
               alt="Uploaded"
               style={{ marginLeft: "10px", maxWidth: "150px" }}
             />
@@ -361,7 +256,7 @@ const FormMenuEdit = ({
             onClick={handleSubmit}
             disabled={isSubmitButtonDisabled}
           >
-            Agregar
+            Actualizar
           </button>
         </div>
       </div>

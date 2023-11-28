@@ -55,6 +55,7 @@ function Home() {
   const handleOrder = (element) => {
     dispatch(orderMenu(element.target.value));
   };
+  const filteredMenu = allMenu.filter(menu => menu.available);
 
   return (
     <div className={`${Style.bigDiv} ${Style.background_home}`}>
@@ -155,8 +156,8 @@ function Home() {
       </div>
 
       <div className={Style.cardsDiv}>
-        {allMenu && allMenu.length > 0 ? (
-          <Cards props={allMenu} />
+        {filteredMenu && allMenu.length > 0 ? (
+          <Cards props={filteredMenu} />
         ) : (
           <img
             className={Style.imgLoading}

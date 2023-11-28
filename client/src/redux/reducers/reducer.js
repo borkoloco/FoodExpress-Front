@@ -18,6 +18,8 @@ import {
   LOGOUT_BY_USER,
   REGISTER_BY_USER,
   USERLOGUED,
+  UPDATE_MENU_AVAILABILITY
+  
 } from "../actions/action";
 
 const initialState = {
@@ -204,6 +206,23 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userRegistered: payload,
+      };
+
+      
+    // borrado logico
+
+    case UPDATE_MENU_AVAILABILITY:
+      return {
+        ...state,
+        allMenu: state.allMenu.map(menu => {
+          if (menu.idMenu === action.payload.menuId) {
+            return {
+              ...menu,
+              available: action.payload.newAvailability,
+            };
+          }
+          return menu;
+        }),
       };
 
     default:

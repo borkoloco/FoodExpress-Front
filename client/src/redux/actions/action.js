@@ -34,6 +34,8 @@ export const LOGIN_BY_USER = "LOGIN_BY_USER";
 export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
+export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
+//export const GET_AVAILABLE_MENU= " GET_AVAILABLE_MENU";
 
 const endPoint = "http://localhost:3001";
 
@@ -211,6 +213,29 @@ export const startGoogleLogout = () => {
   return async (dispatch) => {
     await firebase.auth().signOut();
     dispatch(logout());
+  };
+};
+
+//actualizar un menu/plato
+
+export const updateMenu = (id, value) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(endPoint + "/updatemenu/" + id, value);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Actualizado",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      console.log("Error al actualizar el plato: " + error.message);
+    }
   };
 };
 
@@ -507,3 +532,30 @@ export const registerByUser = (user) => {
     }
   };
 };
+
+//Action para el borrado lógico
+
+export const updateMenuAvailability = (menuId, newAvailability) => {
+  console.log(menuId,newAvailability)
+  return async (dispatch) => {
+    try {
+      const response = await axios.patch(`${endPoint}/menu/${menuId}`, {
+        available: newAvailability,
+      });
+
+      if (response.status !== 200) {
+        throw new Error('Error al actualizar la disponibilidad del menú');
+      }
+
+      dispatch({
+        type: UPDATE_MENU_AVAILABILITY,
+        payload: { menuId, newAvailability },
+      });
+    } catch (error) {
+      console.error('Error al actualizar la disponibilidad del menú:', error);
+      // Manejar errores, como dispatch de una acción de error
+    }
+  };
+};
+
+

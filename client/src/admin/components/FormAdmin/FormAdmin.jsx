@@ -9,6 +9,7 @@ import {
   getTypesOfFood,
   postSpecialties,
   postTypesOfFood,
+  getAllMenu,
 } from "../../../redux/actions/action";
 import { BackButton } from "../../../ui/components/BackButton/BackButton";
 import Swal from "sweetalert2";
@@ -217,7 +218,7 @@ const FormAdmin = () => {
       price: 0,
     });
     setErrors({ initial: "initial" });
-
+    dispatch(getAllMenu());
     setShowSuccessMessage(true);
     setTimeout(() => {
       setShowSuccessMessage(false);
@@ -309,7 +310,7 @@ const FormAdmin = () => {
           </div>
         </div>
 
-        {/*options*/}
+        {/options/}
         <div>
           <div className="mb-3 d-flex  align-items-center">
             <label className="form-label">Tipos de Platos:</label>
