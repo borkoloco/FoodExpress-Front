@@ -36,7 +36,7 @@ export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
 export const UPDATE_CART  = "UPDATE_CART ";
 
-const endPoint = "http://localhost:3001";
+const endPoint = import.meta.env.VITE_BACKEND_URL;
 
 //datos en nuestra BD del usuario logueado
 export const user_logued = (email) => {
