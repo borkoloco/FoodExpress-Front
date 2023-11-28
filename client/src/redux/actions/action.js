@@ -34,7 +34,8 @@ export const LOGIN_BY_USER = "LOGIN_BY_USER";
 export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
-export const ADD_TO_CART   = "ADD_TO_CART  ";
+export const ADD_TO_CART = "ADD_TO_CART  ";
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
@@ -541,3 +542,11 @@ export const addToCart = (item) => {
     payload: item,
   };
 };
+
+
+export const removeFromCart = ({ id, amount }) => {
+  return {
+    type: REMOVE_FROM_CART,
+    payload: {id, amount}
+  }
+}
