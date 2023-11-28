@@ -2,29 +2,13 @@ import { useEffect, useState } from "react";
 import cart from "../../../assets/icons/cart.svg";
 import style from "./CartButton.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCart } from "../../../redux/actions/action";
+
 
 export const CartButton = () => {
 
-  const dispatch = useDispatch();
-  const cartAmount = useSelector((state) => state.cart);
+  const cartItems = useSelector(state => state.cartItems);
 
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const updatedCart = JSON.parse(localStorage.getItem('cart')) || [];
-      dispatch(updateCart(updatedCart));
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [dispatch]);
-
-  const totalAmount = cartAmount.reduce((total, item) => total + item.amount, 0);
-
-
+  const totalAmount = cartItems.reduce((acc, item) => acc + item.amount, 0);
   return (
     <>
       <button type="button" className={`${style.btnCart} position-relative`}>

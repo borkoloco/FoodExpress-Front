@@ -1,7 +1,11 @@
 
+.bgAlert{
+    background-color: sandybrown;
+    /* color: white; */
+    
+}
 
-.btnAdd {
-    margin-top: 1rem;
+.btnAlert {
     background: sandybrown;
     border-radius: 0.5rem;
     border: 0;
@@ -9,8 +13,9 @@
     padding-left: 16px;
     padding-right: 16px;
     color: white;
+    margin-left: 1rem;
 }
-.btnAdd:hover {
+.btnAlert:hover {
     background: white;
     border-radius: 0.5rem;
     border: 1px solid sandybrown;

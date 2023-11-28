@@ -18,7 +18,7 @@ import {
   LOGOUT_BY_USER,
   REGISTER_BY_USER,
   USERLOGUED,
-  UPDATE_CART
+  ADD_TO_CART
 } from "../actions/action";
 
 
@@ -43,7 +43,7 @@ const initialState = {
     typesOfFood: "all",
     availability: "all",
   },
-  cart: JSON.parse(localStorage.getItem('cart')) || [],
+  cartItems: JSON.parse(localStorage.getItem('cart')) || [],
 
 };
 const rootReducer = (state = initialState, action) => {
@@ -211,10 +211,25 @@ const rootReducer = (state = initialState, action) => {
         userRegistered: payload,
       };
 
-    case UPDATE_CART:
+    /** Add to cart icono del carrito */
+    case ADD_TO_CART:
+      const newItem = action.payload;
+      const existingItemIndex = state.cartItems.findIndex(item => item.id === newItem.id);
+
+      let updatedCart;
+      if (existingItemIndex !== -1) {
+        const updatedItem = { ...state.cartItems[existingItemIndex] };
+        updatedItem.amount += newItem.amount;
+        updatedCart = [...state.cartItems];
+        updatedCart[existingItemIndex] = updatedItem;
+      } else {
+        updatedCart = [...state.cartItems, newItem];
+      }
+
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
       return {
         ...state,
-        cart: payload,
+        cartItems: updatedCart,
       };
 
     default:
