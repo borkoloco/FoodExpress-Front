@@ -20,6 +20,7 @@ import {
   USERLOGUED,
 } from "../actions/action";
 
+
 const initialState = {
   allMenu: [],
   menuDetail: {},
@@ -197,6 +198,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userAuth: {},
+        userLogued:{}
       };
 
     /* Registro con usuario, email y password */

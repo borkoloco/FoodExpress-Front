@@ -82,7 +82,7 @@ function Cards({ props }) {
             <button className="page-link" onClick={goToPreviousPage} disabled={currentPage === 1}>{"<"}</button>
           </li>
           {pages.map((page) => (
-            <li className={`page-item ${currentPage === page ? "active" : ""}`} aria-current="page">
+            <li key={page} className={`page-item ${currentPage === page ? "active" : ""}`} aria-current="page">
               <button
                 className="page-link"
                 key={page}
