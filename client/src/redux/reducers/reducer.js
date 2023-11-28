@@ -18,9 +18,11 @@ import {
   LOGOUT_BY_USER,
   REGISTER_BY_USER,
   USERLOGUED,
-  UPDATE_MENU_AVAILABILITY
-  
+  UPDATE_MENU_AVAILABILITY,
+  ADD_TO_CART
+
 } from "../actions/action";
+
 
 const initialState = {
   allMenu: [],
@@ -43,6 +45,8 @@ const initialState = {
     typesOfFood: "all",
     availability: "all",
   },
+  cartItems: JSON.parse(localStorage.getItem('cart')) || [],
+
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -199,6 +203,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userAuth: {},
+        userLogued:{}
       };
 
     /* Registro con usuario, email y password */
@@ -207,6 +212,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userRegistered: payload,
       };
+
 
       
     // borrado logico
@@ -223,6 +229,27 @@ const rootReducer = (state = initialState, action) => {
           }
           return menu;
         }),
+
+    /** Add to cart icono del carrito */
+    case ADD_TO_CART:
+      const newItem = action.payload;
+      const existingItemIndex = state.cartItems.findIndex(item => item.id === newItem.id);
+
+      let updatedCart;
+      if (existingItemIndex !== -1) {
+        const updatedItem = { ...state.cartItems[existingItemIndex] };
+        updatedItem.amount += newItem.amount;
+        updatedCart = [...state.cartItems];
+        updatedCart[existingItemIndex] = updatedItem;
+      } else {
+        updatedCart = [...state.cartItems, newItem];
+      }
+
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      return {
+        ...state,
+        cartItems: updatedCart,
+
       };
 
     default:

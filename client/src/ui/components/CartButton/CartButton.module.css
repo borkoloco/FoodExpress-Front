@@ -6,13 +6,18 @@
     color: white;
     font-weight: 400;
     border-radius: 25px;
-    padding: 4px 12px;
+    padding: 4px 0px;
+    padding-right: 4px;
+    padding-left: 12px;
     
     
 }
 
 
 
+.bgColor {
+    background-color: sandybrown;
+}
 .imgCart {
     margin-right: 10px;
     width: 1.4rem;

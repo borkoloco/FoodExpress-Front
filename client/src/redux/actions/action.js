@@ -36,15 +36,25 @@ export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
 export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
 //export const GET_AVAILABLE_MENU= " GET_AVAILABLE_MENU";
+export const ADD_TO_CART   = "ADD_TO_CART  ";
 
-const endPoint = "http://localhost:3001";
+
+const endPoint = import.meta.env.VITE_BACKEND_URL;
 
 //datos en nuestra BD del usuario logueado
 export const user_logued = (email) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endPoint + "/users/" + email);
-      console.log(data);
+      localStorage.setItem('sesion',JSON.stringify(data))
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `Welcome ${data.nameUser}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      // console.log(data);
       return dispatch({
         type: USERLOGUED,
         payload: data,
@@ -499,29 +509,46 @@ export const loginByUser = (user) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(endPoint + "/login", user);
-      window.alert(data.message);
+      localStorage.setItem('sesion',JSON.stringify(data.data));
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title:`Welcome ${data.data.nameUser}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      // window.alert(data.message);
       return dispatch({
         type: LOGIN_BY_USER,
         payload: data,
       });
     } catch (error) {
       console.log(error.message);
-      window.alert(error.response.data);
+      window.alert(error.response.data.error);
     }
   };
 };
 
 export const logoutByUser = () => {
+  localStorage.removeItem('sesion');
   return { type: LOGOUT_BY_USER };
 };
+
+
 
 /* ACTIONS PARA EL REGISTRO CON usuario, email y password */
 export const registerByUser = (user) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(endPoint + "/register", user);
-      window.alert("Usted se ha registrado correctamente");
-      console.log(data);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `Successful registration`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      // console.log(data);
       return dispatch({
         type: REGISTER_BY_USER,
         payload: data,
@@ -532,6 +559,7 @@ export const registerByUser = (user) => {
     }
   };
 };
+
 
 //Action para el borrado lógico
 
@@ -558,4 +586,13 @@ export const updateMenuAvailability = (menuId, newAvailability) => {
   };
 };
 
+
+
+/** Carrito icono */
+export const addToCart = (item) => {
+  return {
+    type: ADD_TO_CART,
+    payload: item,
+  };
+};
 

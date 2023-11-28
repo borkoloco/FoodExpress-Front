@@ -3,6 +3,7 @@ import { FormButton } from "../../../ui/components/FormButtton/FormButton";
 import { useForm } from "../../../restaurant/hooks/useForm";
 import { useDispatch } from "react-redux";
 import {
+  registerByUser,
   startGoogleAuth,
   startGoogleLogout,
   startWithEmail,
@@ -20,30 +21,22 @@ const Register = () => {
     idRole: 1, // Envío manual del rol del cliente
   });
 
-  // const handleRegisterByUser = () => {
-  //   dispatch(registerByUser(formState));
-  //   navigate('/login')
-  // }
+  //Login forma 1
+  const handleRegisterByUser = () => {
+    dispatch(registerByUser(formState));
+    navigate('/login')
+  }
 
-  // const handleGoogleAuth = () => {
-  //   dispatch(startGoogleAuth());
+  //Login forma 2
+  // const handleEmailAuth = () => {
+  //   const { username, email, password } = formState;
+  //   dispatch(startWithEmail(email, password, username));
+  //   navigate("/login");
   // };
 
-  // const handleLogout = () => {
-  //   dispatch(startGoogleLogout());
-  // };
+  // Login con Google
   const handleGoogleAuth = () => {
     dispatch(startGoogleAuth());
-  };
-
-  const handleLogout = () => {
-    dispatch(startGoogleLogout());
-  };
-
-  const handleEmailAuth = () => {
-    const { username, email, password } = formState;
-    dispatch(startWithEmail(email, password, username));
-    navigate("/login");
   };
 
   return (
@@ -112,7 +105,7 @@ const Register = () => {
         </div>
 
         <FormButton
-          eventHandler={handleEmailAuth}
+          eventHandler={handleRegisterByUser}
           nameButton="Sing up"
           disabled={!areThereErrors(errors)}
         />

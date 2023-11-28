@@ -1,12 +1,20 @@
 import { useDispatch } from "react-redux";
 import icon_burguer from "../../assets/icon-burguer.svg";
-import { startGoogleLogout } from "../../../redux/actions/action";
-import { useNavigate } from "react-router-dom";
+import { logoutByUser, startGoogleLogout } from "../../../redux/actions/action";
+import { NavLink, useNavigate } from "react-router-dom";
+import { validateSesion } from "../../../utils/validateSesion";
 
 export const NavBarAdmin = ({ Toggle }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const dataLoginUser = JSON.parse(localStorage.getItem('sesion'));
+  const authenticated = validateSesion(dataLoginUser); //True: autenticado; false: no autenticado
+
+
+
   const handleLogout = () => {
+    dispatch(logoutByUser());       
     dispatch(startGoogleLogout());
     navigate("/");
   };
@@ -38,17 +46,22 @@ export const NavBarAdmin = ({ Toggle }) => {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Andrés
+              {authenticated ? dataLoginUser.nameUser : "Perfil"}
             </a>
             <div
               className="dropdown-menu dropdown-menu-end"
               aria-labelledby="dropdownId"
             >
+              <NavLink to='/'>
+                <a className="dropdown-item" href="#">
+                  Home
+                </a>
+              </NavLink>
               <a className="dropdown-item" href="#">
                 Profile
               </a>
               <a className="dropdown-item" href="#">
-                Setting
+                Settings
               </a>
               <a className="dropdown-item" href="#" onClick={handleLogout}>
                 <strong>Logout</strong>
