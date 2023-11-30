@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "../../../ui/components/Modal/Modal";
 import { useNavigate } from "react-router-dom";
-import { getAllMenu,updateMenuAvailability, getMenuDetailById } from "../../../redux/actions/action";
+import {
+  getAllMenu,
+  updateMenuAvailability,
+  getMenuDetailById,
+} from "../../../redux/actions/action";
 import FormAdmin from "../FormAdmin/FormAdmin";
 import FormABMcategory from "../../views/FormMenu/FormABMcategory";
-import Style from './ProductsAdmin.module.css'
-
+import Style from "./ProductsAdmin.module.css";
 
 export const ProductsAdmin = () => {
   const navigate = useNavigate();
@@ -43,16 +46,27 @@ export const ProductsAdmin = () => {
   return (
     <>
       {/* Modal es un Botón que abre un modal con el form de producto */}
-      <Modal name='Add' component={<FormAdmin />} title="Crea tu nuevo plato" style='btn-success' />
-      <Modal name='EditCategories' component={<FormABMcategory />} title='Modifica tus categorías' style='btn-dark'/>  
+      <Modal
+        name="Add"
+        component={<FormAdmin />}
+        title="Crea tu nuevo plato"
+        style="btn-success"
+      />
+      <Modal
+        name="EditCategories"
+        component={<FormABMcategory />}
+        title="Modifica tus categorías"
+        style="btn-dark"
+      />
 
       {/* Botón para alternar entre la vista activa e inactiva */}
       <button className="btn btn-info" onClick={handleToggleView}>
-        {viewInactive ? 'Mostrar Activos' : 'Mostrar Inactivos'}
+        {viewInactive ? "Mostrar Activos" : "Mostrar Inactivos"}
       </button>
 
       {/* Tabla de productos */}
-      {((viewInactive && filteredInactiveMenu.length > 0) || (!viewInactive && filteredMenu.length > 0)) && (
+      {((viewInactive && filteredInactiveMenu.length > 0) ||
+        (!viewInactive && filteredMenu.length > 0)) && (
         <table className="table caption-top bg-white rounded mt-2">
           <caption className="text-black fs-4">Products</caption>
           <thead>
@@ -73,7 +87,7 @@ export const ProductsAdmin = () => {
                     <td>{plato.nameMenu}</td>
                     <td>{plato.typeMenu}</td>
                     <td>{plato.price}</td>
-                    <td>{plato.available ? 'Activated' :'Disabled'}</td>
+                    <td>{plato.available ? "Activated" : "Disabled"}</td>
                     <td>
                       <button
                         className="btn btn-primary"
@@ -81,12 +95,16 @@ export const ProductsAdmin = () => {
                         onClick={(e) => {
                           handleEditProduct(e.target.id);
                         }}
-                        disabled
                       >
                         Edit
                       </button>
                       <button className="btn btn-warning">View</button>
-                      <button className="btn btn-success" onClick={() => handleRestore(plato.idMenu)}>Restaurar</button>
+                      <button
+                        className="btn btn-success"
+                        onClick={() => handleRestore(plato.idMenu)}
+                      >
+                        Restaurar
+                      </button>
                     </td>
                   </tr>
                 ))
@@ -96,7 +114,7 @@ export const ProductsAdmin = () => {
                     <td>{plato.nameMenu}</td>
                     <td>{plato.typeMenu}</td>
                     <td>{plato.price}</td>
-                    <td>{plato.available ? 'Activated' :'Disabled'}</td>
+                    <td>{plato.available ? "Activated" : "Disabled"}</td>
                     <td>
                       <button
                         className="btn btn-primary"
@@ -104,12 +122,16 @@ export const ProductsAdmin = () => {
                         onClick={(e) => {
                           handleEditProduct(e.target.id);
                         }}
-                        disabled
                       >
                         Edit
                       </button>
                       <button className="btn btn-warning">View</button>
-                      <button className="btn btn-danger" onClick={() => handleDelete(plato.idMenu)}>Delete</button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleDelete(plato.idMenu)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
