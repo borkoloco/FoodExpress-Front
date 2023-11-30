@@ -2,7 +2,7 @@ import React from "react";
 
 /** Modal reutilizable  */
 
-export const Modal = ({name,component,title,style}) => {
+export const Modal = ({ name, component, title, style }) => {
   return (
     <>
       <button
@@ -18,7 +18,7 @@ export const Modal = ({name,component,title,style}) => {
       <div
         className="modal fade"
         id={`${name}Modal`}
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby={`${name}ModalLabel`}
         aria-hidden="true"
       >
@@ -35,11 +35,7 @@ export const Modal = ({name,component,title,style}) => {
                 aria-label="Close"
               ></button>
             </div>
-            <div className="modal-body">
-
-              {component}
-
-            </div>
+            <div className="modal-body">{component}</div>
             {/* <div className="modal-footer">
               <button
                 type="button"
