@@ -4,7 +4,8 @@ import { SideBar } from "../components/SideBar/SideBar";
 import { HomeAdmin } from "../components/HomeAdmin/HomeAdmin";
 import { ProductsAdmin } from "../components/ProductsAdmin/ProductsAdmin";
 import { NavBarAdmin } from "../components/NavBarAdmin/NavBarAdmin";
-import style from './Dashboard.module.css'
+import style from "./Dashboard.module.css";
+import FormMenuEdit from "../views/FormMenu/FormMenuEdit";
 
 export const AdminRoutes = () => {
   const [toggle, setToggle] = useState(true);
@@ -27,16 +28,13 @@ export const AdminRoutes = () => {
             <Routes>
               <Route path="home" element={<HomeAdmin />} />
               <Route path="products" element={<ProductsAdmin />} />
-
+              <Route path="editproduct" element={<FormMenuEdit />} />
               {/*Añade más rutas aqui...  */}
               <Route path="/*" element={<Navigate to="/dashboard/home" />} />
             </Routes>
           </div>
         </div>
-        
       </div>
     </div>
   );
 };
-
-
