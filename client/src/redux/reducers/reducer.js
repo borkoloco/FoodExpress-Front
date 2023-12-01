@@ -32,7 +32,7 @@ const initialState = {
   allTypesOfFood: [],
   menu: null,
   currentPage: 1,
-  itemsPerPage: 3,
+  itemsPerPage: 6,
   input: "",
   uid: null,
   displayName: null,

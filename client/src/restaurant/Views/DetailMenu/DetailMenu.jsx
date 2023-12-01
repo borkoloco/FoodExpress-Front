@@ -10,6 +10,7 @@ import { AddCart } from "../../../ui/components/AddCart/AddCart";
 import style from "./DetailMenu.module.css";
 import { useLocalStorage } from "../../../utils/useLocalStorage";
 import { useState } from "react";
+import { Loading } from "../../../ui/components/Loading/Loading";
 
 const DetailMenu = () => {
   const { id } = useParams();
@@ -142,15 +143,11 @@ const DetailMenu = () => {
           </div>
         </div>
       ) : (
-        <img
-          className={style.imgLoading}
-          src="https://media.tenor.com/SWJCs0u0Tr0AAAAC/taco-tacos.gif"
-          alt="Loading"
-        />
+        <Loading/>
       )}
 
       {/* AQUI PODEMOS HACER EL APARTADO DE REVIEWS O COMENTARIOS */}
-      <div className="card border-light mb-3" >
+      {/* <div className="card border-light mb-3" >
         <div className="card-header">APARTADO DE COMENTARIOS/CALIFICACIÓN</div>
         <div className="card-body">
           <h5 className="card-title">Ya se verá!</h5>
@@ -158,7 +155,7 @@ const DetailMenu = () => {
             Bocetar este apartado. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero debitis autem accusamus! Possimus dolores sit facilis necessitatibus tempore nemo obcaecati. Maiores id tempora dignissimos architecto ipsam eaque praesentium magni quia.
           </p>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

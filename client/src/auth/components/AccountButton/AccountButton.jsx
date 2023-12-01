@@ -50,7 +50,7 @@ export const AccountButton = () => {
     <>
       {authenticated ? (
         // Dropdown cuando el usuario está autenticado
-        <div className="btn-group position-relative">
+        <div className="btn-group">
           <button
             type="button"
             data-bs-toggle="dropdown"

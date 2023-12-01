@@ -1,19 +1,20 @@
-/* .container_{
-
-} */
+.container_{
+    margin-top: 3.9rem;
+    /* background: red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 
 .bigDiv {
-    /* border: 2px solid white;
-    background: green; */
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    padding: 30px 30px;
-    justify-content: space-between;
-    padding-bottom: 20px;
-    /* margin-top: 3.9em; */
-    width: 80%;
+    /* border: 2px solid white; */
+    /* background: green;  */
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas con el mismo ancho */
+    gap: 5px; /* Espacio entre las tarjetas */
+    
 }
 
 .item {

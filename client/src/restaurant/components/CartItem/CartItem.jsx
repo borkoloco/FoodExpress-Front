@@ -27,11 +27,10 @@ export const CartItem = ({ id, amount, description, nameMenu, price, specialtyMe
 
   }
 
-
   return (
     <>
       <tr>
-        <td>
+        <td >
           <div className={style.containerCard}>
             <img className={style.image} src={imageUrl} />
             <div className={style.features}>
