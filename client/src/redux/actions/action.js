@@ -597,3 +597,56 @@ export const updateMenu = (id, value) => {
     }
   };
 };
+
+//eliminar un tipo de plato, en categorias
+export const deleteType = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(endPoint + "/deletetipo2/" + id);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Categoría eliminada",
+        showConfirmButton: false,
+        timer: 1800,
+      });
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No pudimos eliminar la categoría",
+        footer: "",
+      });
+    }
+  };
+};
+//eliminar una especialidad, en categorias
+export const deleteSpecial = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(endPoint + "/deleteespec2/" + id);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Categoría eliminada",
+        showConfirmButton: false,
+        timer: 1800,
+      });
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No pudimos eliminar la categoría",
+        footer: "",
+      });
+    }
+  };
+};
