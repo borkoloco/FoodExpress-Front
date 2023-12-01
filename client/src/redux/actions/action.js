@@ -35,7 +35,7 @@ export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
 export const ADD_TO_CART = "ADD_TO_CART  ";
-export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
@@ -45,7 +45,7 @@ export const user_logued = (email) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endPoint + "/users/" + email);
-      localStorage.setItem('sesion',JSON.stringify(data))
+      localStorage.setItem("sesion", JSON.stringify(data));
       Swal.fire({
         position: "center",
         icon: "success",
@@ -485,11 +485,11 @@ export const loginByUser = (user) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(endPoint + "/login", user);
-      localStorage.setItem('sesion',JSON.stringify(data.data));
+      localStorage.setItem("sesion", JSON.stringify(data.data));
       Swal.fire({
         position: "center",
         icon: "success",
-        title:`Welcome ${data.data.nameUser}`,
+        title: `Welcome ${data.data.nameUser}`,
         showConfirmButton: false,
         timer: 2000,
       });
@@ -506,11 +506,9 @@ export const loginByUser = (user) => {
 };
 
 export const logoutByUser = () => {
-  localStorage.removeItem('sesion');
+  localStorage.removeItem("sesion");
   return { type: LOGOUT_BY_USER };
 };
-
-
 
 /* ACTIONS PARA EL REGISTRO CON usuario, email y password */
 export const registerByUser = (user) => {
@@ -544,17 +542,16 @@ export const addToCart = (item) => {
   };
 };
 
-
 export const removeFromCart = ({ id, amount }) => {
   return {
     type: REMOVE_FROM_CART,
-    payload: {id, amount}
-  }
-}
+    payload: { id, amount },
+  };
+};
 
 //Action para el borrado lógico
 export const updateMenuAvailability = (menuId, newAvailability) => {
-  console.log(menuId,newAvailability)
+  console.log(menuId, newAvailability);
   return async (dispatch) => {
     try {
       const response = await axios.patch(`${endPoint}/menu/${menuId}`, {
@@ -562,7 +559,7 @@ export const updateMenuAvailability = (menuId, newAvailability) => {
       });
 
       if (response.status !== 200) {
-        throw new Error('Error al actualizar la disponibilidad del menú');
+        throw new Error("Error al actualizar la disponibilidad del menú");
       }
 
       dispatch({
@@ -570,8 +567,33 @@ export const updateMenuAvailability = (menuId, newAvailability) => {
         payload: { menuId, newAvailability },
       });
     } catch (error) {
-      console.error('Error al actualizar la disponibilidad del menú:', error);
+      console.error(
+        "Error al actualizar la disponibilidplatoupdateMenuad del menú:",
+        error
+      );
       // Manejar errores, como dispatch de una acción de error
+    }
+  };
+};
+
+//actualizar un menu/plato
+export const updateMenu = (id, value) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(endPoint + "/updatemenu/" + id, value);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Actualizado",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      console.log("Error al actualizar el plato: " + error.message);
     }
   };
 };

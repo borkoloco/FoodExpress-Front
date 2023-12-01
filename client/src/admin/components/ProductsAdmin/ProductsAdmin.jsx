@@ -13,6 +13,7 @@ import Style from "./ProductsAdmin.module.css";
 import { Loading } from "../../../ui/components/Loading/Loading";
 import { Sliding } from "../../../ui/components/Sliding/Sliding";
 
+
 export const ProductsAdmin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ export const ProductsAdmin = () => {
 
   return (
     <>
+
       {/* Sliding es un Botón que abre un panel que se despliega a la derecha con el form */}
       <Sliding
         btnName="Add"
@@ -72,6 +74,8 @@ export const ProductsAdmin = () => {
         offcanvasId="form-categories"
       />   
 
+     
+
       {/* Botón para alternar entre la vista activa e inactiva */}
       <button className="btn btn-info" onClick={handleToggleView}>
         {viewInactive ? "Mostrar Activos" : "Mostrar Inactivos"}
@@ -79,86 +83,82 @@ export const ProductsAdmin = () => {
 
       {/* Tabla de productos */}
 
+
       {isLoading ? (
         <Loading />
-      ) : (
-        ((viewInactive && filteredInactiveMenu.length > 0) ||
-          (!viewInactive && filteredMenu.length > 0)) && (
-          <table className="table caption-top bg-white rounded mt-2">
-            <caption className="text-black fs-4">Products</caption>
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Product</th>
-                <th scope="col">Category</th>
-                <th scope="col">Price</th>
-                <th scope="col">Status</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {viewInactive
-                ? filteredInactiveMenu.map((plato) => (
-                    <tr key={plato.idMenu}>
-                      <th scope="row">{plato.idMenu}</th>
-                      <td>{plato.nameMenu}</td>
-                      <td>{plato.typeMenu}</td>
-                      <td>{plato.price}</td>
-                      <td>{plato.available ? "Activated" : "Disabled"}</td>
-                      <td>
-                        <button
-                          className="btn btn-primary"
-                          id={plato.idMenu}
-                          onClick={(e) => {
-                            handleEditProduct(e.target.id);
-                          }}
-                          disabled
-                        >
-                          Edit
-                        </button>
-                        <button className="btn btn-warning">View</button>
-                        <button
-                          className="btn btn-success"
-                          onClick={() => handleRestore(plato.idMenu)}
-                        >
-                          Restaurar
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                : filteredMenu.map((plato) => (
-                    <tr key={plato.idMenu}>
-                      <th scope="row">{plato.idMenu}</th>
-                      <td>{plato.nameMenu}</td>
-                      <td>{plato.typeMenu}</td>
-                      <td>{plato.price}</td>
-                      <td>{plato.available ? "Activated" : "Disabled"}</td>
-                      <td>
-                        <button
-                          className="btn btn-primary"
-                          id={plato.idMenu}
-                          onClick={(e) => {
-                            handleEditProduct(e.target.id);
-                          }}
-                          disabled
-                        >
-                          Edit
-                        </button>
-                        <button className="btn btn-warning">View</button>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleDelete(plato.idMenu)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-            </tbody>
-          </table>
-        )
-      )}
-      {}
+      ) : (((viewInactive && filteredInactiveMenu.length > 0) ||
+      (!viewInactive && filteredMenu.length > 0)) && (
+      <table className="table caption-top bg-white rounded mt-2">
+        <caption className="text-black fs-4">Products</caption>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {viewInactive
+            ? filteredInactiveMenu.map((plato) => (
+                <tr key={plato.idMenu}>
+                  <th scope="row">{plato.idMenu}</th>
+                  <td>{plato.nameMenu}</td>
+                  <td>{plato.typeMenu}</td>
+                  <td>{plato.price}</td>
+                  <td>{plato.available ? "Activated" : "Disabled"}</td>
+                  <td>
+                    <button
+                      className="btn btn-primary"
+                      id={plato.idMenu}
+                      onClick={(e) => {
+                        handleEditProduct(e.target.id);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button className="btn btn-warning">View</button>
+                    <button
+                      className="btn btn-success"
+                      onClick={() => handleRestore(plato.idMenu)}
+                    >
+                      Restaurar
+                    </button>
+                  </td>
+                </tr>
+              ))
+            : filteredMenu.map((plato) => (
+                <tr key={plato.idMenu}>
+                  <th scope="row">{plato.idMenu}</th>
+                  <td>{plato.nameMenu}</td>
+                  <td>{plato.typeMenu}</td>
+                  <td>{plato.price}</td>
+                  <td>{plato.available ? "Activated" : "Disabled"}</td>
+                  <td>
+                    <button
+                      className="btn btn-primary"
+                      id={plato.idMenu}
+                      onClick={(e) => {
+                        handleEditProduct(e.target.id);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button className="btn btn-warning">View</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleDelete(plato.idMenu)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+        </tbody>
+      </table>
+    ))}
     </>
   );
 };
