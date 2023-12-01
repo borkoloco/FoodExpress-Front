@@ -1,0 +1,26 @@
+.sliding-panel {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.panel {
+    background-color: #f8f9fa;
+    grid-column: 1;
+    height: 100%;
+    overflow-y: auto;
+    padding: 20px;
+    position: relative;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    width: 40%;
+}
+
+.panel.open {
+    transform: translateX(0);
+}
+
+button {
+    margin-bottom: 20px;
+}
