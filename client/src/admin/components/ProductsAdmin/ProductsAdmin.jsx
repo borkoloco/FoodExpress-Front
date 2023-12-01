@@ -62,12 +62,14 @@ export const ProductsAdmin = () => {
         btnStyle="btn-success"
         component={<FormAdmin />}
         title="Create your product"
+        offcanvasId="form-create-product"
       />
       <Sliding
         btnName="Edit Categories"
         btnStyle="btn-dark"
         component={<FormABMcategory />}
         title="Edit your categories"
+        offcanvasId="form-categories"
       />   
 
       {/* Botón para alternar entre la vista activa e inactiva */}
