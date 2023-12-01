@@ -33,12 +33,12 @@ export const AccountButton = () => {
 
   /* Luego de autenticarse manual o con google te redirige a "/home" */
   useEffect(() => {
-    if (authenticated) {
+    if (validateSesion(userAuth)) {
       navigate("/home");
     }
   }, [userAuth]);
   useEffect(() => {
-    if (authenticated) {
+    if (validateSesion(userLogued)) {
       navigate("/home");
     }
   }, [userLogued]);
