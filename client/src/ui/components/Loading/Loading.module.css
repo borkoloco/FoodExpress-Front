@@ -1,0 +1,20 @@
+
+
+
+
+.containerLoading{
+    /* background-color: black; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    width: 1005;
+}
+
+
+
+.imgLoading {
+    height: 11em;
+    width: auto;
+    border-radius: 50%;
+}

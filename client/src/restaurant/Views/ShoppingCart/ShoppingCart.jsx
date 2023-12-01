@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllMenu } from "../../../redux/actions/action";
+import { EmptyCart } from "../../../ui/components/EmptyCart/EmptyCart";
 
 const ShoppingCart = () => {
   const cartItems = useSelector((state) => state.cartItems)
@@ -66,20 +67,21 @@ const ShoppingCart = () => {
       <BackButton />
       <div className="container mt-4">
         <h2>Shopping cart</h2>
-        <div className="container">
-          <div className="d-flex justify-content-around flex-row">
-            <div>
-              <table className="table mt-4">
+        {
+          cartItems.length === 0 ? <EmptyCart/> : (<div className="container">
+          <div className="d-flex justify-content-around flex-row mt-5">
+            <div className={`${style.tableContainer}`}>
+              <table className="table">
                 <thead>
                   <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                    <th>Remove</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Remove</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="table-group-divider">
                   {
                     filterMenu && filterMenu.length > 0 && filterMenu.map((el) => {
                       const amountId = cartItems.filter((cart) => el.idMenu === cart.id)
@@ -134,7 +136,10 @@ const ShoppingCart = () => {
             </div>
 
           </div>
-        </div>
+        </div>)
+        }
+        
+
       </div>
     </>
   );

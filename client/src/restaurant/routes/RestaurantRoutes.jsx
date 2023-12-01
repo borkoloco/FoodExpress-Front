@@ -12,6 +12,7 @@ import { firebase } from "../../utils/firebase";
 import { login } from "../../redux/actions/action";
 import FormCategories from "../../admin/views/FormMenu/FormCategories";
 import FormABMcategory from "../../admin/views/FormMenu/FormABMcategory";
+import { Footer } from "../../ui/components/Footer/Footer";
 
 export const RestaurantRoutes = () => {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ export const RestaurantRoutes = () => {
         {/*Añade más rutas aqui...  */}
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
+      <Footer/>
     </>
   );
 };
