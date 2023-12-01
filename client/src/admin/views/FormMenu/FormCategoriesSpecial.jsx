@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteSpecial,
   updateSpecialty,
   postSpecialties,
   getSpecialties,
 } from "../../../redux/actions/action";
 
+//este componente apunta a las ESPECIALIDADES
 function FormCategoriesSpecial() {
   const regexName = /^[A-Za-z\s]+$/;
   const dispatch = useDispatch();
@@ -108,6 +110,10 @@ function FormCategoriesSpecial() {
     }
   };
 
+  const handleDelete = async (id) => {
+    await dispatch(deleteSpecial(id));
+    await dispatch(getSpecialties());
+  };
   return (
     <div>
       <h3 className="fs-5">Especialidades</h3>
@@ -163,6 +169,9 @@ function FormCategoriesSpecial() {
                     ✏️
                   </button>
                 )}
+              </td>
+              <td>
+                <button onClick={() => handleDelete(type.id)}> ❌</button>
               </td>
               <td>
                 <span> {errors[type.name]}</span>
