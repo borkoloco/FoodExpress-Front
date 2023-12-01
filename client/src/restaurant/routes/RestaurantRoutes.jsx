@@ -13,6 +13,7 @@ import { login } from "../../redux/actions/action";
 import FormCategories from "../../admin/views/FormMenu/FormCategories";
 import FormABMcategory from "../../admin/views/FormMenu/FormABMcategory";
 import { Footer } from "../../ui/components/Footer/Footer";
+import { Comments } from "../components/Comments/Comments";
 
 export const RestaurantRoutes = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,8 @@ export const RestaurantRoutes = () => {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        <Route path="/comments" element={<Comments />} />
 
         {/*Añade más rutas aqui...  */}
         <Route path="/*" element={<Navigate to="/" />} />

@@ -12,6 +12,7 @@ import FormABMcategory from "../../views/FormMenu/FormABMcategory";
 import Style from "./ProductsAdmin.module.css";
 import { Loading } from "../../../ui/components/Loading/Loading";
 import { Sliding } from "../../../ui/components/Sliding/Sliding";
+import FormMenuEdit from "../../views/FormMenu/FormMenuEdit";
 
 
 export const ProductsAdmin = () => {
@@ -55,24 +56,38 @@ export const ProductsAdmin = () => {
     setViewInactive(!viewInactive);
   };
 
+
+
+
+  const [panel, setPanel] = useState(false);
+  const togglePanel = () => setPanel(!panel);
+  let toggle = panel ? `open` : `close`;
+
+  const openPanel = () => {
+    togglePanel();
+  };
+
   return (
     <>
 
-      {/* Sliding es un Botón que abre un panel que se despliega a la derecha con el form */}
-      <Sliding
+      {/* Sliding no es óptimo, ando viendo otra opción  */}
+      {/* <Sliding
         btnName="Add"
         btnStyle="btn-success"
         component={<FormAdmin />}
         title="Create your product"
         offcanvasId="form-create-product"
-      />
-      <Sliding
+      /> */}
+      {/* <Sliding
         btnName="Edit Categories"
         btnStyle="btn-dark"
-        component={<FormABMcategory />}
-        title="Edit your categories"
-        offcanvasId="form-categories"
-      />   
+        title='Edita'
+        children={<FormABMcategory />}
+
+      />    */}
+
+    
+
 
      
 
@@ -92,7 +107,7 @@ export const ProductsAdmin = () => {
         <caption className="text-black fs-4">Products</caption>
         <thead>
           <tr>
-            <th scope="col">#</th>
+            {/* <th scope="col">#</th> */}
             <th scope="col">Product</th>
             <th scope="col">Category</th>
             <th scope="col">Price</th>
@@ -104,12 +119,13 @@ export const ProductsAdmin = () => {
           {viewInactive
             ? filteredInactiveMenu.map((plato) => (
                 <tr key={plato.idMenu}>
-                  <th scope="row">{plato.idMenu}</th>
-                  <td>{plato.nameMenu}</td>
+                  {/* <th scope="row">{plato.idMenu}</th> */}
+                  <td  scope="row">{plato.nameMenu}</td>
                   <td>{plato.typeMenu}</td>
                   <td>{plato.price}</td>
                   <td>{plato.available ? "Activated" : "Disabled"}</td>
                   <td>
+
                     <button
                       className="btn btn-primary"
                       id={plato.idMenu}
@@ -118,7 +134,8 @@ export const ProductsAdmin = () => {
                       }}
                     >
                       Edit
-                    </button>
+                    </button> 
+
                     <button className="btn btn-warning">View</button>
                     <button
                       className="btn btn-success"
@@ -131,8 +148,8 @@ export const ProductsAdmin = () => {
               ))
             : filteredMenu.map((plato) => (
                 <tr key={plato.idMenu}>
-                  <th scope="row">{plato.idMenu}</th>
-                  <td>{plato.nameMenu}</td>
+                  {/* <th scope="row">{plato.idMenu}</th> */}
+                  <td  scope="row">{plato.nameMenu}</td>
                   <td>{plato.typeMenu}</td>
                   <td>{plato.price}</td>
                   <td>{plato.available ? "Activated" : "Disabled"}</td>

@@ -1,15 +1,17 @@
+export const Sliding = ({ btnName, btnStyle, title, component, offcanvasId, eventHandler,id }) => {
 
+  console.log({eventHandler,id});
 
-
-export const Sliding = ({ btnName, btnStyle, title, component, offcanvasId }) => {
   return (
     <>
       <button
+        id={id}
         className={`btn btn-primary ${btnStyle}`}
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target={`#${offcanvasId}`} // Utiliza el identificador único
         aria-controls={offcanvasId}
+        onClick={eventHandler}
       >
         {btnName}
       </button>
@@ -39,3 +41,4 @@ export const Sliding = ({ btnName, btnStyle, title, component, offcanvasId }) =>
     </>
   );
 };
+
