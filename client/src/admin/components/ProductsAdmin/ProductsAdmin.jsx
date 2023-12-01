@@ -10,9 +10,11 @@ import {
 import FormAdmin from "../FormAdmin/FormAdmin";
 import FormABMcategory from "../../views/FormMenu/FormABMcategory";
 import Style from "./ProductsAdmin.module.css";
+
+import Swal from "sweetalert2";
+
 import { Loading } from "../../../ui/components/Loading/Loading";
 import FormMenuEdit from "../../views/FormMenu/FormMenuEdit";
-
 
 
 export const ProductsAdmin = () => {
@@ -37,6 +39,13 @@ export const ProductsAdmin = () => {
   }, []);
 
   const handleEditProduct = (id) => {
+    Swal.fire({
+      icon: "warning",
+      title: "Advertencia",
+      text: "No realices cambios radicales en los productos que ya guardaste.",
+      //footer: '<a href="#">Why do I have this issue?</a>',
+    });
+
     dispatch(getMenuDetailById(id));
     navigate("/dashboard/editproduct");
   };
