@@ -6,6 +6,9 @@ import { ProductsAdmin } from "../components/ProductsAdmin/ProductsAdmin";
 import { NavBarAdmin } from "../components/NavBarAdmin/NavBarAdmin";
 import style from "./Dashboard.module.css";
 import FormMenuEdit from "../views/FormMenu/FormMenuEdit";
+import FormAdmin from "../components/FormAdmin/FormAdmin";
+import FormABMcategory from "../views/FormMenu/FormABMcategory";
+import { Form } from "../../ui/components/Form/Form";
 
 export const AdminRoutes = () => {
   const [toggle, setToggle] = useState(true);
@@ -28,7 +31,9 @@ export const AdminRoutes = () => {
             <Routes>
               <Route path="home" element={<HomeAdmin />} />
               <Route path="products" element={<ProductsAdmin />} />
-              <Route path="editproduct" element={<FormMenuEdit />} />
+              <Route path="createproduct" element={<Form children={<FormAdmin />}/>} />
+              <Route path="editcategories" element={<Form children={<FormABMcategory />}/>} />
+              <Route path="editproduct" element={<Form children={<FormMenuEdit />}/>} />
               {/*Añade más rutas aqui...  */}
               <Route path="/*" element={<Navigate to="/dashboard/home" />} />
             </Routes>

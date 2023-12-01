@@ -1,0 +1,20 @@
+
+
+.containerLogin {
+    /* background-color: rebeccapurple; */
+    border-radius: 55px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 3rem;
+  }
+  
+  .containerForm {
+    background: #ffffff;
+    border-radius: 55px;
+    padding: 3rem;
+    width: 32rem;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  
