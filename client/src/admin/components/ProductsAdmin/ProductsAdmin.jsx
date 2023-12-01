@@ -11,6 +11,7 @@ import FormAdmin from "../FormAdmin/FormAdmin";
 import FormABMcategory from "../../views/FormMenu/FormABMcategory";
 import Style from "./ProductsAdmin.module.css";
 import { Loading } from "../../../ui/components/Loading/Loading";
+import { Sliding } from "../../../ui/components/Sliding/Sliding";
 
 export const ProductsAdmin = () => {
   const navigate = useNavigate();
@@ -55,19 +56,19 @@ export const ProductsAdmin = () => {
 
   return (
     <>
-      {/* Modal es un Botón que abre un modal con el form de producto */}
-      <Modal
-        name="Add"
+      {/* Sliding es un Botón que abre un panel que se despliega a la derecha con el form */}
+      <Sliding
+        btnName="Add"
+        btnStyle="btn-success"
         component={<FormAdmin />}
-        title="Crea tu nuevo plato"
-        style="btn-success"
+        title="Create your product"
       />
-      <Modal
-        name="EditCategories"
+      <Sliding
+        btnName="Edit Categories"
+        btnStyle="btn-dark"
         component={<FormABMcategory />}
-        title="Modifica tus categorías"
-        style="btn-dark"
-      />
+        title="Edit your categories"
+      />   
 
       {/* Botón para alternar entre la vista activa e inactiva */}
       <button className="btn btn-info" onClick={handleToggleView}>
