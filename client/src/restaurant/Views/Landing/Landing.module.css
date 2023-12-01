@@ -53,3 +53,12 @@
     height: 70px;
     margin: auto;
 }
+
+.arrowLeft{
+    background: gray;
+    
+}
+.arrowRight{
+    z-index: 1;
+    
+}

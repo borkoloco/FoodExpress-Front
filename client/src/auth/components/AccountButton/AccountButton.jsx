@@ -33,12 +33,12 @@ export const AccountButton = () => {
 
   /* Luego de autenticarse manual o con google te redirige a "/home" */
   useEffect(() => {
-    if (authenticated) {
+    if (validateSesion(userAuth)) {
       navigate("/home");
     }
   }, [userAuth]);
   useEffect(() => {
-    if (authenticated) {
+    if (validateSesion(userLogued)) {
       navigate("/home");
     }
   }, [userLogued]);
@@ -50,7 +50,7 @@ export const AccountButton = () => {
     <>
       {authenticated ? (
         // Dropdown cuando el usuario está autenticado
-        <div className="btn-group position-relative">
+        <div className="btn-group">
           <button
             type="button"
             data-bs-toggle="dropdown"

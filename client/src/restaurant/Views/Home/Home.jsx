@@ -10,6 +10,7 @@ import {
   filters,
   orderMenu,
 } from "../../../redux/actions/action";
+import { Loading } from "../../../ui/components/Loading/Loading";
 
 
 function Home() {
@@ -158,13 +159,10 @@ function Home() {
         {filteredMenu && allMenu.length > 0 ? (
           <Cards props={filteredMenu} />
         ) : (
-          <img
-            className={Style.imgLoading}
-            src="https://media.tenor.com/SWJCs0u0Tr0AAAAC/taco-tacos.gif"
-            alt="Loading"
-          />
+          <Loading/>
         )}
       </div>
+      
     </div>
 
   );

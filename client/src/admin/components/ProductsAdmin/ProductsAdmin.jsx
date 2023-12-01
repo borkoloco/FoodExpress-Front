@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal } from "../../../ui/components/Modal/Modal";
-import { useNavigate } from "react-router-dom";
+// import { Modal } from "../../../ui/components/Modal/Modal";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   getAllMenu,
   updateMenuAvailability,
@@ -11,22 +11,45 @@ import FormAdmin from "../FormAdmin/FormAdmin";
 import FormABMcategory from "../../views/FormMenu/FormABMcategory";
 import Style from "./ProductsAdmin.module.css";
 
+import Swal from "sweetalert2";
+
+import { Loading } from "../../../ui/components/Loading/Loading";
+import FormMenuEdit from "../../views/FormMenu/FormMenuEdit";
+
+
 export const ProductsAdmin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const allMenu = useSelector((state) => state.allMenu);
   const [viewInactive, setViewInactive] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (allMenu.length === 0) {
-      dispatch(getAllMenu());
-    }
+    
+      dispatch(getAllMenu())
+        .then(() => {
+          setIsLoading(false); // Una vez que se obtienen los datos, se desactiva el estado de carga
+        })
+        .catch((error) => {
+          // Manejo de errores si la carga falla
+          console.error("Error fetching data:", error);
+          setIsLoading(false); // Asegurarse de desactivar el estado de carga en caso de error
+        });
+    
   }, []);
 
   const handleEditProduct = (id) => {
+    Swal.fire({
+      icon: "warning",
+      title: "Advertencia",
+      text: "No realices cambios radicales en los productos que ya guardaste.",
+      //footer: '<a href="#">Why do I have this issue?</a>',
+    });
+
     dispatch(getMenuDetailById(id));
     navigate("/dashboard/editproduct");
   };
+
 
   const handleDelete = (id) => {
     dispatch(updateMenuAvailability(id, false));
@@ -43,35 +66,40 @@ export const ProductsAdmin = () => {
     setViewInactive(!viewInactive);
   };
 
+
+
   return (
     <>
-      {/* Modal es un Botón que abre un modal con el form de producto */}
-      <Modal
-        name="Add"
-        component={<FormAdmin />}
-        title="Crea tu nuevo plato"
-        style="btn-success"
-      />
-      <Modal
-        name="EditCategories"
-        component={<FormABMcategory />}
-        title="Modifica tus categorías"
-        style="btn-dark"
-      />
-
-      {/* Botón para alternar entre la vista activa e inactiva */}
-      <button className="btn btn-info" onClick={handleToggleView}>
-        {viewInactive ? "Mostrar Activos" : "Mostrar Inactivos"}
-      </button>
+      <div className={Style.buttonsBar}>
+        <NavLink to="/dashboard/createproduct">
+          <button className="btn btn-success" >
+            Add
+          </button>
+        </NavLink>
+        <NavLink to="/dashboard/editcategories">
+          <button className="btn btn-dark mx-3" >
+            Edit Categories
+          </button>
+        </NavLink>
+        {/* Botón para alternar entre la vista activa e inactiva */}
+        <button className="btn btn-info" onClick={handleToggleView}>
+          {viewInactive ? "View actives " : "View inactives"}
+        </button>
+      </div>
 
       {/* Tabla de productos */}
-      {((viewInactive && filteredInactiveMenu.length > 0) ||
-        (!viewInactive && filteredMenu.length > 0)) && (
+
+
+      {isLoading ? (
+        <Loading />
+      ) : (((viewInactive && filteredInactiveMenu.length > 0) ||
+      (!viewInactive && filteredMenu.length > 0)) && (
+      <div className={Style.tableContainer}>
         <table className="table caption-top bg-white rounded mt-2">
           <caption className="text-black fs-4">Products</caption>
           <thead>
             <tr>
-              <th scope="col">#</th>
+              {/* <th scope="col">#</th> */}
               <th scope="col">Product</th>
               <th scope="col">Category</th>
               <th scope="col">Price</th>
@@ -83,8 +111,8 @@ export const ProductsAdmin = () => {
             {viewInactive
               ? filteredInactiveMenu.map((plato) => (
                   <tr key={plato.idMenu}>
-                    <th scope="row">{plato.idMenu}</th>
-                    <td>{plato.nameMenu}</td>
+                    {/* <th scope="row">{plato.idMenu}</th> */}
+                    <td  scope="row">{plato.nameMenu}</td>
                     <td>{plato.typeMenu}</td>
                     <td>{plato.price}</td>
                     <td>{plato.available ? "Activated" : "Disabled"}</td>
@@ -110,8 +138,8 @@ export const ProductsAdmin = () => {
                 ))
               : filteredMenu.map((plato) => (
                   <tr key={plato.idMenu}>
-                    <th scope="row">{plato.idMenu}</th>
-                    <td>{plato.nameMenu}</td>
+                    {/* <th scope="row">{plato.idMenu}</th> */}
+                    <td  scope="row">{plato.nameMenu}</td>
                     <td>{plato.typeMenu}</td>
                     <td>{plato.price}</td>
                     <td>{plato.available ? "Activated" : "Disabled"}</td>
@@ -137,7 +165,8 @@ export const ProductsAdmin = () => {
                 ))}
           </tbody>
         </table>
-      )}
+      </div>
+    ))}
     </>
   );
 };

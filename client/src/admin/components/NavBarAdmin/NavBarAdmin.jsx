@@ -8,13 +8,11 @@ export const NavBarAdmin = ({ Toggle }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const dataLoginUser = JSON.parse(localStorage.getItem('sesion'));
+  const dataLoginUser = JSON.parse(localStorage.getItem("sesion"));
   const authenticated = validateSesion(dataLoginUser); //True: autenticado; false: no autenticado
 
-
-
   const handleLogout = () => {
-    dispatch(logoutByUser());       
+    dispatch(logoutByUser());
     dispatch(startGoogleLogout());
     navigate("/");
   };
@@ -52,11 +50,14 @@ export const NavBarAdmin = ({ Toggle }) => {
               className="dropdown-menu dropdown-menu-end"
               aria-labelledby="dropdownId"
             >
-              <NavLink to='/'>
+              <NavLink to="/" className="dropdown-item">
+                Home
+              </NavLink>
+              {/* <NavLink to="/">
                 <a className="dropdown-item" href="#">
                   Home
                 </a>
-              </NavLink>
+              </NavLink> */}
               <a className="dropdown-item" href="#">
                 Profile
               </a>

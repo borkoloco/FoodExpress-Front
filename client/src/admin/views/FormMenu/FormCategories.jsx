@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteType,
   getTypesOfFood,
   postTypesOfFood,
   updateType,
 } from "../../../redux/actions/action";
 
+//este componente apunta a los TIPOS DE PLATOS
 function FormCategories() {
   const regexName = /^[A-Za-z\s]+$/;
   const dispatch = useDispatch();
@@ -108,6 +110,11 @@ function FormCategories() {
     }
   };
 
+  const handleDelete = async (id) => {
+    await dispatch(deleteType(id));
+    await dispatch(getTypesOfFood());
+  };
+
   return (
     <div>
       <h3 className="fs-5">Tipos de comidas</h3>
@@ -163,6 +170,9 @@ function FormCategories() {
                     ✏️
                   </button>
                 )}
+              </td>
+              <td>
+                <button onClick={() => handleDelete(type.id)}> ❌</button>
               </td>
               <td>
                 <span> {errors[type.name]}</span>
