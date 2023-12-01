@@ -3,6 +3,7 @@ import Card from "../Card/Card";
 import Style from "./Cards.module.css";
 import { setCurrentPage } from "../../../../redux/actions/action";
 import { useSelector, useDispatch } from "react-redux";
+import { Pagination } from "../Pagination/Pagination";
 
 function Cards({ props }) {
   const dispatch = useDispatch();
@@ -43,12 +44,20 @@ function Cards({ props }) {
   useEffect(() => {
     if (input.length > 2) {
       dispatch(setCurrentPage(1));
-
     }
   }, [input]);
 
   return (
     <div className={Style.container_}>
+      <Pagination
+        currentPage={currentPage}
+        goToPreviousPage={goToPreviousPage}
+        goToNextPage={goToNextPage}
+        handlePageChange={handlePageChange}
+        pages={pages}
+        totalPages={totalPages}
+      />
+
       <div className={Style.bigDiv}>
         {menuToDisplay.map((plato, index) => {
           const {
@@ -77,31 +86,14 @@ function Cards({ props }) {
           );
         })}
       </div>
-
-      {/* Paginación */}
-      <nav aria-label="...">
-        <ul className="pagination">
-          <li className="page-item">
-            <button className="page-link" onClick={goToPreviousPage} disabled={currentPage === 1}>{"<"}</button>
-          </li>
-          {pages.map((page) => (
-            <li key={page} className={`page-item ${currentPage === page ? "active" : ""}`} aria-current="page">
-              <button
-                className="page-link"
-                key={page}
-                onClick={() => handlePageChange(page)}
-                disabled={page === currentPage}
-              >
-                {page}
-              </button>
-            </li>
-          ))}
-          <li className="page-item">
-            <button className="page-link" onClick={goToNextPage} disabled={currentPage === totalPages}>{">"}</button>
-          </li>
-        </ul>
-      </nav>
-
+      <Pagination
+        currentPage={currentPage}
+        goToPreviousPage={goToPreviousPage}
+        goToNextPage={goToNextPage}
+        handlePageChange={handlePageChange}
+        pages={pages}
+        totalPages={totalPages}
+      />
     </div>
   );
 }

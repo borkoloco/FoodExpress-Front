@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { firebase } from "../utils/firebase";
 import { login } from "../redux/actions/action";
 import { useDispatch } from "react-redux";
+import { Loading } from "../ui/components/Loading/Loading";
 
 /*ROUTER PRINCIPAL DE LA APLICACIÓN */
 export const AppRouter = () => {
@@ -28,7 +29,7 @@ export const AppRouter = () => {
   }, [dispatch, checking, isLoggedIn]);
 
   if (checking) {
-    return <h3>Cargando...</h3>;
+    return <Loading/>;
   }
 
   return (
