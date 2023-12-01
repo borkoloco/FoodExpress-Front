@@ -54,7 +54,7 @@ export const RestaurantRoutes = () => {
         <Route path="/comments" element={<Comments />} />
 
         {/*Añade más rutas aqui...  */}
-        {/* <Route path="/*" element={<Navigate to="/" />} /> */}
+        <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
       <Footer/>
     </>
