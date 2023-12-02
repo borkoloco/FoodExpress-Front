@@ -20,9 +20,13 @@ import {
   USERLOGUED,
   ADD_TO_CART,
   REMOVE_FROM_CART,
-  UPDATE_MENU_AVAILABILITY
+  UPDATE_MENU_AVAILABILITY,
+  ALLREVIEWS,
+  GET_REVIEW_BY_IDMENU,
+  GET_REVIEW_BY_ID,
+  GET_REVIEW_BY_IDUSER,
+  GET_AVDREVIEW_BYIDMENU,
 } from "../actions/action";
-
 
 const initialState = {
   allMenu: [],
@@ -45,12 +49,35 @@ const initialState = {
     typesOfFood: "all",
     availability: "all",
   },
-  cartItems: JSON.parse(localStorage.getItem('cart')) || [],
-
+  cartItems: JSON.parse(localStorage.getItem("cart")) || [],
+  allreviews: [],
+  reviewsByIdMenu: [],
+  reviewsByIdUser: [],
+  reviewAVGbyIdMenu: 0,
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
   switch (action.type) {
+    case GET_AVDREVIEW_BYIDMENU:
+      return {
+        ...state,
+        reviewAVGbyIdMenu: payload,
+      };
+    case GET_REVIEW_BY_IDUSER:
+      return {
+        ...state,
+        reviewsByIdMenu: payload,
+      };
+    case GET_REVIEW_BY_IDMENU:
+      return {
+        ...state,
+        reviewsByIdMenu: payload,
+      };
+    case ALLREVIEWS:
+      return {
+        ...state,
+        allreviews: payload,
+      };
     case USERLOGUED:
       return {
         ...state,
@@ -203,7 +230,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userAuth: {},
-        userLogued:{}
+        userLogued: {},
       };
 
     /* Registro con usuario, email y password */
@@ -216,7 +243,9 @@ const rootReducer = (state = initialState, action) => {
     /** Add to cart icono del carrito */
     case ADD_TO_CART:
       const newItem = action.payload;
-      const existingItemIndex = state.cartItems.findIndex(item => item.id === newItem.id);
+      const existingItemIndex = state.cartItems.findIndex(
+        (item) => item.id === newItem.id
+      );
 
       let updatedCart;
       if (existingItemIndex !== -1) {
@@ -228,21 +257,23 @@ const rootReducer = (state = initialState, action) => {
         updatedCart = [...state.cartItems, newItem];
       }
 
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
       return {
         ...state,
         cartItems: updatedCart,
       };
-    
+
     case REMOVE_FROM_CART:
       const itemToRemove = action.payload;
-      const itemIndexToRemove = state.cartItems.findIndex(item => item.id === itemToRemove.id);
+      const itemIndexToRemove = state.cartItems.findIndex(
+        (item) => item.id === itemToRemove.id
+      );
 
       if (itemIndexToRemove !== -1) {
         const updatedCart = [...state.cartItems];
         updatedCart.splice(itemIndexToRemove, 1);
 
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
 
         return {
           ...state,
@@ -250,11 +281,11 @@ const rootReducer = (state = initialState, action) => {
         };
       }
 
-      // borrado logico
+    // borrado logico
     case UPDATE_MENU_AVAILABILITY:
       return {
         ...state,
-        allMenu: state.allMenu.map(menu => {
+        allMenu: state.allMenu.map((menu) => {
           if (menu.idMenu === action.payload.menuId) {
             return {
               ...menu,
@@ -264,7 +295,6 @@ const rootReducer = (state = initialState, action) => {
           return menu;
         }),
       };
-
 
     default:
       return state;
