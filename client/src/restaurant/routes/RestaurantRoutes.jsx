@@ -14,6 +14,8 @@ import FormCategories from "../../admin/views/FormMenu/FormCategories";
 import FormABMcategory from "../../admin/views/FormMenu/FormABMcategory";
 import { Footer } from "../../ui/components/Footer/Footer";
 import { Comments } from "../components/Comments/Comments";
+import { Checkout } from "../Views/Checkout/Checkout";
+import { Booking } from "../Views/Booking/Booking";
 
 export const RestaurantRoutes = () => {
   const dispatch = useDispatch();
@@ -42,16 +44,17 @@ export const RestaurantRoutes = () => {
       <Routes>
         {/* <Route path="/" element={<Login />} /> */}
         <Route path="/" element={<Landing />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/menus" element={<Home />} />
         <Route path="/menu/detail/:id" element={<DetailMenu />} />
-        {/* <Route path="/form" element={<FormMenu/>} /> */}
-        <Route path="/form/category" element={<FormABMcategory />} />
         <Route path="/cart" element={<ShoppingCart />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
         <Route path="/comments" element={<Comments />} />
+        <Route path="/checkout" element={<Checkout />} />
+
+        <Route path="/bookings" element={<Booking />} />
 
         {/*Añade más rutas aqui...  */}
         <Route path="/*" element={<Navigate to="/" />} />

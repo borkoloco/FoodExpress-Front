@@ -1,11 +1,19 @@
 
+.containerHeader{
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
 
 .containerCard{
-    /* background: red; */
+    background: white;
     margin-top: 2rem;
+    padding: 1rem;
     margin-bottom: 5rem;
-    margin-left: 2rem;
-    margin-right: 2rem;
+
+
+    margin-left: 10rem;
+    margin-right: 10rem;
 
 }
 
