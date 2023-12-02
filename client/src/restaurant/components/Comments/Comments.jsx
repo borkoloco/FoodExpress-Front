@@ -1,4 +1,4 @@
-import "./Comments.css";
+import style from "./Comments.module.css";
 import React from "react";
 import { useState } from "react";
 import axios from "axios"
@@ -40,23 +40,25 @@ export const Comments = () => {
   };
 
   return (
-    <div class="card">
-      <span className="title">Leave a Comment</span>
-      <form className="form" onSubmit={handleSubmit}>
-        <div class="group">
-          <textarea
-            placeholder=""
-            id="comment"
-            name="comment"
-            rows="5"
-            required
-            value={formData.comment}
-            onChange={handleInputChange}
-          ></textarea>
-          <label for="comment">Comment</label>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+    <div className={style.containerCardComments}>
+      <div className={style["card"]}>
+        <span className={style.title}>Leave a Comment</span>
+        <form className={style.form} onSubmit={handleSubmit}>
+          <div className={style.group}>
+            <textarea
+              placeholder=""
+              id="comment"
+              name="comment"
+              rows="5"
+              required
+              value={formData.comment}
+              onChange={handleInputChange}
+            ></textarea>
+            <label for="comment">Comment</label>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 };

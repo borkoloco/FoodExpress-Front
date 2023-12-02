@@ -15,10 +15,9 @@ import { Loading } from "../../../ui/components/Loading/Loading";
 const DetailMenu = () => {
   const { id } = useParams();
 
-
   const menuDetail = useSelector((state) => state.menuDetail);
   const dispatch = useDispatch();
-  const [amountValue, setAmountValue] = useState(1)
+  const [amountValue, setAmountValue] = useState(1);
 
   useEffect(() => {
     dispatch(getMenuDetailById(id));
@@ -28,15 +27,20 @@ const DetailMenu = () => {
   }, [id]);
 
   const handleInputCart = (value) => {
-    setAmountValue(value)
-  }
-  useEffect(() => { console.log(amountValue); }, [amountValue])
-  const [cartProducts, setCartProducts] = useLocalStorage('cart', '[]')
+    setAmountValue(value);
+  };
+  useEffect(() => {
+    console.log(amountValue);
+  }, [amountValue]);
+  const [cartProducts, setCartProducts] = useLocalStorage("cart", "[]");
   console.log(cartProducts);
 
   return (
     <>
-      <BackButton />
+      <div className={style.containerHeader}>
+        <BackButton />
+        <hr />
+      </div>
       {menuDetail.nameMenu ? (
         <div className={style.containerCard}>
           <div className="row">
@@ -116,34 +120,38 @@ const DetailMenu = () => {
             </div>
 
             {/* Detalles del menú */}
-            <div className="col-md-7">
+            <div className="col-md-7 m">
               <p className={`${style.newArrival} text-center`}>NEW</p>
               <h2>{menuDetail.nameMenu}</h2>
               <span>Product ID: MEN{menuDetail.idMenu}U</span>
               {/* <p>⭐⭐⭐⭐⭐</p> */}
               <p className={style.price}>$ {menuDetail.price}</p>
-              <p><b>Description:</b> {menuDetail.description}</p>
+              <p>
+                <b>Description:</b> {menuDetail.description}
+              </p>
               <p>
                 {menuDetail.typeMenu} - {menuDetail.specialtyMenu}
               </p>
               <p>
                 <b>Available: </b> 5
               </p>
-             
-              
+
               <label>
                 <b>Quantity: </b>&nbsp;
-                <input className={style.quantityInput} type="number" onChange={(el) => handleInputCart(el.target.value)} defaultValue={amountValue} />
+                <input
+                  className={style.quantityInput}
+                  type="number"
+                  onChange={(el) => handleInputCart(el.target.value)}
+                  defaultValue={amountValue}
+                />
               </label>
-                
-          
 
               <AddCart amount={amountValue} id={id} />
             </div>
           </div>
         </div>
       ) : (
-        <Loading/>
+        <Loading />
       )}
 
       {/* AQUI PODEMOS HACER EL APARTADO DE REVIEWS O COMENTARIOS */}

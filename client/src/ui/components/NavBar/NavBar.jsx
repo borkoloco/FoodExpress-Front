@@ -30,20 +30,25 @@ export const NavBar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <NavLink className="nav-link" to="/home">
+                <NavLink className="nav-link" to="/">
                   Home
                 </NavLink>
               </li>
-              {/* <li className="nav-item">
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/menus">
+                  Menus
+                </NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink className="nav-link" to="/bookings">
                   Bookings
                 </NavLink>
-              </li> */}
-              <li className="nav-item">
+              </li>
+              {/* <li className="nav-item">
                 <NavLink className="nav-link" >
                   About
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
 
             <NavLink to="/comments" className="nav-link">
