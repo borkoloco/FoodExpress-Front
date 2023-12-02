@@ -37,6 +37,11 @@ export const USERLOGUED = "USERLOGUED";
 export const ADD_TO_CART = "ADD_TO_CART  ";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
+export const ALLREVIEWS = "ALLREVIEWS";
+export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
+export const GET_REVIEW_BY_IDMENU = "GET_REVIEW_BY_IDMENU";
+export const GET_REVIEW_BY_IDUSER = "GET_REVIEW_BY_IDUSER";
+export const GET_AVDREVIEW_BYIDMENU = "GET_AVDREVIEW_BYIDMENU";
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
@@ -647,6 +652,110 @@ export const deleteSpecial = (id) => {
         text: "No pudimos eliminar la categoría",
         footer: "",
       });
+    }
+  };
+};
+
+//!SECCION REVIEWS Y PUNTUACION
+//GET de todos los reviews
+//devuelve un arrelgo de objetos {idReview, idUser, idMenu, rate, comment, date}
+export const getAllReviews = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getallreviews");
+      return dispatch({
+        type: ALLREVIEWS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("Tuvimos un error al obtener los reviews: " + error.message);
+    }
+  };
+};
+
+//POST de un nuevo review
+//value debe ser { idUser, idMenu, rate, comment }
+export const addReview = (value) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(endPoint + "/addreview", value);
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      console.log("Tuvimos un error al agregar un review: " + error.message);
+    }
+  };
+};
+
+//UPDATE de review por parte del usuario
+// id por params, y rate, comment actualizados por body
+export const updateReviewById = (id, rate, comment) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(endPoint + "/updatereview" + id, {
+        rate,
+        comment,
+      });
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No pudimos actualizar tu review: " + error.message);
+    }
+  };
+};
+
+//GET reviews por ID de menú/plato. Pasamos ID por params
+//obtenemos todos los reviwes de un plato. Un Arreglo de objetos
+export const getReviewsByMenu = (idMenu) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getreviewsmenu/" + idMenu);
+      return dispatch({
+        type: GET_REVIEW_BY_IDMENU,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener los reviews");
+    }
+  };
+};
+
+//GET reviews por ID de usuario. Pasamos ID por params
+//obtenemos todos los reviwes de un usuario. Un Arreglo de objetos
+export const getReviewsByUser = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getreviewsuser/" + idUser);
+      return dispatch({
+        type: GET_REVIEW_BY_IDUSER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener los reviews");
+    }
+  };
+};
+
+//GET promedio de puntuaciones de un producto por id de producto
+// devuelve {"promedioRates": 3.6666666666666665 }
+export const getAvgReviewByIdMenu = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getavgreview/" + id);
+      const rawAverage = data.promedioRates;
+
+      // Redondear al múltiplo de 0.5 más cercano
+      const roundedAverage = Math.round(rawAverage * 2) / 2;
+      return dispatch({
+        type: GET_AVDREVIEW_BYIDMENU,
+        payload: roundedAverage,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener el promedio");
     }
   };
 };
