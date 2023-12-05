@@ -11,28 +11,34 @@ import style from "./DetailMenu.module.css";
 import { useLocalStorage } from "../../../utils/useLocalStorage";
 import { useState } from "react";
 import { Loading } from "../../../ui/components/Loading/Loading";
+import RatingStars from "../../components/Reviews/RatingUtensil";
+import { getAvgReviewByIdMenu } from "../../../redux/actions/action";
 
 const DetailMenu = () => {
   const { id } = useParams();
 
-
   const menuDetail = useSelector((state) => state.menuDetail);
+  const reviewAVGbyIdMenu = useSelector((state) => state.reviewAVGbyIdMenu);
+
   const dispatch = useDispatch();
-  const [amountValue, setAmountValue] = useState(1)
+  const [amountValue, setAmountValue] = useState(1);
 
   useEffect(() => {
     dispatch(getMenuDetailById(id));
+    dispatch(getAvgReviewByIdMenu(id));
     return () => {
       dispatch(cleanDetailMenu());
     };
   }, [id]);
 
   const handleInputCart = (value) => {
-    setAmountValue(value)
-  }
-  useEffect(() => { console.log(amountValue); }, [amountValue])
-  const [cartProducts, setCartProducts] = useLocalStorage('cart', '[]')
-  console.log(cartProducts);
+    setAmountValue(value);
+  };
+  useEffect(() => {
+    console.log(amountValue);
+  }, [amountValue]);
+
+  const [cartProducts, setCartProducts] = useLocalStorage("cart", "[]");
 
   return (
     <>
@@ -117,33 +123,35 @@ const DetailMenu = () => {
 
             {/* Detalles del menú */}
             <div className="col-md-7">
-              <p className={`${style.newArrival} text-center`}>NEW</p>
-              <h2>{menuDetail.nameMenu}</h2>
+              {/* <p className={`${style.newArrival} text-center`}>NEW</p> */}
+              <h2>{menuDetail.nameMenu}</h2>{" "}
               <span>Product ID: MEN{menuDetail.idMenu}U</span>
-              {/* <p>⭐⭐⭐⭐⭐</p> */}
+              <RatingStars averageRating={reviewAVGbyIdMenu} iconSize={40} />
               <p className={style.price}>$ {menuDetail.price}</p>
-              <p><b>Description:</b> {menuDetail.description}</p>
+              <p>
+                <b>Description:</b> {menuDetail.description}
+              </p>
               <p>
                 {menuDetail.typeMenu} - {menuDetail.specialtyMenu}
               </p>
               <p>
                 <b>Available: </b> 5
               </p>
-             
-              
               <label>
                 <b>Quantity: </b>&nbsp;
-                <input className={style.quantityInput} type="number" onChange={(el) => handleInputCart(el.target.value)} defaultValue={amountValue} />
+                <input
+                  className={style.quantityInput}
+                  type="number"
+                  onChange={(el) => handleInputCart(el.target.value)}
+                  defaultValue={amountValue}
+                />
               </label>
-                
-          
-
               <AddCart amount={amountValue} id={id} />
             </div>
           </div>
         </div>
       ) : (
-        <Loading/>
+        <Loading />
       )}
 
       {/* AQUI PODEMOS HACER EL APARTADO DE REVIEWS O COMENTARIOS */}

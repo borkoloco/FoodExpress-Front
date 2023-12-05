@@ -1,7 +1,6 @@
-
 import { Link, NavLink } from "react-router-dom";
 import style from "./SideBar.module.css";
-export const SideBar = () =>  {
+export const SideBar = () => {
   return (
     <div className="bg-white sidebar p-2">
       <div className="m-2">
@@ -24,11 +23,16 @@ export const SideBar = () =>  {
         <NavLink className="list-group-item py-2">
           <span>Payments</span>
         </NavLink>
+        <NavLink
+          to="/dashboard/reviewsaprobation"
+          className="list-group-item py-2"
+        >
+          <span>Moderation</span>
+        </NavLink>
         <NavLink className="list-group-item py-2">
           <span>Logout</span>
         </NavLink>
       </div>
     </div>
   );
-}
-
+};

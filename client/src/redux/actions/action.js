@@ -42,6 +42,7 @@ export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
 export const GET_REVIEW_BY_IDMENU = "GET_REVIEW_BY_IDMENU";
 export const GET_REVIEW_BY_IDUSER = "GET_REVIEW_BY_IDUSER";
 export const GET_AVDREVIEW_BYIDMENU = "GET_AVDREVIEW_BYIDMENU";
+export const GET_AVGALL = "GET_AVGALL";
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
@@ -746,8 +747,7 @@ export const getAvgReviewByIdMenu = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios(endPoint + "/getavgreview/" + id);
-      const rawAverage = data.promedioRates;
-
+      const rawAverage = data.promedioRates ?? 0;
       // Redondear al múltiplo de 0.5 más cercano
       const roundedAverage = Math.round(rawAverage * 2) / 2;
       return dispatch({
@@ -756,6 +756,41 @@ export const getAvgReviewByIdMenu = (id) => {
       });
     } catch (error) {
       console.log("No pudimos obtener el promedio");
+    }
+  };
+};
+
+//GET promedios de todos los productos
+export const getAllAvg = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getallavg");
+      const averages = data.promedios;
+      return dispatch({
+        type: GET_AVGALL,
+        payload: averages,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener los promedios");
+    }
+  };
+};
+
+//PATCH del status de un cometnario, pasa a aprobado o rechazado
+export const updateReviewStatus = (idReview, idStatus) => {
+  const id = idReview;
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(
+        endPoint + "/updatereviewstatus/" + id,
+        { idStatus: idStatus }
+      );
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No pudimos aprobar/rechazar el comentario");
     }
   };
 };
