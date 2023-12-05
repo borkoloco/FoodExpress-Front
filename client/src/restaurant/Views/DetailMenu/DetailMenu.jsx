@@ -42,7 +42,10 @@ const DetailMenu = () => {
 
   return (
     <>
-      <BackButton />
+      <div className={style.containerHeader}>
+        <BackButton />
+        <hr />
+      </div>
       {menuDetail.nameMenu ? (
         <div className={style.containerCard}>
           <div className="row">
@@ -125,6 +128,7 @@ const DetailMenu = () => {
             <div className="col-md-7">
               {/* <p className={`${style.newArrival} text-center`}>NEW</p> */}
               <h2>{menuDetail.nameMenu}</h2>{" "}
+
               <span>Product ID: MEN{menuDetail.idMenu}U</span>
               <RatingStars averageRating={reviewAVGbyIdMenu} iconSize={40} />
               <p className={style.price}>$ {menuDetail.price}</p>

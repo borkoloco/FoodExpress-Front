@@ -9,8 +9,11 @@
     padding: 4px 0px;
     padding-right: 4px;
     padding-left: 12px;
+    transition: transform 0.3s ease-in-out; /* Transición suave */
     
-    
+}
+.btnCart:hover {
+    transform: scale(1.1); /* Cambio de escala al pasar el cursor */
 }
 
 

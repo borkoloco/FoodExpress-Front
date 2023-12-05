@@ -1,0 +1,62 @@
+.containerHeader {
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+.containerCheckout{
+    display: flex;
+    /* background: green; */
+    justify-content: space-around;
+    margin-left: 10rem;
+    margin-right: 10rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+
+}
+
+.billingDetails {
+    /* border: 2px solid black; */
+    border: 1px solid rgb(203, 203, 203);
+    background: white;
+    padding: 1rem;
+    width: 50%;
+
+    margin-right: 2rem;
+}
+
+.yourOrder{
+    border: 1px solid rgb(203, 203, 203);
+    /* border-radius: 1rem; */
+    background: white;
+    padding: 1rem;
+    width: 50%;
+    height: auto;
+}
+
+.title_{
+    margin-left: 2rem;
+    margin-top: 1.6rem;
+}
+
+@media (max-width: 920px) {
+    .containerCheckout{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    .billingDetails {
+        width: 90%;
+        margin-right: 0;
+        margin-bottom: 2rem;
+    }
+    .yourOrder{
+        width: 90%;
+    }
+    .containerHeader {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+}
