@@ -26,6 +26,7 @@ import {
   GET_REVIEW_BY_ID,
   GET_REVIEW_BY_IDUSER,
   GET_AVDREVIEW_BYIDMENU,
+  GET_AVGALL,
 } from "../actions/action";
 
 const initialState = {
@@ -53,11 +54,17 @@ const initialState = {
   allreviews: [],
   reviewsByIdMenu: [],
   reviewsByIdUser: [],
-  reviewAVGbyIdMenu: 0,
+  reviewAVGbyIdMenu: "",
+  reviewsAvgAll: [],
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
   switch (action.type) {
+    case GET_AVGALL:
+      return {
+        ...state,
+        reviewsAvgAll: payload,
+      };
     case GET_AVDREVIEW_BYIDMENU:
       return {
         ...state,
