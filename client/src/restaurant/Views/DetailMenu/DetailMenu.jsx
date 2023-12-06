@@ -135,13 +135,13 @@ const DetailMenu = () => {
               <span>Product ID: MEN{menuDetail.idMenu}U</span>
               {reviewAVGbyIdMenu !== "0.0" && (
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <span style={{ marginRight: "10px" }}>
-                    {reviewAVGbyIdMenu}
-                  </span>
                   <RatingStars
                     averageRating={reviewAVGbyIdMenu}
-                    iconSize={40}
+                    iconSize={30}
                   />
+                  <span style={{ marginRight: "10px" }}>
+                    {"(" + reviewAVGbyIdMenu + ")"}
+                  </span>
                 </div>
               )}
               {reviewAVGbyIdMenu === "0.0" && (

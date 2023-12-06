@@ -32,6 +32,22 @@ function ReviewsAprobation() {
     await dispatch(getAllReviews());
     setForce(!force);
   };
+
+  const handleApproveAll = async () => {
+    for (const review of pendingReviews) {
+      await dispatch(updateReviewStatus(review.idReview, 2));
+    }
+    await dispatch(getAllReviews());
+    setForce(!force);
+  };
+
+  const handleRejectAll = async () => {
+    for (const review of pendingReviews) {
+      await dispatch(updateReviewStatus(review.idReview, 3));
+    }
+    await dispatch(getAllReviews());
+    setForce(!force);
+  };
   return (
     <div>
       <h2>Comentarios Pendientes de Moderación</h2>
@@ -47,7 +63,7 @@ function ReviewsAprobation() {
           <tbody>
             {pendingReviews.map((review) => (
               <tr key={review.idReview}>
-                <td>{review.idStatus}</td>
+                <td>{review.reviewStatus.statusDescription}</td>
                 <td
                   style={{
                     maxWidth: "250px",
@@ -72,6 +88,23 @@ function ReviewsAprobation() {
       ) : (
         <p>No hay comentarios pendientes de moderación.</p>
       )}
+      <div
+        style={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
+      >
+        <button
+          onClick={handleApproveAll}
+          disabled={pendingReviews.length === 0}
+          style={{ marginRight: "10px" }}
+        >
+          Aprobar Todos
+        </button>
+        <button
+          onClick={handleRejectAll}
+          disabled={pendingReviews.length === 0}
+        >
+          Rechazar Todos
+        </button>
+      </div>
     </div>
   );
 }
