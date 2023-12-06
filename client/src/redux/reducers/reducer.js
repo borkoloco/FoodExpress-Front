@@ -51,6 +51,7 @@ const initialState = {
     availability: "all",
   },
   cartItems: JSON.parse(localStorage.getItem("cart")) || [],
+  cartItemsDB:[],
   allreviews: [],
   reviewsByIdMenu: [],
   reviewsByIdUser: [],
@@ -231,13 +232,18 @@ const rootReducer = (state = initialState, action) => {
     case LOGIN_BY_USER:
       return {
         ...state,
-        userAuth: payload,
+        userAuth: payload.data,
+        cartItemsDB:payload.dataCartDB
+
       };
     case LOGOUT_BY_USER:
+      localStorage.setItem("cart", JSON.stringify([]));
       return {
         ...state,
         userAuth: {},
         userLogued: {},
+        cartItems:[],
+        cartItemsDB:[],
       };
 
     /* Registro con usuario, email y password */
@@ -268,6 +274,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: updatedCart,
+        
       };
 
     case REMOVE_FROM_CART:

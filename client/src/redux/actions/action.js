@@ -44,7 +44,10 @@ export const GET_REVIEW_BY_IDUSER = "GET_REVIEW_BY_IDUSER";
 export const GET_AVDREVIEW_BYIDMENU = "GET_AVDREVIEW_BYIDMENU";
 export const GET_AVGALL = "GET_AVGALL";
 
-const endPoint = import.meta.env.VITE_BACKEND_URL;
+// const endPoint = import.meta.env.VITE_BACKEND_URL;
+
+const endPoint = 'http://localhost:3001';
+
 
 //datos en nuestra BD del usuario logueado
 export const user_logued = (email) => {
@@ -499,10 +502,19 @@ export const loginByUser = (user) => {
         showConfirmButton: false,
         timer: 2000,
       });
+      const dataCartDB = await axios.get(endPoint + `/getcarrito/${data.data.idUser}`)
+      
+      let formatedDataCartDB = []
+      ///formatear datos para mandar al estado global
+      dataCartDB.data.carritoItems.map((el) => {
+        formatedDataCartDB.push({id:el.menu.idMenu, amount:el.cantidad})
+      })
+      const dataTotal = {data:data, dataCartDB:formatedDataCartDB}
+      
       // window.alert(data.message);
       return dispatch({
         type: LOGIN_BY_USER,
-        payload: data,
+        payload: dataTotal,
       });
     } catch (error) {
       console.log(error.message);
@@ -542,6 +554,7 @@ export const registerByUser = (user) => {
 
 /** Carrito icono */
 export const addToCart = (item) => {
+  
   return {
     type: ADD_TO_CART,
     payload: item,
@@ -554,6 +567,21 @@ export const removeFromCart = ({ id, amount }) => {
     payload: { id, amount },
   };
 };
+
+/// subir al carrito de la base de datos
+export const addToCartDB = (item, idUser) => {
+  return async () => {
+    console.log('entra aca??');
+    const formatedData = [{ "idUser": idUser, "idMenu": item.id, "cantidad": item.amount }]
+    console.log(formatedData);
+    try {
+      const sendData = await axios.post(endPoint+"/carrito/add", formatedData)
+      console.log(sendData);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
 
 //Action para el borrado lógico
 export const updateMenuAvailability = (menuId, newAvailability) => {

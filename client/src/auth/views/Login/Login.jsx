@@ -7,10 +7,16 @@ import {
   startGoogleLogout,
   loginByUser,
   startLoginWithEmail,
+  addToCart,
+  addToCartDB,
 } from "../../../redux/actions/action";
 import { useEffect } from "react";
 import { areThereErrors } from "../../../utils/areThereErrors";
 import style from "./Login.module.css";
+
+
+
+
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -20,19 +26,40 @@ export const Login = () => {
     email: "",
     password: "",
   });
+  const cartItemsDB = useSelector((state) => state.cartItemsDB)
+  const cartItems = useSelector((state) => state.cartItems)
+  const userAuth = useSelector((state) => state.userAuth)
 
+
+  useEffect(() => {
+
+    cartItemsDB && cartItemsDB.length > 0 && cartItemsDB.map((el) => {
+      dispatch(addToCart(el))
+    })
+    if (Object.keys(userAuth).length > 0) {
+
+      cartItems && cartItems.length > 0 && cartItems.map((el) => {
+        dispatch(addToCartDB(el, userAuth.data.idUser))
+      })
+    }
+
+
+
+
+  }, [cartItemsDB])
 
   //Login forma 1
   const handleLoginByUser = () => {
     dispatch(loginByUser(formState));
+
   };
 
-   //Login forma 2
+  //Login forma 2
   // const handleLoginByUser = () => {
   //   const { email, password } = formState;
   //   dispatch(startLoginWithEmail(email, password));
   // };
-
+  console.log(userAuth);
   //Login con Google
   const handleGoogleAuth = () => {
     dispatch(startGoogleAuth());
@@ -53,9 +80,8 @@ export const Login = () => {
           <input
             type="email"
             placeholder="Email"
-            className={`form-control ${
-              errors.email ? "is-invalid" : formState.email ? "is-valid" : ""
-            }`}
+            className={`form-control ${errors.email ? "is-invalid" : formState.email ? "is-valid" : ""
+              }`}
             name="email"
             value={formState.email}
             onChange={onInputChange}
@@ -68,13 +94,12 @@ export const Login = () => {
           <input
             type="password"
             placeholder="Password"
-            className={`form-control ${
-              errors.password
-                ? "is-invalid"
-                : formState.password
+            className={`form-control ${errors.password
+              ? "is-invalid"
+              : formState.password
                 ? "is-valid"
                 : ""
-            }`}
+              }`}
             name="password"
             value={formState.password}
             onChange={onInputChange}
