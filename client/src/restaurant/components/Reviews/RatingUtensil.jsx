@@ -4,10 +4,11 @@ import utensHalf from "../../../assets/icons/utens03Half.svg";
 
 const RatingStars = ({ averageRating, iconSize }) => {
   const stars = [];
+  averageRating = Math.round(averageRating * 2) / 2;
   // Tamaño deseado para las imágenes de calificación
   const imageSize = {
-    width: iconSize || "23px", // Usa iconSize si está presente, de lo contrario, usa el valor predeterminado
-    height: iconSize || "22px",
+    width: iconSize || "20px", // Usa iconSize si está presente, de lo contrario, usa el valor predeterminado
+    height: iconSize || "20px",
   };
 
   for (let i = 1; i <= 5; i++) {
