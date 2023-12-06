@@ -4,7 +4,7 @@
 
 
 .gridContainer {
-    background: orange;
+    /* background: orange; */
     display: grid;
     gap: 20px;
     /* Tamaño por defecto en celular */

@@ -73,7 +73,17 @@ function Cards({ props }) {
           } = plato;
           return (
             <div key={index} className={Style.item}>
-              <CardB/>
+              <CardB
+                idMenu={idMenu}
+                nameMenu={nameMenu}
+                description={description}
+                imageUrl={imageUrl}
+                price={price}
+                available={available}
+                typeMenu={typeMenu}
+                specialtyMenu={specialtyMenu}
+              
+              />
             </div>
           );
         })}

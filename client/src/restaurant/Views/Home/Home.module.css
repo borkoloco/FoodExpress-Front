@@ -1,8 +1,13 @@
+.containerHeader {
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+
 .bigDiv {
-    background: green;
+    /* background: green; */
     display: flex;
     flex-direction: row;
-    padding-top: 2rem;
     padding-bottom: 2rem;
     
     margin-right: 10rem;
@@ -11,7 +16,7 @@
 }
 
 .barDiv {
-    background: black;
+    /* background: black; */
     width: 20%;
 }
 
@@ -22,7 +27,7 @@
 }
 
 .cardsDiv {
-    background: yellow;
+    /* background: yellow; */
     padding: 1rem;
     width: 80%;
     display: flex;
@@ -47,4 +52,21 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     min-height: 100vh;
+}
+
+
+@media (max-width: 600px) {
+   
+}
+@media (max-width: 1024px) {
+    .bigDiv {
+        margin-right: 0;
+        margin-left: 0;
+    
+    }
+}
+  
+@media (min-width: 1220px) {
+    
+
 }

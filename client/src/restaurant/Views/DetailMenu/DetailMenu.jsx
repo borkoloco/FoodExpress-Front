@@ -11,6 +11,8 @@ import style from "./DetailMenu.module.css";
 import { useLocalStorage } from "../../../utils/useLocalStorage";
 import { useState } from "react";
 import { Loading } from "../../../ui/components/Loading/Loading";
+import { ToastContainer, toast } from "react-toastify";
+
 
 const DetailMenu = () => {
   const { id } = useParams();
@@ -146,7 +148,9 @@ const DetailMenu = () => {
                 />
               </label>
 
-              <AddCart amount={amountValue} id={id} />
+              <div className={style.containerAddCart}>
+                <AddCart amount={amountValue} id={id} />
+              </div>
             </div>
           </div>
         </div>
@@ -164,6 +168,19 @@ const DetailMenu = () => {
           </p>
         </div>
       </div> */}
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 };

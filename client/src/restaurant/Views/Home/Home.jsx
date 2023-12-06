@@ -11,12 +11,12 @@ import {
   orderMenu,
 } from "../../../redux/actions/action";
 import { Loading } from "../../../ui/components/Loading/Loading";
-
+import { ToastContainer, toast } from "react-toastify";
 
 function Home() {
   const dispatch = useDispatch();
   const allMenu = useSelector((state) => state.allMenu);
-  const filterGlobalState = useSelector((state) => state.filterGlobalState)
+  const filterGlobalState = useSelector((state) => state.filterGlobalState);
   const allSpecialties = useSelector((state) => state.allSpecialties);
   const allTypesOfFood = useSelector((state) => state.allTypesOfFood);
   const [localFilter, setLocalFilter] = useState({
@@ -56,11 +56,16 @@ function Home() {
   const handleOrder = (element) => {
     dispatch(orderMenu(element.target.value));
   };
-  const filteredMenu = allMenu.filter(menu => menu.available);
+  const filteredMenu = allMenu.filter((menu) => menu.available);
   return (
     <div className={Style.background_home}>
+
+      <div className={Style.containerHeader}>
+        <h2 className="text-light pt-4">Menus</h2>
+        <hr className="text-light" />
+      </div>
+
       <div className={`${Style.bigDiv}`}>
-      
         <div className={Style.barDiv}>
           <div className={`accordion ${Style.accordion}`} id="accordionExample">
             <div className={`accordion-item ${Style.accordionItem}`}>
@@ -82,7 +87,9 @@ function Home() {
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
               >
-                <div className="accordion-body"><Search /></div>
+                <div className="accordion-body">
+                  <Search />
+                </div>
                 <div className="accordion-body">
                   <p>Specialties</p>
                   <select
@@ -158,15 +165,24 @@ function Home() {
           {filteredMenu && allMenu.length > 0 ? (
             <Cards props={filteredMenu} />
           ) : (
-            <Loading/>
+            <Loading />
           )}
         </div>
-      
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
-
   );
 }
 
 export default Home;
-

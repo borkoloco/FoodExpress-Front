@@ -1,7 +1,7 @@
 /* CardB.module.css */
 .card {
     display: flex;
-    border: 1px solid #606060;
+    /* border: 1px solid #606060; */
     background: white;
     border-radius: 8px;
     overflow: hidden;
@@ -82,3 +82,8 @@
   .addButton:hover {
     background-color: #ffc200;
   }
+
+  .deleteDecoration {
+    text-decoration: none;
+    color: black;
+}
