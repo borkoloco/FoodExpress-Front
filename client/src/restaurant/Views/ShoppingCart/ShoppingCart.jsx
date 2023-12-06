@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { getAllMenu } from "../../../redux/actions/action";
 import { EmptyCart } from "../../../ui/components/EmptyCart/EmptyCart";
 import { NavLink } from "react-router-dom";
+import { validateSesion } from "../../../utils/validateSesion";
 
 const ShoppingCart = () => {
   const cartItems = useSelector((state) => state.cartItems);
@@ -18,6 +19,10 @@ const ShoppingCart = () => {
   const allMenuOriginal = useSelector((state) => state.allMenuOriginal);
   const allMenu = useSelector((state) => state.allMenu);
   const dispatch = useDispatch();
+
+  const dataLoginUser = JSON.parse(localStorage.getItem('sesion'));
+  const authenticated = validateSesion(dataLoginUser); //True: autenticado; false: no autenticado
+
   useEffect(() => {
     if (allMenu.length === 0) {
       dispatch(getAllMenu());
@@ -128,7 +133,7 @@ const ShoppingCart = () => {
                       </p>
                       {subTotal && <p>${subTotal + 20}</p>}
                     </div>
-                    <NavLink to="/checkout">
+                    <NavLink to={authenticated ? "/checkout" : "/login"}>
                       <button className={style.btn}>Checkout</button>
                     </NavLink>
                   </div>

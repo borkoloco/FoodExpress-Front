@@ -1,7 +1,45 @@
+import { useEffect } from "react";
 import { BackButton } from "../../../ui/components/BackButton/BackButton";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./Checkout.module.css";
+import { getCartByUser, sendCartToMercadoPago } from "../../../redux/actions/action";
+import { TableYourOrder } from "../../components/Payments/TableYourOrder";
+import { validateSesion } from "../../../utils/validateSesion";
+import { FormBillingDetails } from "../../components/Payments/FormBillingDetails";
 
 export const Checkout = () => {
+  const dispatch = useDispatch();
+  const cartBDTemp = useSelector((state) => state.cartBDTemp);
+  const dataLoginUser = JSON.parse(localStorage.getItem("sesion"));
+  const authenticated = validateSesion(dataLoginUser); //True: autenticado; false: no autenticado
+
+  const propertiesReadyToSend = cartBDTemp.map((item) => ({
+    idMenu: item.menu.idMenu,
+    nameMenu: item.menu.nameMenu,
+    price: item.menu.price,
+    description: item.menu.description,
+    quantity: item.cantidad,
+    subtotal: item.subtotal,
+  })) || null;
+
+  const handleClickPay = async() => {
+    try {
+      const response = await dispatch(sendCartToMercadoPago(propertiesReadyToSend));
+      
+        window.location.href = response.payload;
+      
+    } catch (error) {
+      console.log('Error al procesar el pago:', error.message);
+    }
+  };
+
+  useEffect(() => {
+    if(authenticated){
+      dispatch(getCartByUser(dataLoginUser.idUser));
+    }
+    // console.log(dataLoginUser);
+  }, []);
+
   return (
     <>
       <div className={style.containerHeader}>
@@ -9,150 +47,20 @@ export const Checkout = () => {
         <hr />
         <h2>Checkout</h2>
       </div>
-      <div className={style.containerCheckout}>
-        <div className={style.billingDetails}>
-          <h3>Billing Details</h3>
-          <hr />
-          <form>
-            <div className="row mb-3">
-              <div className="col">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="First name"
-                  aria-label="First name"
-                />
-              </div>
-              <div className="col">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Last name"
-                  aria-label="Last name"
-                />
-              </div>
-            </div>
-            <div className="mb-3">
-              <label for="exampleInputEmail1" className="form-label">
-                DNI
-              </label>
-              <input
-                type="number"
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
-            </div>
-            <div className="mb-3">
-              <label for="exampleInputEmail1" className="form-label">
-                Address
-              </label>
-              <input
-                type="number"
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
-            </div>
-            <div className="mb-3">
-              <label for="exampleInputEmail1" className="form-label">
-                Phone
-              </label>
-              <input
-                type="number"
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
-            </div>
-            <div className="mb-3">
-              <label for="exampleInputEmail1" className="form-label">
-                Email
-              </label>
-              <input
-                type="number"
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
-            </div>
-            <h3>Additional Information</h3>
-            <hr />
-            <div className="mb-3">
-              <label for="exampleInputEmail1" className="form-label">
-                Order notes (optional)
-              </label>
-              <textarea
-                type="number"
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-              {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
-            </div>
-            {/* <button type="submit" className="btn btn-primary">
-                Submit
-              </button> */}
-          </form>
-        </div>
-        <div className={style.yourOrder}>
-          <h3>Your Order</h3>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Product</th>
-                <th scope="col"></th>
-                <th scope="col">Subtotal</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Pizza vegetariana x2</td>
-                <td>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
-                  beatae ab maiores id impedit neque consectetur aliquam
-                  quibusdam fuga.
-                </td>
-                <td>$220</td>
-              </tr>
-              {/* Información de precios fija */}
-              <tr>
-                <td>Subtotal</td>
-                <td></td>
-                <td>$220</td>
-              </tr>
-              <tr>
-                <td>Total</td>
-                <td></td>
-                <td>$220</td>
-              </tr>
-            </tbody>
-          </table>
-          <div>
-            <p className="d-inline-flex gap-1">
-              <a
-                className="btn btn-warning"
-                data-bs-toggle="collapse"
-                href="#collapseExample"
-                role="button"
-                aria-expanded="false"
-                aria-controls="collapseExample"
-              >
-                Pay with Mercadopago
-              </a>
-            </p>
-            <div className="collapse" id="collapseExample">
-              <div className="card card-body">
-                Form de MercadoPago, opciones ...
-              </div>
-            </div>
+
+      {
+        authenticated ? (<div className={style.containerCheckout}>
+          {/* <div className={style.billingDetails}>
+            <FormBillingDetails/>
+          </div> */}
+          <div className={style.yourOrder}>
+            <TableYourOrder handleClick={handleClickPay} properties={propertiesReadyToSend}/>
           </div>
-        </div>
-      </div>
+        </div>) : <div style={{padding: "7rem"}}><center>"Debe iniciar sesion si quiere comprar"</center></div>
+      }
+
+      
+      
     </>
   );
 };

@@ -26,6 +26,8 @@ import {
   GET_REVIEW_BY_ID,
   GET_REVIEW_BY_IDUSER,
   GET_AVDREVIEW_BYIDMENU,
+  GET_CART_BY_USER,
+  SEND_CART_MERCADO_PAGO
 } from "../actions/action";
 
 const initialState = {
@@ -54,6 +56,8 @@ const initialState = {
   reviewsByIdMenu: [],
   reviewsByIdUser: [],
   reviewAVGbyIdMenu: 0,
+  cartBDTemp: [],
+  linkMercadoPago: "",
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -295,6 +299,20 @@ const rootReducer = (state = initialState, action) => {
           return menu;
         }),
       };
+
+    case GET_CART_BY_USER:
+      return {
+        ...state,
+        cartBDTemp: payload,
+      };
+
+    case SEND_CART_MERCADO_PAGO:
+      return {
+        ...state,
+        linkMercadoPago: payload,
+      };
+
+    
 
     default:
       return state;

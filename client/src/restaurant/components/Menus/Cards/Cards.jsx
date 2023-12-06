@@ -4,6 +4,7 @@ import Style from "./Cards.module.css";
 import { setCurrentPage } from "../../../../redux/actions/action";
 import { useSelector, useDispatch } from "react-redux";
 import { Pagination } from "../Pagination/Pagination";
+import { CardB } from "../CardB/CardB";
 
 function Cards({ props }) {
   const dispatch = useDispatch();
@@ -49,16 +50,16 @@ function Cards({ props }) {
 
   return (
     <div className={Style.container_}>
-      <Pagination
+      {/* <Pagination
         currentPage={currentPage}
         goToPreviousPage={goToPreviousPage}
         goToNextPage={goToNextPage}
         handlePageChange={handlePageChange}
         pages={pages}
         totalPages={totalPages}
-      />
+      /> */}
 
-      <div className={Style.bigDiv}>
+      <div className={Style.gridContainer}>
         {menuToDisplay.map((plato, index) => {
           const {
             idMenu,
@@ -72,16 +73,7 @@ function Cards({ props }) {
           } = plato;
           return (
             <div key={index} className={Style.item}>
-              <Card
-                idMenu={idMenu}
-                nameMenu={nameMenu}
-                description={description}
-                imageUrl={imageUrl}
-                price={price}
-                available={available}
-                typeMenu={typeMenu}
-                specialtyMenu={specialtyMenu}
-              />
+              <CardB/>
             </div>
           );
         })}
@@ -94,6 +86,8 @@ function Cards({ props }) {
         pages={pages}
         totalPages={totalPages}
       />
+
+      
     </div>
   );
 }

@@ -42,6 +42,8 @@ export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
 export const GET_REVIEW_BY_IDMENU = "GET_REVIEW_BY_IDMENU";
 export const GET_REVIEW_BY_IDUSER = "GET_REVIEW_BY_IDUSER";
 export const GET_AVDREVIEW_BYIDMENU = "GET_AVDREVIEW_BYIDMENU";
+export const GET_CART_BY_USER = "GET_CART_BY_USER";
+export const SEND_CART_MERCADO_PAGO = "SEND_CART_MERCADO_PAGO";
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
@@ -756,6 +758,39 @@ export const getAvgReviewByIdMenu = (id) => {
       });
     } catch (error) {
       console.log("No pudimos obtener el promedio");
+    }
+  };
+};
+
+
+//! CARRITO -> CHECKOUT
+/* OBTIENE LOS DATOS DEL CARRITO-TEMPORAL */
+export const getCartByUser = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + `/getcarrito/${idUser}`);
+      // console.log(data.carritoItems);
+      
+      return dispatch({
+        type: GET_CART_BY_USER,
+        payload: data.carritoItems,
+      });
+    } catch (error) {
+      console.log("No se pudo obtener el carrito de ese usuario", error.message);
+    }
+  };
+};
+export const sendCartToMercadoPago = (cart) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(endPoint + "/create-payment",cart );
+      // console.log(data);
+      return dispatch({
+        type: SEND_CART_MERCADO_PAGO,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("Error al enviar el carrito a mercado Pago", error.message);
     }
   };
 };

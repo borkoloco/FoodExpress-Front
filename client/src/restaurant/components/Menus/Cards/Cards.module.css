@@ -1,30 +1,33 @@
-.container_{
-    margin-top: 3.9rem;
-    /* background: red; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 
-.bigDiv {
-    /* border: 2px solid white; */
-    /* background: green;  */
+
+
+
+.gridContainer {
+    background: orange;
     display: grid;
-    width: 100%;
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas con el mismo ancho */
-    gap: 5px; /* Espacio entre las tarjetas */
-    
-}
-
-.item {
-    width: 25%;
-    box-sizing: border-box;
-    padding: 1em;
-}
-
-.activePage {
-    background-color: sandybrown;
-    width: 100%;
-}
-
+    gap: 20px;
+    /* Tamaño por defecto en celular */
+    grid-template-columns: repeat(1, 1fr);
+    padding: px;
+  }
+  
+  @media (min-width: 600px) {
+    /* En tablet: 2 columnas */
+    .gridContainer {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    /* En tablet: 2 columnas */
+    .gridContainer {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1220px) {
+    /* En escritorio: 3 columnas */
+    .gridContainer {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
