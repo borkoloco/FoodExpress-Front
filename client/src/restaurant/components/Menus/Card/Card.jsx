@@ -18,6 +18,7 @@ function Card({
   const reviewsAvgAll = useSelector((state) => state.reviewsAvgAll);
 
   let avgItem = 0;
+
   for (let index = 0; index < reviewsAvgAll.length; index++) {
     if (idMenu === reviewsAvgAll[index].idMenu) {
       avgItem = reviewsAvgAll[index].promedioRate;

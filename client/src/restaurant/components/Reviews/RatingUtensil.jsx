@@ -4,6 +4,7 @@ import utensHalf from "../../../assets/icons/utens03Half.svg";
 
 const RatingStars = ({ averageRating, iconSize }) => {
   const stars = [];
+  averageRating = Math.round(averageRating * 2) / 2;
   // Tamaño deseado para las imágenes de calificación
   const imageSize = {
     width: iconSize || "30px", // Usa iconSize si está presente, de lo contrario, usa el valor predeterminado
