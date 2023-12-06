@@ -6,8 +6,8 @@ const RatingStars = ({ averageRating, iconSize }) => {
   const stars = [];
   // Tamaño deseado para las imágenes de calificación
   const imageSize = {
-    width: iconSize || "30px", // Usa iconSize si está presente, de lo contrario, usa el valor predeterminado
-    height: iconSize || "30px",
+    width: iconSize || "23px", // Usa iconSize si está presente, de lo contrario, usa el valor predeterminado
+    height: iconSize || "22px",
   };
 
   for (let i = 1; i <= 5; i++) {
