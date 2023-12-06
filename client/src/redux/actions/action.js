@@ -4,17 +4,6 @@ import Swal from "sweetalert2";
 import { formatData } from "../../utils/formatData";
 import { firebase, googleAuthProvider, auth } from "../../utils/firebase";
 
-/*
-import menu, { postMenu } from "../../Views/Home/menu";
-import {
-  specialty,
-  typesOfFood,
-  addSpecialty,
-  addTypes,
-} from "../../Views/Home/datosParaFiltros";
-
-*/
-
 export const ALL_MENU = "ALL_MENU";
 export const GET_MENU_DETAIL_BY_ID = "GET_MENU_DETAIL_BY_ID";
 export const CLEAN_DETAIL_MENU = "CLEAN_DETAIL_MENU";
@@ -704,6 +693,12 @@ export const getAllReviews = () => {
         payload: data,
       });
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Tuvimos un error al obtener los reviews",
+        footer: "",
+      });
       console.log("Tuvimos un error al obtener los reviews: " + error.message);
     }
   };
@@ -715,11 +710,24 @@ export const addReview = (value) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(endPoint + "/addreview", value);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Gracias por calificar",
+        showConfirmButton: false,
+        timer: 1800,
+      });
       return dispatch({
         type: "",
         payload: data,
       });
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Tuvimos un error al agregar un review",
+        footer: "",
+      });
       console.log("Tuvimos un error al agregar un review: " + error.message);
     }
   };
@@ -739,6 +747,12 @@ export const updateReviewById = (id, rate, comment) => {
         payload: data,
       });
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No pudimos actualizar tu review",
+        footer: "",
+      });
       console.log("No pudimos actualizar tu review: " + error.message);
     }
   };
@@ -831,6 +845,12 @@ export const updateReviewStatus = (idReview, idStatus) => {
         payload: data,
       });
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No pudimos aprobar/rechazar el comentario",
+        footer: "",
+      });
       console.log("No pudimos aprobar/rechazar el comentario");
     }
   };

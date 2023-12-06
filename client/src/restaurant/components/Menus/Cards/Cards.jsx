@@ -11,7 +11,6 @@ function Cards({ props }) {
   const currentPage = useSelector((state) => state.currentPage);
   const itemsPerPage = useSelector((state) => state.itemsPerPage);
   const input = useSelector((state) => state.input);
-  const reviewsAvgAll = useSelector((state) => state.reviewsAvgAll);
 
   //*paginación
   const startIndex = (currentPage - 1) * itemsPerPage;
