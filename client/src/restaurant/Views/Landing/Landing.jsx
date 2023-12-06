@@ -4,6 +4,7 @@ import { Carousell } from "../../components/Menus/Carousel/Carousel";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllMenu } from "../../../redux/actions/action";
+import { Loading2 } from "../../../ui/components/Loading2/Loading2";
 
 
 const Landing = () => {
@@ -11,11 +12,15 @@ const Landing = () => {
   const dispatch = useDispatch();
   const allMenu = useSelector((state) => state.allMenu);
   const [force, setForce] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const getMenus = async() => {
+    await dispatch(getAllMenu());
+    setLoading(true);
+  }
   
-  useEffect(() => {
-    if (allMenu.length === 0) {
-      dispatch(getAllMenu());
-    }
+  useEffect( () => {
+    getMenus();
   }, []);
 
   useEffect(() => {
@@ -23,9 +28,10 @@ const Landing = () => {
   }, [allMenu]);
 
 
+
   return (
     <>
-      <div id={`${style.heroSlider}`} className="carousel slide">
+      <div id={`${style.heroSlider}`} className="carousel slide z-0 ">
         <div className="carousel-inner">
           <div
             className={`carousel-item text-center vh-100 active ${style.slide_1} ${style.bg_cover}`}
@@ -37,7 +43,7 @@ const Landing = () => {
                   <h1 className="display-1 fw-bold text-white">
                     Un catálogo maravilloso para deleitar tu paladar.
                   </h1>
-                  <Link to="/home">
+                  <Link to="/menus">
                     <button className={`${style.btn} ${style.btn_brand}`}>
                       Pedir ahora
                     </button>
@@ -56,7 +62,7 @@ const Landing = () => {
                   <h1 className="display-1 fw-bold text-white">
                     Garantiza tu lugar y disfruta junto a tu familia
                   </h1>
-                  <Link to="/reservation">
+                  <Link to="/bookings">
                     <button className={`${style.btn} ${style.btn_brand}`}>
                       Reservar ahora
                     </button>
@@ -87,11 +93,14 @@ const Landing = () => {
           </button>
         </div>
       </div>
-      <Carousell
-        title="Menu of the day"
-        description="Experience our rotating menu with fresh and varied flavors daily at our restaurant, a unique culinary journey"
-        cards={allMenu}
-      />
+      {
+        loading ? (<Carousell
+          title="Menu of the day"
+          description="Experience our rotating menu with fresh and varied flavors daily at our restaurant, a unique culinary journey"
+          cards={allMenu}
+        />) : <center><Loading2/></center>
+      }
+      
 
     </>
   );

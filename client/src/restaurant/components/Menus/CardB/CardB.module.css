@@ -1,0 +1,92 @@
+/* CardB.module.css */
+.card {
+    display: flex;
+    /* border: 1px solid #606060; */
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    width: 25rem;
+    height: auto;
+  }
+  
+  .hoverEffect:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .containerImage {
+    height: auto;
+    width: 40%;
+  }
+  
+  .cardImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantener la relación de aspecto y cubrir el contenedor */
+    object-position: center; /* Centrar la imagen dentro del contenedor */
+  }
+  
+  .containerElements {
+
+    padding: 15px;
+    width: 60%;
+  }
+  
+  .title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: bold;
+  }
+  
+  .categories {
+    font-size: 0.8rem;
+    color: #666;
+    font-style: italic;
+  }
+  
+  .description {
+    /* background: gray; */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3; /* Limita el texto a 3 líneas */
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #666;
+    height: 4rem;
+  }
+  
+  .endElements {
+      /* background: yellow; */
+    height: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .price {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .addButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ffcc00;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .addButton:hover {
+    background-color: #ffc200;
+  }
+
+  .deleteDecoration {
+    text-decoration: none;
+    color: black;
+}

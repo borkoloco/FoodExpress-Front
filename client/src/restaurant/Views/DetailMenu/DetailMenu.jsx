@@ -14,6 +14,8 @@ import { useState } from "react";
 import { Loading } from "../../../ui/components/Loading/Loading";
 import RatingStars from "../../components/Reviews/RatingUtensil";
 import { getAvgReviewByIdMenu } from "../../../redux/actions/action";
+import { ToastContainer, toast } from "react-toastify";
+
 
 const DetailMenu = () => {
   const { id } = useParams();
@@ -171,7 +173,11 @@ const DetailMenu = () => {
                   defaultValue={amountValue}
                 />
               </label>
-              <AddCart amount={amountValue} id={id} />
+
+              <div className={style.containerAddCart}>
+                <AddCart amount={amountValue} id={id} />
+              </div>
+
             </div>
           </div>
         </div>
@@ -248,6 +254,20 @@ const DetailMenu = () => {
           ))}
         </div>
       </div>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      
     </>
   );
 };
