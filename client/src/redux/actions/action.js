@@ -721,6 +721,10 @@ export const getReviewsByMenu = (idMenu) => {
       });
     } catch (error) {
       console.log("No pudimos obtener los reviews");
+      return dispatch({
+        type: GET_REVIEW_BY_IDMENU,
+        payload: [],
+      });
     }
   };
 };
@@ -749,7 +753,8 @@ export const getAvgReviewByIdMenu = (id) => {
       const { data } = await axios(endPoint + "/getavgreview/" + id);
       const rawAverage = data.promedioRates ?? 0;
       // Redondear al múltiplo de 0.5 más cercano
-      const roundedAverage = Math.round(rawAverage * 2) / 2;
+      const roundedAverage = rawAverage.toFixed(1);
+
       return dispatch({
         type: GET_AVDREVIEW_BYIDMENU,
         payload: roundedAverage,
