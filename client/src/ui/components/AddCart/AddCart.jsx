@@ -1,8 +1,8 @@
 import style from "./AddCart.module.css";
 import { useLocalStorage } from "../../../utils/useLocalStorage";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/actions/action";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, addToCartDB } from "../../../redux/actions/action";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -17,6 +17,7 @@ export const AddCart = ({ amount, id }) => {
 
   const [cartProducts, setCartProducts] = useLocalStorage("cart", []);
   const [showAlert, setShowAlert] = useState(false);
+  const userAuth = useSelector((state) => state.userAuth)
 
   const addInput = () => {
     const data = { id: parseInt(id), amount: parseInt(amount) };
@@ -45,6 +46,12 @@ export const AddCart = ({ amount, id }) => {
 
     /*Funcionalidad del icono del carrito */
     dispatch(addToCart(data));
+
+
+    if (Object.keys(userAuth).length > 0) {
+
+      dispatch(addToCartDB(data, userAuth.data.idUser))
+    }
 
     /* Esto es para desplegar una pequeña alerta abajo a la derecha
     cuando se agrega algo al carrito */

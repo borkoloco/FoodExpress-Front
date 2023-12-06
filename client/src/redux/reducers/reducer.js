@@ -27,7 +27,9 @@ import {
   GET_REVIEW_BY_IDUSER,
   GET_AVDREVIEW_BYIDMENU,
   GET_CART_BY_USER,
-  SEND_CART_MERCADO_PAGO
+  GET_AVGALL,
+  SEND_CART_MERCADO_PAGO,
+
 } from "../actions/action";
 
 const initialState = {
@@ -52,16 +54,23 @@ const initialState = {
     availability: "all",
   },
   cartItems: JSON.parse(localStorage.getItem("cart")) || [],
+  cartItemsDB:[],
   allreviews: [],
   reviewsByIdMenu: [],
   reviewsByIdUser: [],
-  reviewAVGbyIdMenu: 0,
+  reviewAVGbyIdMenu: "",
+  reviewsAvgAll: [],
   cartBDTemp: [],
   linkMercadoPago: "",
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
   switch (action.type) {
+    case GET_AVGALL:
+      return {
+        ...state,
+        reviewsAvgAll: payload,
+      };
     case GET_AVDREVIEW_BYIDMENU:
       return {
         ...state,
@@ -228,13 +237,18 @@ const rootReducer = (state = initialState, action) => {
     case LOGIN_BY_USER:
       return {
         ...state,
-        userAuth: payload,
+        userAuth: payload.data,
+        cartItemsDB:payload.dataCartDB
+
       };
     case LOGOUT_BY_USER:
+      localStorage.setItem("cart", JSON.stringify([]));
       return {
         ...state,
         userAuth: {},
         userLogued: {},
+        cartItems:[],
+        cartItemsDB:[],
       };
 
     /* Registro con usuario, email y password */
@@ -265,6 +279,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: updatedCart,
+        
       };
 
     case REMOVE_FROM_CART:

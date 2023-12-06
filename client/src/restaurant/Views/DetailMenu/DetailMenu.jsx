@@ -11,6 +11,8 @@ import style from "./DetailMenu.module.css";
 import { useLocalStorage } from "../../../utils/useLocalStorage";
 import { useState } from "react";
 import { Loading } from "../../../ui/components/Loading/Loading";
+import RatingStars from "../../components/Reviews/RatingUtensil";
+import { getAvgReviewByIdMenu } from "../../../redux/actions/action";
 import { ToastContainer, toast } from "react-toastify";
 
 
@@ -18,11 +20,14 @@ const DetailMenu = () => {
   const { id } = useParams();
 
   const menuDetail = useSelector((state) => state.menuDetail);
+  const reviewAVGbyIdMenu = useSelector((state) => state.reviewAVGbyIdMenu);
+
   const dispatch = useDispatch();
   const [amountValue, setAmountValue] = useState(1);
 
   useEffect(() => {
     dispatch(getMenuDetailById(id));
+    dispatch(getAvgReviewByIdMenu(id));
     return () => {
       dispatch(cleanDetailMenu());
     };
@@ -34,8 +39,8 @@ const DetailMenu = () => {
   useEffect(() => {
     console.log(amountValue);
   }, [amountValue]);
+
   const [cartProducts, setCartProducts] = useLocalStorage("cart", "[]");
-  console.log(cartProducts);
 
   return (
     <>
@@ -122,11 +127,12 @@ const DetailMenu = () => {
             </div>
 
             {/* Detalles del menú */}
-            <div className="col-md-7 m">
-              <p className={`${style.newArrival} text-center`}>NEW</p>
-              <h2>{menuDetail.nameMenu}</h2>
+            <div className="col-md-7">
+              {/* <p className={`${style.newArrival} text-center`}>NEW</p> */}
+              <h2>{menuDetail.nameMenu}</h2>{" "}
+
               <span>Product ID: MEN{menuDetail.idMenu}U</span>
-              {/* <p>⭐⭐⭐⭐⭐</p> */}
+              <RatingStars averageRating={reviewAVGbyIdMenu} iconSize={40} />
               <p className={style.price}>$ {menuDetail.price}</p>
               <p>
                 <b>Description:</b> {menuDetail.description}
@@ -137,7 +143,6 @@ const DetailMenu = () => {
               <p>
                 <b>Available: </b> 5
               </p>
-
               <label>
                 <b>Quantity: </b>&nbsp;
                 <input
@@ -151,6 +156,7 @@ const DetailMenu = () => {
               <div className={style.containerAddCart}>
                 <AddCart amount={amountValue} id={id} />
               </div>
+
             </div>
           </div>
         </div>

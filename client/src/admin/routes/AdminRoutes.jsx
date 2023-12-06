@@ -9,6 +9,7 @@ import FormMenuEdit from "../views/FormMenu/FormMenuEdit";
 import FormAdmin from "../components/FormAdmin/FormAdmin";
 import FormABMcategory from "../views/FormMenu/FormABMcategory";
 import { Form } from "../../ui/components/Form/Form";
+import ReviewsAprobation from "../components/ReviewAdmin/ReviewsAprobation";
 
 export const AdminRoutes = () => {
   const [toggle, setToggle] = useState(true);
@@ -31,9 +32,22 @@ export const AdminRoutes = () => {
             <Routes>
               <Route path="home" element={<HomeAdmin />} />
               <Route path="products" element={<ProductsAdmin />} />
-              <Route path="createproduct" element={<Form children={<FormAdmin />}/>} />
-              <Route path="editcategories" element={<Form children={<FormABMcategory />}/>} />
-              <Route path="editproduct" element={<Form children={<FormMenuEdit />}/>} />
+              <Route
+                path="createproduct"
+                element={<Form children={<FormAdmin />} />}
+              />
+              <Route
+                path="editcategories"
+                element={<Form children={<FormABMcategory />} />}
+              />
+              <Route
+                path="editproduct"
+                element={<Form children={<FormMenuEdit />} />}
+              />
+              <Route
+                path="reviewsaprobation"
+                element={<Form children={<ReviewsAprobation />} />}
+              />
               {/*Añade más rutas aqui...  */}
               <Route path="/*" element={<Navigate to="/dashboard/home" />} />
             </Routes>

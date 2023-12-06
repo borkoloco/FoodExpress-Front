@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Card from "../Card/Card";
 import Style from "./Cards.module.css";
-import { setCurrentPage } from "../../../../redux/actions/action";
+import { getAllAvg, setCurrentPage } from "../../../../redux/actions/action";
 import { useSelector, useDispatch } from "react-redux";
 import { Pagination } from "../Pagination/Pagination";
 import { CardB } from "../CardB/CardB";
@@ -11,6 +11,7 @@ function Cards({ props }) {
   const currentPage = useSelector((state) => state.currentPage);
   const itemsPerPage = useSelector((state) => state.itemsPerPage);
   const input = useSelector((state) => state.input);
+  const reviewsAvgAll = useSelector((state) => state.reviewsAvgAll);
 
   //*paginación
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -40,6 +41,10 @@ function Cards({ props }) {
       handlePageChange(currentPage + 1);
     }
   };
+
+  useEffect(() => {
+    dispatch(getAllAvg());
+  }, []);
 
   /*Ubica en la pagina 1 cuando se busca */
   useEffect(() => {

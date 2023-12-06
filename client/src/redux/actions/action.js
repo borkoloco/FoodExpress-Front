@@ -42,10 +42,15 @@ export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
 export const GET_REVIEW_BY_IDMENU = "GET_REVIEW_BY_IDMENU";
 export const GET_REVIEW_BY_IDUSER = "GET_REVIEW_BY_IDUSER";
 export const GET_AVDREVIEW_BYIDMENU = "GET_AVDREVIEW_BYIDMENU";
+export const GET_AVGALL = "GET_AVGALL";
 export const GET_CART_BY_USER = "GET_CART_BY_USER";
 export const SEND_CART_MERCADO_PAGO = "SEND_CART_MERCADO_PAGO";
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
+
+// const endPoint = 'http://localhost:3001';
+
+
 
 //datos en nuestra BD del usuario logueado
 export const user_logued = (email) => {
@@ -500,10 +505,19 @@ export const loginByUser = (user) => {
         showConfirmButton: false,
         timer: 2000,
       });
+      const dataCartDB = await axios.get(endPoint + `/getcarrito/${data.data.idUser}`)
+      
+      let formatedDataCartDB = []
+      ///formatear datos para mandar al estado global
+      dataCartDB.data.carritoItems.map((el) => {
+        formatedDataCartDB.push({id:el.menu.idMenu, amount:el.cantidad})
+      })
+      const dataTotal = {data:data, dataCartDB:formatedDataCartDB}
+      
       // window.alert(data.message);
       return dispatch({
         type: LOGIN_BY_USER,
-        payload: data,
+        payload: dataTotal,
       });
     } catch (error) {
       console.log(error.message);
@@ -543,6 +557,7 @@ export const registerByUser = (user) => {
 
 /** Carrito icono */
 export const addToCart = (item) => {
+  
   return {
     type: ADD_TO_CART,
     payload: item,
@@ -555,6 +570,21 @@ export const removeFromCart = ({ id, amount }) => {
     payload: { id, amount },
   };
 };
+
+/// subir al carrito de la base de datos
+export const addToCartDB = (item, idUser) => {
+  return async () => {
+    console.log('entra aca??');
+    const formatedData = [{ "idUser": idUser, "idMenu": item.id, "cantidad": item.amount }]
+    console.log(formatedData);
+    try {
+      const sendData = await axios.post(endPoint+"/carrito/add", formatedData)
+      console.log(sendData);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
 
 //Action para el borrado lógico
 export const updateMenuAvailability = (menuId, newAvailability) => {
@@ -748,8 +778,7 @@ export const getAvgReviewByIdMenu = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios(endPoint + "/getavgreview/" + id);
-      const rawAverage = data.promedioRates;
-
+      const rawAverage = data.promedioRates ?? 0;
       // Redondear al múltiplo de 0.5 más cercano
       const roundedAverage = Math.round(rawAverage * 2) / 2;
       return dispatch({
@@ -758,6 +787,42 @@ export const getAvgReviewByIdMenu = (id) => {
       });
     } catch (error) {
       console.log("No pudimos obtener el promedio");
+    }
+  };
+};
+
+
+//GET promedios de todos los productos
+export const getAllAvg = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getallavg");
+      const averages = data.promedios;
+      return dispatch({
+        type: GET_AVGALL,
+        payload: averages,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener los promedios");
+    }
+  };
+};
+
+//PATCH del status de un cometnario, pasa a aprobado o rechazado
+export const updateReviewStatus = (idReview, idStatus) => {
+  const id = idReview;
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(
+        endPoint + "/updatereviewstatus/" + id,
+        { idStatus: idStatus }
+      );
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No pudimos aprobar/rechazar el comentario");
     }
   };
 };
@@ -792,5 +857,5 @@ export const sendCartToMercadoPago = (cart) => {
     } catch (error) {
       console.log("Error al enviar el carrito a mercado Pago", error.message);
     }
-  };
+  }
 };
