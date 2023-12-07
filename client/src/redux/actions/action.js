@@ -42,6 +42,7 @@ const endPoint = import.meta.env.VITE_BACKEND_URL;
 //datos en nuestra BD del usuario logueado
 export const user_logued = (email) => {
   return async (dispatch) => {
+    console.log('pasa por aca');
     try {
       const { data } = await axios.get(endPoint + "/users/" + email);
       localStorage.setItem("sesion", JSON.stringify(data));
@@ -52,10 +53,21 @@ export const user_logued = (email) => {
         showConfirmButton: false,
         timer: 2000,
       });
+      
+      const dataCartDB = await axios.get(
+        endPoint + `/getcarrito/${data.idUser}`
+      );
+
+      let formatedDataCartDB = [];
+      ///formatear datos para mandar al estado global
+      dataCartDB.data.carritoItems.map((el) => {
+        formatedDataCartDB.push({ id: el.menu.idMenu, amount: el.cantidad });
+      });
+      const dataTotal = { data: data, dataCartDB: formatedDataCartDB };
       // console.log(data);
       return dispatch({
         type: USERLOGUED,
-        payload: data,
+        payload: dataTotal,
       });
     } catch (error) {
       console.error("Error al obtener el usuario en la BD: ", error.message);

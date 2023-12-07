@@ -94,7 +94,8 @@ const rootReducer = (state = initialState, action) => {
     case USERLOGUED:
       return {
         ...state,
-        userLogued: payload,
+        userLogued: payload.data,
+        cartItemsDB:payload.dataCartDB
       };
     case LOGIN:
       return {
