@@ -8,7 +8,7 @@ import { addReview } from "../../../redux/actions/action";
 
 const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
   //!eliminar estas lineas
-  idUser = 3;
+  idUser = 1;
   idMenu = 7;
   nameProduct = "Empanada Giga";
   descProduct =
