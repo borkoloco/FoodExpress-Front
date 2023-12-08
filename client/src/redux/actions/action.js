@@ -25,6 +25,7 @@ export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
 export const ADD_TO_CART = "ADD_TO_CART  ";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART"
 export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
 export const ALLREVIEWS = "ALLREVIEWS";
 export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
@@ -34,6 +35,7 @@ export const GET_AVDREVIEW_BYIDMENU = "GET_AVDREVIEW_BYIDMENU";
 export const GET_AVGALL = "GET_AVGALL";
 export const GET_CART_BY_USER = "GET_CART_BY_USER";
 export const SEND_CART_MERCADO_PAGO = "SEND_CART_MERCADO_PAGO";
+
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
@@ -590,6 +592,16 @@ export const addToCartDB = (item, idUser) => {
     }
   };
 };
+
+export const removeOneFromCart = (id) => {
+  return ({
+    type: REMOVE_ONE_FROM_CART,
+    payload: {id:id}
+  })
+}
+
+
+
 
 //Action para el borrado lógico
 export const updateMenuAvailability = (menuId, newAvailability) => {

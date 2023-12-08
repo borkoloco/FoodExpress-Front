@@ -18,3 +18,17 @@
     /* Ocultar el exceso de texto */
     text-overflow: ellipsis;
 }
+
+.addLessButton {
+    padding-right: 0.1em;
+    padding-left: 0.1em;
+    border-radius: 5px;
+    width: 1.3em;
+    height: 1.5em;
+    align-items: center;
+}
+
+.amountView {
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+}
