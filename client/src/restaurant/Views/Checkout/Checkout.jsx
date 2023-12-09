@@ -29,7 +29,7 @@ export const Checkout = () => {
 
   const handleClickPay = async() => {
     try {
-      const response = await dispatch(sendCartToMercadoPago(propertiesReadyToSend));
+      const response = await dispatch(sendCartToMercadoPago({idUser:dataLoginUser.idUser,propertiesReadyToSend}));
       window.location.href = response.payload;
 
       // if(formState.address !== "Select your address"){
