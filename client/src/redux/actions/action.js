@@ -904,8 +904,10 @@ export const getCartByUser = (idUser) => {
 export const sendCartToMercadoPago = (cart) => {
   return async (dispatch) => {
     try {
+      console.log("Envia:",cart);
+      
       const { data } = await axios.post(endPoint + "/create-payment", cart);
-      // console.log(data);
+      console.log("Responde:", data);
       return dispatch({
         type: SEND_CART_MERCADO_PAGO,
         payload: data,
