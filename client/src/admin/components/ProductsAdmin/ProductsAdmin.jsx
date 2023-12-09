@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 
 import { Loading } from "../../../ui/components/Loading/Loading";
 import FormMenuEdit from "../../views/FormMenu/FormMenuEdit";
+import { Filters } from "../../../ui/components/Filters/Filters";
 
 export const ProductsAdmin = () => {
   const navigate = useNavigate();
@@ -114,14 +115,30 @@ export const ProductsAdmin = () => {
           <button className="btn btn-dark mx-3">Edit Categories</button>
         </NavLink>
         {/* Botón para alternar entre la vista activa e inactiva */}
-        <button className="btn btn-info" onClick={handleToggleView}>
+        <button className="btn btn-light" onClick={handleToggleView}>
           {viewInactive ? "View actives " : "View inactives"}
         </button>
+        <button
+          className="btn btn-light mx-3"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >
+          Filters
+        </button>
+      </div>
+      {/* Colapse */}
+      <div className="collapse mt-2" id="collapseExample">
+        <div className="card card-body">
+          <Filters responsive={true} />
+        </div>
       </div>
 
-      {/* Tabla de productos */}
+         {/* Tabla de productos */}
 
-      {isLoading ? (
+         {isLoading ? (
         <Loading />
       ) : (
         ((viewInactive && filteredInactiveMenu.length > 0) ||

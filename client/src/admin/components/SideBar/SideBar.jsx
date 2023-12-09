@@ -29,19 +29,19 @@ export const SideBar = () => {
       <hr className="text-dark" />
       <div className={`${style.list_group} list-group-flush`}>
         <NavLink to="/dashboard/home" className="list-group-item py-2">
-          <span>Home</span>
+          Home
         </NavLink>
         <NavLink to="/dashboard/products" className="list-group-item py-2 ">
-          <span>Products</span>
+          Products
+        </NavLink>
+        {/* <NavLink className="list-group-item py-2">
+          Bookings
+        </NavLink> */}
+        <NavLink className="list-group-item py-2">
+          Customers
         </NavLink>
         <NavLink className="list-group-item py-2">
-          <span>Bookings</span>
-        </NavLink>
-        <NavLink className="list-group-item py-2">
-          <span>Customers</span>
-        </NavLink>
-        <NavLink className="list-group-item py-2">
-          <span>Payments</span>
+          Payments
         </NavLink>
         <NavLink
           to="/dashboard/reviewsaprobation"
@@ -51,7 +51,7 @@ export const SideBar = () => {
           {pendingReviews.length !== 0 && <span>🔴</span>}
         </NavLink>
         <NavLink className="list-group-item py-2">
-          <span>Logout</span>
+          Logout
         </NavLink>
       </div>
     </div>

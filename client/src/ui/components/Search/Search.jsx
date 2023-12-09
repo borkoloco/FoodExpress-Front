@@ -1,8 +1,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { setInput, getMenusByName } from '../../../redux/actions/action'
-import { useEffect } from "react";
-
+import style from "./Search.module.css"
 
 export const Search = () => {
 
@@ -25,9 +24,9 @@ export const Search = () => {
 
 
   return (
-    <div className="d-flex" role="search">
+    <div role="search">
       <input
-        className="form-control "
+        className={`form-control ${style.search} `}
         type="search"
         placeholder="Search"
         aria-label="Search"

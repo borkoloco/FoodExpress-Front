@@ -35,6 +35,9 @@ export const GET_AVDREVIEW_BYIDMENU = "GET_AVDREVIEW_BYIDMENU";
 export const GET_AVGALL = "GET_AVGALL";
 export const GET_CART_BY_USER = "GET_CART_BY_USER";
 export const SEND_CART_MERCADO_PAGO = "SEND_CART_MERCADO_PAGO";
+export const SEND_ADDRESS_BY_USER = "SEND_ADDRESS_BY_USER";
+export const GET_ADDRESS_BY_USER = "GET_ADDRESS_BY_USER";
+
 
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
@@ -909,6 +912,40 @@ export const sendCartToMercadoPago = (cart) => {
       });
     } catch (error) {
       console.log("Error al enviar el carrito a mercado Pago", error.message);
+    }
+  };
+};
+
+
+
+//! GESTIÓN DE DIRECCIÓN
+export const sendAddressByUser = (address,idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(endPoint + `/postdireccion`,{ calle:address,idUser });
+      // console.log(data.carritoItems);
+      
+      return dispatch({
+        type: SEND_ADDRESS_BY_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No se pudo enviar la dirección", error.message);
+    }
+  };
+};
+export const getAddresByUser = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + `/getdireccionbyuser/${idUser}`);
+      // console.log(data.carritoItems);
+      
+      return dispatch({
+        type: GET_ADDRESS_BY_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No se pudo enviar la dirección", error.message);
     }
   };
 };

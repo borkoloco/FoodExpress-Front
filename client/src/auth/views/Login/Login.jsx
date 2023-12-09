@@ -10,13 +10,11 @@ import {
   addToCart,
   addToCartDB,
 } from "../../../redux/actions/action";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { areThereErrors } from "../../../utils/areThereErrors";
 import style from "./Login.module.css";
-
-
-
-
+import eyeOpen from "../../../assets/icons/eye-open.svg";
+import eyeclose from "../../../assets/icons/eye-close.svg";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -26,6 +24,8 @@ export const Login = () => {
     email: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
   const cartItemsDB = useSelector((state) => state.cartItemsDB)
   const cartItems = useSelector((state) => state.cartItems)
   const userAuth = useSelector((state) => state.userAuth)
@@ -56,10 +56,10 @@ export const Login = () => {
 
   }, [cartItemsDB])
 
+
   //Login forma 1
   const handleLoginByUser = () => {
     dispatch(loginByUser(formState));
-
   };
 
   //Login forma 2
@@ -73,10 +73,13 @@ export const Login = () => {
     dispatch(startGoogleAuth());
   };
 
-
   // const handleLogout = () => {
   //   dispatch(startGoogleLogout());
   // };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div
@@ -88,8 +91,9 @@ export const Login = () => {
           <input
             type="email"
             placeholder="Email"
-            className={`form-control ${errors.email ? "is-invalid" : formState.email ? "is-valid" : ""
-              }`}
+            className={`form-control ${
+              errors.email ? "is-invalid" : formState.email ? "is-valid" : ""
+            }`}
             name="email"
             value={formState.email}
             onChange={onInputChange}
@@ -98,28 +102,40 @@ export const Login = () => {
             <p className={`text-danger ${style.errorsSize}`}>{errors.email}</p>
           )}
         </div>
-        <div className="mb-3">
+
+        <div className="input-group">
           <input
-            type="password"
+            type={`${showPassword ? "text" : "password"}`}
             placeholder="Password"
-            className={`form-control ${errors.password
-              ? "is-invalid"
-              : formState.password
+            className={`form-control ${
+              errors.password
+                ? "is-invalid"
+                : formState.password
                 ? "is-valid"
                 : ""
-              }`}
+            }`}
             name="password"
             value={formState.password}
             onChange={onInputChange}
+            aria-label="Amount (to the nearest dollar)"
           />
-          {errors.password && (
-            <p className={`text-danger ${style.errorsSize}`}>
-              {errors.password}
-            </p>
-          )}
+          <span className="input-group-text">
+            <button
+              style={{ border: "none", background: "transparent" }}
+              checked={showPassword}
+              onClick={toggleShowPassword}
+            >
+              <img src={showPassword ? eyeclose : eyeOpen} alt="icon" />
+            </button>
+          </span>
         </div>
+        {errors.password && (
+          <div className={style.containerError}>
+            <p className={`text-danger ${style.errorsSize}`}>{errors.password}</p>
+          </div>
+        )}
 
-        <p className="form-text">
+        <p className="form-text mt-3">
           <a className={`${style.links}`} href="#">
             Forget Password
           </a>
@@ -149,5 +165,3 @@ export const Login = () => {
 };
 
 export default Login;
-
-

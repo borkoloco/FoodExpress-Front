@@ -36,17 +36,12 @@ export const NavBar = () => {
                   Menus
                 </NavLink>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <NavLink className="nav-link" to="/bookings">
                   Bookings
                 </NavLink>
+              </li> */}
 
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link">About</NavLink>
-              </li>
-
-              
               {/* <li className="nav-item">
                 <NavLink className="nav-link" >
                   About

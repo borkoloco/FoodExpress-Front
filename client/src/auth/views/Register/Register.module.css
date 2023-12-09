@@ -27,4 +27,9 @@
     margin-left: 0.5rem;
   }
   
+  .containerError{
+    margin-top: 1px;
+    /* background: gray; */
+  }
+  
   
