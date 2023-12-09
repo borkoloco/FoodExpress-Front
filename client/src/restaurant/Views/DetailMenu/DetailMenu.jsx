@@ -205,7 +205,7 @@ const DetailMenu = () => {
         >
           {reviewsByIdMenu.map((review, index) => (
             <div key={review.idReview}>
-              {review.idStatus !== 1 && (
+              {review.idStatus !== 0 && (
                 <div
                   style={{
                     display: "flex",
@@ -230,7 +230,7 @@ const DetailMenu = () => {
                       </div>
                       <p>Este comentario fue rechazado por el moderador.</p>
                     </div>
-                  ) : (
+                  ) : review.idStatus === 2 ? (
                     <div>
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <div>
@@ -244,6 +244,21 @@ const DetailMenu = () => {
                         </div>
                       </div>
                       <p>{review.comment}</p>
+                    </div>
+                  ) : (
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <div>
+                          <RatingStars
+                            averageRating={review.rate}
+                            iconSize={30}
+                          />
+                        </div>
+                        <div>
+                          <p>{review.date}</p>
+                        </div>
+                      </div>
+                      <p>Comentario pendiente de moderación</p>
                     </div>
                   )}
                 </div>

@@ -16,6 +16,20 @@ export const AdminRoutes = () => {
   const Toggle = () => {
     setToggle(!toggle);
   };
+
+
+  const datauser = JSON.parse(localStorage.getItem('sesion'));
+  console.log("soy data user", datauser)
+  if (!datauser) {
+    return <Navigate to="/" />;
+  }
+  const isAdmin = datauser.idRole === 2;
+
+
+  if (!isAdmin) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className={`container-fluid min-vh-100 ${style.bg_color}`}>
       <div className="row ">

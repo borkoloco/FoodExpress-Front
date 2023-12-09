@@ -2,9 +2,13 @@ import style from "./Comments.module.css";
 import React from "react";
 import { useState } from "react";
 import axios from "axios"
+import { Navigate } from "react-router-dom";
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 export const Comments = () => {
   const datauser = JSON.parse(localStorage.getItem('sesion'));
+  if (!datauser) {
+    return <Navigate to="/" />;
+  }
   const [formData, setFormData] = useState({
     name: datauser.nameUser,
     email: datauser.email,

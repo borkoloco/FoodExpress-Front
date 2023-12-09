@@ -24,25 +24,38 @@ export const Login = () => {
     email: "",
     password: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
-  const cartItemsDB = useSelector((state) => state.cartItemsDB);
-  const cartItems = useSelector((state) => state.cartItems);
-  const userAuth = useSelector((state) => state.userAuth);
+  const cartItemsDB = useSelector((state) => state.cartItemsDB)
+  const cartItems = useSelector((state) => state.cartItems)
+  const userAuth = useSelector((state) => state.userAuth)
+  const userLogued = useSelector((state) => state.userLogued)
+
 
   useEffect(() => {
-    cartItemsDB &&
-      cartItemsDB.length > 0 &&
-      cartItemsDB.map((el) => {
-        dispatch(addToCart(el));
-      });
+
+    cartItemsDB && cartItemsDB.length > 0 && cartItemsDB.map((el) => {
+      dispatch(addToCart(el))
+    })
+
     if (Object.keys(userAuth).length > 0) {
-      cartItems &&
-        cartItems.length > 0 &&
-        cartItems.map((el) => {
-          dispatch(addToCartDB(el, userAuth.data.idUser));
-        });
+
+      cartItems && cartItems.length > 0 && cartItems.map((el) => {
+        dispatch(addToCartDB(el, userAuth.data.idUser))
+      })
     }
-  }, [cartItemsDB]);
+
+    if (Object.keys(userLogued).length > 0) {
+      cartItems && cartItems.length > 0 && cartItems.map((el) => {
+        dispatch(addToCartDB(el, userLogued.idUser))
+      })
+
+    }
+
+
+
+  }, [cartItemsDB])
+
 
   //Login forma 1
   const handleLoginByUser = () => {
@@ -54,7 +67,7 @@ export const Login = () => {
   //   const { email, password } = formState;
   //   dispatch(startLoginWithEmail(email, password));
   // };
-  console.log(userAuth);
+
   //Login con Google
   const handleGoogleAuth = () => {
     dispatch(startGoogleAuth());

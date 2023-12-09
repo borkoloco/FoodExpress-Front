@@ -31,28 +31,3 @@ const RatingStars = ({ averageRating, iconSize }) => {
 };
 
 export default RatingStars;
-
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import {
-//   faStar,
-//   faStarHalf,
-//   faStarEmpty,
-// } from "@fortawesome/free-solid-svg-icons";
-
-// const RatingStars = ({ averageRating }) => {
-//   const stars = [];
-
-//   for (let i = 1; i <= 5; i++) {
-//     if (i <= averageRating) {
-//       stars.push(<FontAwesomeIcon icon={faStar} key={i} />);
-//     } else if (i - 0.5 === averageRating) {
-//       stars.push(<FontAwesomeIcon icon={faStarHalf} key={i} />);
-//     } else {
-//       stars.push(<FontAwesomeIcon icon={faStarEmpty} key={i} />);
-//     }
-//   }
-
-//   return <div>{stars}</div>;
-// };
-
-// export default RatingStars;

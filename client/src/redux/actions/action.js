@@ -4,17 +4,6 @@ import Swal from "sweetalert2";
 import { formatData } from "../../utils/formatData";
 import { firebase, googleAuthProvider, auth } from "../../utils/firebase";
 
-/*
-import menu, { postMenu } from "../../Views/Home/menu";
-import {
-  specialty,
-  typesOfFood,
-  addSpecialty,
-  addTypes,
-} from "../../Views/Home/datosParaFiltros";
-
-*/
-
 export const ALL_MENU = "ALL_MENU";
 export const GET_MENU_DETAIL_BY_ID = "GET_MENU_DETAIL_BY_ID";
 export const CLEAN_DETAIL_MENU = "CLEAN_DETAIL_MENU";
@@ -36,6 +25,7 @@ export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
 export const ADD_TO_CART = "ADD_TO_CART  ";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART"
 export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
 export const ALLREVIEWS = "ALLREVIEWS";
 export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
@@ -49,6 +39,7 @@ export const SEND_ADDRESS_BY_USER = "SEND_ADDRESS_BY_USER";
 export const GET_ADDRESS_BY_USER = "GET_ADDRESS_BY_USER";
 
 
+
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
 // const endPoint = 'http://localhost:3001';
@@ -56,6 +47,7 @@ const endPoint = import.meta.env.VITE_BACKEND_URL;
 //datos en nuestra BD del usuario logueado
 export const user_logued = (email) => {
   return async (dispatch) => {
+    console.log('pasa por aca');
     try {
       const { data } = await axios.get(endPoint + "/users/" + email);
       localStorage.setItem("sesion", JSON.stringify(data));
@@ -66,10 +58,21 @@ export const user_logued = (email) => {
         showConfirmButton: false,
         timer: 2000,
       });
+      
+      const dataCartDB = await axios.get(
+        endPoint + `/getcarrito/${data.idUser}`
+      );
+
+      let formatedDataCartDB = [];
+      ///formatear datos para mandar al estado global
+      dataCartDB.data.carritoItems.map((el) => {
+        formatedDataCartDB.push({ id: el.menu.idMenu, amount: el.cantidad });
+      });
+      const dataTotal = { data: data, dataCartDB: formatedDataCartDB };
       // console.log(data);
       return dispatch({
         type: USERLOGUED,
-        payload: data,
+        payload: dataTotal,
       });
     } catch (error) {
       console.error("Error al obtener el usuario en la BD: ", error.message);
@@ -593,12 +596,21 @@ export const addToCartDB = (item, idUser) => {
   };
 };
 
+export const removeOneFromCart = (id) => {
+  return ({
+    type: REMOVE_ONE_FROM_CART,
+    payload: {id:id}
+  })
+}
+
+
+
+
 //Action para el borrado lógico
-export const updateMenuAvailability = (menuId, newAvailability) => {
-  console.log(menuId, newAvailability);
+export const updateMenuAvailability = (id, newAvailability) => {
   return async (dispatch) => {
     try {
-      const response = await axios.patch(`${endPoint}/menu/${menuId}`, {
+      const response = await axios.patch(`${endPoint}/menu/${id}`, {
         available: newAvailability,
       });
 
@@ -608,7 +620,7 @@ export const updateMenuAvailability = (menuId, newAvailability) => {
 
       dispatch({
         type: UPDATE_MENU_AVAILABILITY,
-        payload: { menuId, newAvailability },
+        payload: { id, newAvailability },
       });
     } catch (error) {
       console.error(
@@ -707,6 +719,12 @@ export const getAllReviews = () => {
         payload: data,
       });
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Tuvimos un error al obtener los reviews",
+        footer: "",
+      });
       console.log("Tuvimos un error al obtener los reviews: " + error.message);
     }
   };
@@ -718,11 +736,24 @@ export const addReview = (value) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(endPoint + "/addreview", value);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Gracias por calificar",
+        showConfirmButton: false,
+        timer: 1800,
+      });
       return dispatch({
         type: "",
         payload: data,
       });
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Tuvimos un error al agregar un review",
+        footer: "",
+      });
       console.log("Tuvimos un error al agregar un review: " + error.message);
     }
   };
@@ -742,6 +773,12 @@ export const updateReviewById = (id, rate, comment) => {
         payload: data,
       });
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No pudimos actualizar tu review",
+        footer: "",
+      });
       console.log("No pudimos actualizar tu review: " + error.message);
     }
   };
@@ -803,7 +840,6 @@ export const getAvgReviewByIdMenu = (id) => {
   };
 };
 
-
 //GET promedios de todos los productos
 export const getAllAvg = () => {
   return async (dispatch) => {
@@ -834,11 +870,16 @@ export const updateReviewStatus = (idReview, idStatus) => {
         payload: data,
       });
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No pudimos aprobar/rechazar el comentario",
+        footer: "",
+      });
       console.log("No pudimos aprobar/rechazar el comentario");
     }
   };
 };
-
 
 //! CARRITO -> CHECKOUT
 /* OBTIENE LOS DATOS DEL CARRITO-TEMPORAL */
@@ -847,20 +888,23 @@ export const getCartByUser = (idUser) => {
     try {
       const { data } = await axios(endPoint + `/getcarrito/${idUser}`);
       // console.log(data.carritoItems);
-      
+
       return dispatch({
         type: GET_CART_BY_USER,
         payload: data.carritoItems,
       });
     } catch (error) {
-      console.log("No se pudo obtener el carrito de ese usuario", error.message);
+      console.log(
+        "No se pudo obtener el carrito de ese usuario",
+        error.message
+      );
     }
   };
 };
 export const sendCartToMercadoPago = (cart) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(endPoint + "/create-payment",cart );
+      const { data } = await axios.post(endPoint + "/create-payment", cart);
       // console.log(data);
       return dispatch({
         type: SEND_CART_MERCADO_PAGO,
@@ -869,7 +913,7 @@ export const sendCartToMercadoPago = (cart) => {
     } catch (error) {
       console.log("Error al enviar el carrito a mercado Pago", error.message);
     }
-  }
+  };
 };
 
 

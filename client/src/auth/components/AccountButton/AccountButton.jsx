@@ -26,9 +26,9 @@ export const AccountButton = () => {
 
   /* Cierra sesión y redirige a "/login"  */
   const handleLogout = () => {
-      dispatch(logoutByUser());       //limpia el estado global userLogued y userAuth
-      dispatch(startGoogleLogout());  //limpia el uid, displaName y displayEmail por si acaso
-      navigate("/login");
+    dispatch(logoutByUser());       //limpia el estado global userLogued y userAuth
+    dispatch(startGoogleLogout());  //limpia el uid, displaName y displayEmail por si acaso
+    navigate("/login");
   }
 
   /* Luego de autenticarse manual o con google te redirige a "/home" */
@@ -38,6 +38,7 @@ export const AccountButton = () => {
     }
   }, [userAuth]);
   useEffect(() => {
+
     if (validateSesion(userLogued)) {
       navigate("/home");
     }
@@ -66,13 +67,13 @@ export const AccountButton = () => {
           </button>
           <ul className="dropdown-menu dropdown-menu-end">
             {
-              dataLoginUser.idRole === 2 && ( <li>
+              dataLoginUser.idRole === 2 && (<li>
                 <NavLink to="/dashboard">
                   <button className="dropdown-item" type="button">
                     DashBoard
                   </button>
                 </NavLink>
-              </li> )
+              </li>)
             }
             <li>
               <button className="dropdown-item" type="button">
