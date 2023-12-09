@@ -25,6 +25,7 @@ export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
 export const ADD_TO_CART = "ADD_TO_CART  ";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART"
 export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
 export const ALLREVIEWS = "ALLREVIEWS";
 export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
@@ -35,6 +36,7 @@ export const GET_AVGALL = "GET_AVGALL";
 export const GET_CART_BY_USER = "GET_CART_BY_USER";
 export const SEND_CART_MERCADO_PAGO = "SEND_CART_MERCADO_PAGO";
 
+
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
 // const endPoint = 'http://localhost:3001';
@@ -42,6 +44,7 @@ const endPoint = import.meta.env.VITE_BACKEND_URL;
 //datos en nuestra BD del usuario logueado
 export const user_logued = (email) => {
   return async (dispatch) => {
+    console.log('pasa por aca');
     try {
       const { data } = await axios.get(endPoint + "/users/" + email);
       localStorage.setItem("sesion", JSON.stringify(data));
@@ -52,10 +55,21 @@ export const user_logued = (email) => {
         showConfirmButton: false,
         timer: 2000,
       });
+      
+      const dataCartDB = await axios.get(
+        endPoint + `/getcarrito/${data.idUser}`
+      );
+
+      let formatedDataCartDB = [];
+      ///formatear datos para mandar al estado global
+      dataCartDB.data.carritoItems.map((el) => {
+        formatedDataCartDB.push({ id: el.menu.idMenu, amount: el.cantidad });
+      });
+      const dataTotal = { data: data, dataCartDB: formatedDataCartDB };
       // console.log(data);
       return dispatch({
         type: USERLOGUED,
-        payload: data,
+        payload: dataTotal,
       });
     } catch (error) {
       console.error("Error al obtener el usuario en la BD: ", error.message);
@@ -578,6 +592,16 @@ export const addToCartDB = (item, idUser) => {
     }
   };
 };
+
+export const removeOneFromCart = (id) => {
+  return ({
+    type: REMOVE_ONE_FROM_CART,
+    payload: {id:id}
+  })
+}
+
+
+
 
 //Action para el borrado lógico
 export const updateMenuAvailability = (id, newAvailability) => {

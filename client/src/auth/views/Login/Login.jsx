@@ -29,6 +29,7 @@ export const Login = () => {
   const cartItemsDB = useSelector((state) => state.cartItemsDB)
   const cartItems = useSelector((state) => state.cartItems)
   const userAuth = useSelector((state) => state.userAuth)
+  const userLogued = useSelector((state) => state.userLogued)
 
 
   useEffect(() => {
@@ -36,6 +37,7 @@ export const Login = () => {
     cartItemsDB && cartItemsDB.length > 0 && cartItemsDB.map((el) => {
       dispatch(addToCart(el))
     })
+
     if (Object.keys(userAuth).length > 0) {
 
       cartItems && cartItems.length > 0 && cartItems.map((el) => {
@@ -43,6 +45,12 @@ export const Login = () => {
       })
     }
 
+    if (Object.keys(userLogued).length > 0) {
+      cartItems && cartItems.length > 0 && cartItems.map((el) => {
+        dispatch(addToCartDB(el, userLogued.idUser))
+      })
+
+    }
 
 
 
@@ -59,7 +67,7 @@ export const Login = () => {
   //   const { email, password } = formState;
   //   dispatch(startLoginWithEmail(email, password));
   // };
-  console.log(userAuth);
+
   //Login con Google
   const handleGoogleAuth = () => {
     dispatch(startGoogleAuth());

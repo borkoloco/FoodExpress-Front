@@ -18,6 +18,7 @@ export const AddCart = ({ amount, id }) => {
   const [cartProducts, setCartProducts] = useLocalStorage("cart", []);
   const [showAlert, setShowAlert] = useState(false);
   const userAuth = useSelector((state) => state.userAuth)
+  const userLogued = useSelector((state) => state.userLogued)
 
   const addInput = () => {
     const data = { id: parseInt(id), amount: parseInt(amount) };
@@ -53,6 +54,10 @@ export const AddCart = ({ amount, id }) => {
       dispatch(addToCartDB(data, userAuth.data.idUser))
     }
 
+    if (Object.keys(userLogued).length > 0) {
+      dispatch(addToCartDB(data, userLogued.idUser))
+    }
+
     /* Esto es para desplegar una pequeña alerta abajo a la derecha
     cuando se agrega algo al carrito */
     toast.success('Added to cart successfully', {
@@ -64,7 +69,7 @@ export const AddCart = ({ amount, id }) => {
       draggable: false,
       progress: undefined,
       theme: "dark",
-      });
+    });
   };
 
   return (
@@ -72,7 +77,7 @@ export const AddCart = ({ amount, id }) => {
       <button className={`${style.btnAdd}`} onClick={addInput}>
         Add to Cart
       </button>
-      
+
     </div>
   );
 };

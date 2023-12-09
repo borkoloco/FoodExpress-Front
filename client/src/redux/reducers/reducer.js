@@ -29,6 +29,7 @@ import {
   GET_CART_BY_USER,
   GET_AVGALL,
   SEND_CART_MERCADO_PAGO,
+  REMOVE_ONE_FROM_CART,
 
 } from "../actions/action";
 
@@ -94,7 +95,8 @@ const rootReducer = (state = initialState, action) => {
     case USERLOGUED:
       return {
         ...state,
-        userLogued: payload,
+        userLogued: payload.data,
+        cartItemsDB:payload.dataCartDB
       };
     case LOGIN:
       return {
@@ -299,6 +301,32 @@ const rootReducer = (state = initialState, action) => {
           cartItems: updatedCart,
         };
       }
+
+    case REMOVE_ONE_FROM_CART:
+      const { id } = payload
+      console.log(id);
+      // Buscar el índice del producto en el array
+      const productIndex = state.cartItems.findIndex(product => product.id === id);
+
+      if (productIndex !== -1) {
+        // Copiar el array de productos para no mutar el estado directamente
+        const updatedCart = [...state.cartItems];
+
+        // Reducir en 1 el amount del producto con el id especificado
+        updatedCart[productIndex] = {
+          ...updatedCart[productIndex],
+          amount: Math.max(updatedCart[productIndex].amount - 1, 0)
+        };
+
+        return {
+          ...state,
+          cartItems: updatedCart
+        };
+      }
+      // Si el producto con el id especificado no se encuentra, devolver el estado actual
+      return state;
+      
+
 
     // borrado logico
     case UPDATE_MENU_AVAILABILITY:

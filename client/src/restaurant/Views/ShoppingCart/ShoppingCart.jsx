@@ -83,8 +83,8 @@ const ShoppingCart = () => {
                     <tr>
                       <th scope="col">Product</th>
                       <th scope="col">Price</th>
-                      <th scope="col">Quantity</th>
                       <th scope="col">Subtotal</th>
+                      <th scope="col">Quantity</th>
                       <th scope="col">Remove</th>
                     </tr>
                   </thead>

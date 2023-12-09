@@ -8,7 +8,7 @@ export const CartButton = () => {
 
   const cartItems = useSelector(state => state.cartItems);
 
-  const totalAmount = cartItems.reduce((acc, item) => acc + item.amount, 0);
+  const totalAmount = cartItems.length;
   return (
     <>
       <button type="button" className={`${style.btnCart} position-relative`}>
