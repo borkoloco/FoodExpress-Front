@@ -3,6 +3,7 @@ import style from './CartItem.module.css'
 import {
   cleanDetailMenu,
   getMenuDetailById,
+  removeFromCartDB,
   removeOneFromCart,
 } from "../../../redux/actions/action";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,6 +30,18 @@ export const CartItem = ({ id, amount, description, nameMenu, price, specialtyMe
     console.log(updatedProducts);
 
     dispatch(removeFromCart(prueba))
+    if (Object.keys(userAuth).length > 0) {
+      const newAmount = 0
+
+      dispatch(removeFromCartDB(userAuth.data.idUser, id, 0))
+      // dispatch(addToCartDB(data, userAuth.data.idUser))
+    }
+
+    if (Object.keys(userLogued).length > 0) {
+      const newAmount = 0
+      dispatch(removeFromCartDB(userLogued.idUser, id, 0))
+      // dispatch(addToCartDB(data, userLogued.idUser))
+    }
 
 
   }
@@ -73,11 +86,23 @@ export const CartItem = ({ id, amount, description, nameMenu, price, specialtyMe
   };
 
   const removeInput = () => {
+    if (Object.keys(userAuth).length > 0) {
+      const newAmount = amount - 1
+
+      dispatch(removeFromCartDB(userAuth.data.idUser, id, newAmount))
+    }
+
+    if (Object.keys(userLogued).length > 0) {
+      const newAmount = amount - 1
+      dispatch(removeFromCartDB(userLogued.idUser, id, newAmount))
+    }
     if (amount === 1) {
       removeButton()
+
     }
-    if (amount > 0) {
+    if (amount > 1) {
       dispatch(removeOneFromCart(id))
+
     }
   }
 

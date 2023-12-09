@@ -17,6 +17,7 @@ import { Comments } from "../components/Comments/Comments";
 import { Checkout } from "../Views/Checkout/Checkout";
 import { Booking } from "../Views/Booking/Booking";
 import ReviewUser from "../Views/Reviews/ReviewUser";
+import EditProfile from "../Views/EditProfile/EditProfile";
 export const RestaurantRoutes = () => {
   const dispatch = useDispatch();
   const [checking, setChecking] = useState(true);
@@ -50,6 +51,7 @@ export const RestaurantRoutes = () => {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/editProfile" element={<EditProfile />} />
 
         <Route path="/comments" element={<Comments />} />
         <Route path="/checkout" element={<Checkout />} />

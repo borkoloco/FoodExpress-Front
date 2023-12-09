@@ -600,6 +600,23 @@ export const removeOneFromCart = (id) => {
   })
 }
 
+export const removeFromCartDB = (idUser, idMenu, amount) => {
+  return async () => {
+    
+    try {
+      if (amount === 0) {
+        const data = await axios.patch(`${endPoint}/carrito/update/${idUser}/${idMenu}`)
+        console.log(data);
+        
+      }
+      const formatedData = { "cantidad": amount }
+      const data = await axios.patch(`${endPoint}/carrito/update/${idUser}/${idMenu}`, formatedData)
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+}
 
 
 
