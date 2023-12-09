@@ -85,6 +85,13 @@ export const AccountButton = () => {
               </button>
             </li>
             <li>
+              <NavLink className={style.textDecoration} to="/address">
+                <button className="dropdown-item" type="button">
+                  Address
+                </button>
+              </NavLink>
+            </li>
+            <li>
               <button onClick={handleLogout} className="dropdown-item" type="button">
                 <strong>Logout</strong>
               </button>

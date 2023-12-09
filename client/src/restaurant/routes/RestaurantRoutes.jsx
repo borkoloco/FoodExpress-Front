@@ -16,6 +16,7 @@ import { Footer } from "../../ui/components/Footer/Footer";
 import { Comments } from "../components/Comments/Comments";
 import { Checkout } from "../Views/Checkout/Checkout";
 import { Booking } from "../Views/Booking/Booking";
+import { AddressPage } from "../Views/Address/AddressPage";
 
 export const RestaurantRoutes = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ export const RestaurantRoutes = () => {
         <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/bookings" element={<Booking />} />
+        <Route path="/address" element={<AddressPage />} />
 
         {/*Añade más rutas aqui...  */}
         <Route path="/*" element={<Navigate to="/" />} />

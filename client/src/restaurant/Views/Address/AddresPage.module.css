@@ -1,0 +1,16 @@
+
+.containerHeader {
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+.containerAddressPage{
+    /* background: gray; */
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
