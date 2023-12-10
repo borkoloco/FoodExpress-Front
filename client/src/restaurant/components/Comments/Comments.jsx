@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios"
 import { Navigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 export const Comments = () => {
   const datauser = JSON.parse(localStorage.getItem('sesion'));
@@ -31,7 +33,11 @@ export const Comments = () => {
   
       const response = await axios.post(endPoint + "/sendEmail", formData);
 
-      console.log("Server response:", response.data);
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Your comment has been submitted successfully.",
+      });
 
       setFormData({
         name: datauser.nameUser,
@@ -39,7 +45,11 @@ export const Comments = () => {
         comment: "",
       });
     } catch (error) {
-      console.error("Error submitting form:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong. Please try again later.",
+      });
     }
   };
 
