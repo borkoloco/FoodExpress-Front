@@ -29,7 +29,10 @@ import {
   GET_CART_BY_USER,
   GET_AVGALL,
   SEND_CART_MERCADO_PAGO,
+  SEND_ADDRESS_BY_USER,
+  GET_ADDRESS_BY_USER,
   REMOVE_ONE_FROM_CART,
+
 
 } from "../actions/action";
 
@@ -63,6 +66,7 @@ const initialState = {
   reviewsAvgAll: [],
   cartBDTemp: [],
   linkMercadoPago: "",
+  address:[]
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -343,6 +347,7 @@ const rootReducer = (state = initialState, action) => {
         }),
       };
 
+    /** OBTENER CARRITO PREVIO AL ENVIO A LA PASARELA */
     case GET_CART_BY_USER:
       return {
         ...state,
@@ -353,6 +358,19 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         linkMercadoPago: payload,
+      };
+
+
+    /* GESTION DE DIRECCIÓN */
+    case SEND_ADDRESS_BY_USER:
+      return {
+        ...state,
+        address: [...address,payload],
+      };
+    case GET_ADDRESS_BY_USER:
+      return {
+        ...state,
+        address: payload,
       };
 
     

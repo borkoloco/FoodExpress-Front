@@ -35,6 +35,9 @@ export const GET_AVDREVIEW_BYIDMENU = "GET_AVDREVIEW_BYIDMENU";
 export const GET_AVGALL = "GET_AVGALL";
 export const GET_CART_BY_USER = "GET_CART_BY_USER";
 export const SEND_CART_MERCADO_PAGO = "SEND_CART_MERCADO_PAGO";
+export const SEND_ADDRESS_BY_USER = "SEND_ADDRESS_BY_USER";
+export const GET_ADDRESS_BY_USER = "GET_ADDRESS_BY_USER";
+
 
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
@@ -621,11 +624,10 @@ export const removeFromCartDB = (idUser, idMenu, amount) => {
 
 
 //Action para el borrado lógico
-export const updateMenuAvailability = (menuId, newAvailability) => {
-  console.log(menuId, newAvailability);
+export const updateMenuAvailability = (id, newAvailability) => {
   return async (dispatch) => {
     try {
-      const response = await axios.patch(`${endPoint}/menu/${menuId}`, {
+      const response = await axios.patch(`${endPoint}/menu/${id}`, {
         available: newAvailability,
       });
 
@@ -635,7 +637,7 @@ export const updateMenuAvailability = (menuId, newAvailability) => {
 
       dispatch({
         type: UPDATE_MENU_AVAILABILITY,
-        payload: { menuId, newAvailability },
+        payload: { id, newAvailability },
       });
     } catch (error) {
       console.error(
@@ -855,7 +857,6 @@ export const getAvgReviewByIdMenu = (id) => {
   };
 };
 
-
 //GET promedios de todos los productos
 export const getAllAvg = () => {
   return async (dispatch) => {
@@ -897,7 +898,6 @@ export const updateReviewStatus = (idReview, idStatus) => {
   };
 };
 
-
 //! CARRITO -> CHECKOUT
 /* OBTIENE LOS DATOS DEL CARRITO-TEMPORAL */
 export const getCartByUser = (idUser) => {
@@ -905,21 +905,26 @@ export const getCartByUser = (idUser) => {
     try {
       const { data } = await axios(endPoint + `/getcarrito/${idUser}`);
       // console.log(data.carritoItems);
-      
+
       return dispatch({
         type: GET_CART_BY_USER,
         payload: data.carritoItems,
       });
     } catch (error) {
-      console.log("No se pudo obtener el carrito de ese usuario", error.message);
+      console.log(
+        "No se pudo obtener el carrito de ese usuario",
+        error.message
+      );
     }
   };
 };
 export const sendCartToMercadoPago = (cart) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(endPoint + "/create-payment",cart );
-      // console.log(data);
+      console.log("Envia:",cart);
+      
+      const { data } = await axios.post(endPoint + "/create-payment", cart);
+      console.log("Responde:", data);
       return dispatch({
         type: SEND_CART_MERCADO_PAGO,
         payload: data,
@@ -927,5 +932,39 @@ export const sendCartToMercadoPago = (cart) => {
     } catch (error) {
       console.log("Error al enviar el carrito a mercado Pago", error.message);
     }
-  }
+  };
+};
+
+
+
+//! GESTIÓN DE DIRECCIÓN
+export const sendAddressByUser = (address,idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(endPoint + `/postdireccion`,{ calle:address,idUser });
+      // console.log(data.carritoItems);
+      
+      return dispatch({
+        type: SEND_ADDRESS_BY_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No se pudo enviar la dirección", error.message);
+    }
+  };
+};
+export const getAddresByUser = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + `/getdireccionbyuser/${idUser}`);
+      // console.log(data.carritoItems);
+      
+      return dispatch({
+        type: GET_ADDRESS_BY_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No se pudo enviar la dirección", error.message);
+    }
+  };
 };

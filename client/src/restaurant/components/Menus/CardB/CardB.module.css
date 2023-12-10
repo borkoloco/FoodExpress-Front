@@ -6,7 +6,7 @@
     border-radius: 8px;
     overflow: hidden;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
-    width: 25rem;
+    width: auto;
     height: auto;
   }
   
@@ -17,7 +17,7 @@
   
   .containerImage {
     height: auto;
-    width: 40%;
+    width: 30%;
   }
   
   .cardImage {
@@ -30,7 +30,7 @@
   .containerElements {
 
     padding: 15px;
-    width: 60%;
+    width: 70%;
   }
   
   .title {
@@ -40,7 +40,7 @@
   }
   
   .categories {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #666;
     font-style: italic;
   }
@@ -51,11 +51,11 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    -webkit-line-clamp: 3; /* Limita el texto a 3 líneas */
+    -webkit-line-clamp: 2; /* Limita el texto a 3 líneas */
     margin-top: 10px;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     color: #666;
-    height: 4rem;
+    height: 2rem;
   }
   
   .endElements {

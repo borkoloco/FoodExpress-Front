@@ -23,7 +23,7 @@ export const AdminRoutes = () => {
   if (!datauser) {
     return <Navigate to="/" />;
   }
-  const isAdmin = datauser.email === 'admin@admin.com';
+  const isAdmin = datauser.idRole === 2;
 
 
   if (!isAdmin) {

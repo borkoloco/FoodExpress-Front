@@ -16,8 +16,12 @@ import { Footer } from "../../ui/components/Footer/Footer";
 import { Comments } from "../components/Comments/Comments";
 import { Checkout } from "../Views/Checkout/Checkout";
 import { Booking } from "../Views/Booking/Booking";
+import { AddressPage } from "../Views/Address/AddressPage";
 import ReviewUser from "../Views/Reviews/ReviewUser";
 import EditProfile from "../Views/EditProfile/EditProfile";
+
+
+
 export const RestaurantRoutes = () => {
   const dispatch = useDispatch();
   const [checking, setChecking] = useState(true);
@@ -57,7 +61,10 @@ export const RestaurantRoutes = () => {
         <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/bookings" element={<Booking />} />
+
+        <Route path="/address" element={<AddressPage />} />
         <Route path="/reviewuser" element={<ReviewUser />} />
+
 
         {/*Añade más rutas aqui...  */}
         <Route path="/*" element={<Navigate to="/" />} />

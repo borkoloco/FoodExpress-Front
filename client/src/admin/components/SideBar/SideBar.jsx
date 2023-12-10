@@ -1,6 +1,26 @@
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import style from "./SideBar.module.css";
+import { getAllReviews } from "../../../redux/actions/action";
+
 export const SideBar = () => {
+  const dispatch = useDispatch();
+  const allreviews = useSelector((state) => state.allreviews);
+  const [pendingReviews, setPendingReviews] = useState([]);
+
+  useEffect(() => {
+    dispatch(getAllReviews());
+  }, []);
+
+  useEffect(() => {
+    // Filtra los comentarios con estado "Pendiente"
+    const filteredReviews = allreviews.filter(
+      (review) => review.idStatus === 1
+    );
+    setPendingReviews(filteredReviews);
+  }, [allreviews]);
+
   return (
     <div className="bg-white sidebar p-2">
       <div className="m-2">
@@ -9,28 +29,29 @@ export const SideBar = () => {
       <hr className="text-dark" />
       <div className={`${style.list_group} list-group-flush`}>
         <NavLink to="/dashboard/home" className="list-group-item py-2">
-          <span>Home</span>
+          Home
         </NavLink>
         <NavLink to="/dashboard/products" className="list-group-item py-2 ">
-          <span>Products</span>
+          Products
+        </NavLink>
+        {/* <NavLink className="list-group-item py-2">
+          Bookings
+        </NavLink> */}
+        <NavLink className="list-group-item py-2">
+          Customers
         </NavLink>
         <NavLink className="list-group-item py-2">
-          <span>Bookings</span>
-        </NavLink>
-        <NavLink className="list-group-item py-2">
-          <span>Customers</span>
-        </NavLink>
-        <NavLink className="list-group-item py-2">
-          <span>Payments</span>
+          Payments
         </NavLink>
         <NavLink
           to="/dashboard/reviewsaprobation"
           className="list-group-item py-2"
         >
           <span>Moderation</span>
+          {pendingReviews.length !== 0 && <span>🔴</span>}
         </NavLink>
         <NavLink className="list-group-item py-2">
-          <span>Logout</span>
+          Logout
         </NavLink>
       </div>
     </div>

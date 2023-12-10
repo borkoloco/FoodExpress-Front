@@ -63,7 +63,11 @@ function ReviewsAprobation() {
           <tbody>
             {pendingReviews.map((review) => (
               <tr key={review.idReview}>
-                <td>{review.reviewStatus.statusDescription}</td>
+                <td>
+                  {review.reviewStatus
+                    ? review.reviewStatus.statusDescription
+                    : "error?"}
+                </td>
                 <td
                   style={{
                     maxWidth: "250px",

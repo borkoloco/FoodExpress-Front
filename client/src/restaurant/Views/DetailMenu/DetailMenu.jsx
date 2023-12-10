@@ -15,17 +15,18 @@ import { Loading } from "../../../ui/components/Loading/Loading";
 import RatingStars from "../../components/Reviews/RatingUtensil";
 import { getAvgReviewByIdMenu } from "../../../redux/actions/action";
 import { ToastContainer, toast } from "react-toastify";
-
+import { FaWhatsapp } from "react-icons/fa";
+import { sendWhatsApp } from "../../../utils/links";
 
 const DetailMenu = () => {
   const { id } = useParams();
-
   const menuDetail = useSelector((state) => state.menuDetail);
   const reviewAVGbyIdMenu = useSelector((state) => state.reviewAVGbyIdMenu);
   const reviewsByIdMenu = useSelector((state) => state.reviewsByIdMenu);
-
   const dispatch = useDispatch();
   const [amountValue, setAmountValue] = useState(1);
+  const [cartProducts, setCartProducts] = useLocalStorage("cart", "[]");
+  const phoneNumber = "543408674244";
 
   useEffect(() => {
     dispatch(getMenuDetailById(id));
@@ -44,8 +45,14 @@ const DetailMenu = () => {
   //   console.log(amountValue);
   // }, [amountValue]);
 
-  const [cartProducts, setCartProducts] = useLocalStorage("cart", "[]");
+  const handleClick = () => {
+    const message = `Hola Food Express, estoy interesado en el siguiente producto: %0A Nombre: ${menuDetail.nameMenu} %0A Descripción: ${menuDetail.description}%0A Precio: $${menuDetail.price} %0A ${menuDetail.imageUrl}`;
+    sendWhatsApp(phoneNumber, message);
+  };
 
+  // const handleClick = () => {
+  //   sendWhatsApp(phoneNumber, message);
+  // };
   return (
     <>
       <div className={style.containerHeader}>
@@ -173,11 +180,28 @@ const DetailMenu = () => {
                   defaultValue={amountValue}
                 />
               </label>
-
-              <div className={style.containerAddCart}>
-                <AddCart amount={amountValue} id={id} />
+              <div
+                style={{
+                  display: "flex",
+                  //justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <div className={style.containerAddCart}>
+                  <AddCart amount={amountValue} id={id} />
+                </div>
+                {"  "}
+                <div className={style.containerAddCart}>
+                  <FaWhatsapp
+                    onClick={handleClick}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "2em",
+                      color: "#25D366",
+                    }}
+                  />
+                </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -282,7 +306,6 @@ const DetailMenu = () => {
         pauseOnHover
         theme="dark"
       />
-      
     </>
   );
 };
