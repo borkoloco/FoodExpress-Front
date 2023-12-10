@@ -19,7 +19,7 @@ export const AdminRoutes = () => {
 
 
   const datauser = JSON.parse(localStorage.getItem('sesion'));
-  console.log("soy data user", datauser)
+  // console.log("soy data user", datauser)
   if (!datauser) {
     return <Navigate to="/" />;
   }

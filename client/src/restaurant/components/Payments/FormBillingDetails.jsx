@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAddresByUser } from "../../../redux/actions/action";
+import { AddressSelect } from "../AddressSelect/AddressSelect";
 
 export const FormBillingDetails = ({ dataUser, formState, onInputChange }) => {
   const dispatch = useDispatch();
@@ -56,9 +57,9 @@ export const FormBillingDetails = ({ dataUser, formState, onInputChange }) => {
           </div>
         </div> */}
 
-        {/* {address.direcciones && (
-          <AddressComponent address={address} formState={formState} onInputChange={onInputChange} />
-        )} */}
+        {address.direcciones && (
+          <AddressSelect formState={formState} onInputChange={onInputChange} />
+        )}
 
         <h3>Additional Information</h3>
         <hr />
