@@ -4,6 +4,7 @@ import { Modal } from "../../../ui/components/Modal/Modal";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteAddresUserById,
   getAddresByUser,
   sendAddressByUser,
 } from "../../../redux/actions/action";
@@ -16,7 +17,9 @@ export const AddressPage = () => {
   const dataLoginUser = JSON.parse(localStorage.getItem("sesion"));
   // const authenticated = validateSesion(dataLoginUser);
   const [loading, setLoading] = useState(false);
-  const { formState, onInputChange,setFormState, errors } = useForm({ address: "" });
+  const { formState, onInputChange, setFormState, errors } = useForm({
+    address: "",
+  });
 
   const getAllAddress = async () => {
     await dispatch(getAddresByUser(dataLoginUser.idUser));
@@ -28,10 +31,17 @@ export const AddressPage = () => {
   }, []);
 
   const handleClick = async () => {
-    setLoading(true);
+    // setLoading(false);
     await dispatch(sendAddressByUser(formState.address, dataLoginUser.idUser));
     getAllAddress();
     setFormState({ address: "" });
+  };
+
+  const handleRemove = async (event) => {
+    const idAddress = event.target.value;
+    // setLoading(false);
+    await dispatch(deleteAddresUserById(dataLoginUser.idUser, idAddress));
+    getAllAddress();
   };
 
   return (
@@ -46,15 +56,25 @@ export const AddressPage = () => {
         <div>
           {/* direcciones */}
           {loading ? (
-            address.direcciones.length > 0 ? (
+            address && address.direcciones && address.direcciones.length > 0 ? (
               address.direcciones.map((e, index) => (
                 <div key={index} className={style.groupAddress}>
                   <span className={style.titleAdress}>{e.calle}</span>
-                  <button className="btn btn-danger">Remove</button>
+                  <button
+                    value={e.idDireccion}
+                    onClick={(e) => handleRemove(e)}
+                    className="btn btn-danger"
+                  >
+                    Remove
+                  </button>
                 </div>
               ))
             ) : (
-              <p>There are no addresses. Please add some</p>
+              <p>
+                {!address || !address.direcciones
+                  ? "There is nothing to show"
+                  : "There are no addresses. Please add some"}
+              </p>
             )
           ) : (
             <Loading2 />
@@ -62,6 +82,8 @@ export const AddressPage = () => {
           <hr />
 
           {/* Añadir nueva direccion */}
+
+          
           <div>
             <Modal
               id="modal1"

@@ -37,6 +37,7 @@ export const GET_CART_BY_USER = "GET_CART_BY_USER";
 export const SEND_CART_MERCADO_PAGO = "SEND_CART_MERCADO_PAGO";
 export const SEND_ADDRESS_BY_USER = "SEND_ADDRESS_BY_USER";
 export const GET_ADDRESS_BY_USER = "GET_ADDRESS_BY_USER";
+export const DETELE_ADRRES_BY_USER = "DETELE_ADRRES_BY_USER";
 
 
 
@@ -957,14 +958,29 @@ export const getAddresByUser = (idUser) => {
   return async (dispatch) => {
     try {
       const { data } = await axios(endPoint + `/getdireccionbyuser/${idUser}`);
-      // console.log(data.carritoItems);
+      // console.log(data);
       
       return dispatch({
         type: GET_ADDRESS_BY_USER,
         payload: data,
       });
     } catch (error) {
-      console.log("No se pudo enviar la dirección", error.message);
+      console.log("No se pudo obtener la dirección", error.message);
+    }
+  };
+};
+export const deleteAddresUserById = (idUser,idAddress) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(endPoint + `/deletedirebyid/${idUser}/${idAddress}`);
+  
+      
+      return dispatch({
+        type: DETELE_ADRRES_BY_USER,
+        // payload: data,
+      });
+    } catch (error) {
+      console.log("No se pudo eliminar la dirección", error.message);
     }
   };
 };
