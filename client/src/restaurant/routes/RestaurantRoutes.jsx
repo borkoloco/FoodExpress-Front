@@ -19,6 +19,7 @@ import { Booking } from "../Views/Booking/Booking";
 import { AddressPage } from "../Views/Address/AddressPage";
 import ReviewUser from "../Views/Reviews/ReviewUser";
 import EditProfile from "../Views/EditProfile/EditProfile";
+import { SuccessPayment } from "../Views/SuccessPay/Success";
 
 
 
@@ -64,6 +65,7 @@ export const RestaurantRoutes = () => {
 
         <Route path="/address" element={<AddressPage />} />
         <Route path="/reviewuser" element={<ReviewUser />} />
+        <Route path="/success" element={<SuccessPayment />} />
 
 
         {/*Añade más rutas aqui...  */}

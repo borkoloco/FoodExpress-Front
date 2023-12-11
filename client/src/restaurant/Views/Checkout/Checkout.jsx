@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { BackButton } from "../../../ui/components/BackButton/BackButton";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Checkout.module.css";
-import { getCartByUser, sendAddressByUser, sendCartToMercadoPago } from "../../../redux/actions/action";
+import { getCartByUser, sendCartToMercadoPago } from "../../../redux/actions/action";
 import { TableYourOrder } from "../../components/Payments/TableYourOrder";
 import { validateSesion } from "../../../utils/validateSesion";
 import { FormBillingDetails } from "../../components/Payments/FormBillingDetails";
@@ -12,7 +12,6 @@ import Swal from "sweetalert2";
 export const Checkout = () => {
   const dispatch = useDispatch();
   const cartBDTemp = useSelector((state) => state.cartBDTemp);
-  const address = useSelector((state) => state.address);
   const dataLoginUser = JSON.parse(localStorage.getItem("sesion"));
   const authenticated = validateSesion(dataLoginUser); //True: autenticado; false: no autenticado
 
@@ -29,18 +28,19 @@ export const Checkout = () => {
 
   const handleClickPay = async() => {
     try {
-      const response = await dispatch(sendCartToMercadoPago({idUser:dataLoginUser.idUser,propertiesReadyToSend}));
-      window.location.href = response.payload;
-
-      // if(formState.address !== "Select your address"){
-      //   dispatch(sendAddressByUser(formState.address,dataLoginUser.idUser))
-      // }else {
-      //   Swal.fire({
-      //     icon: "warning",
-      //     title: "Address required",
-      //     text: "Please! Select your address",
-      //   });
-      // }
+      if(formState.address !== "Select Address" && formState.address !== ""){
+        const response = await dispatch(sendCartToMercadoPago({idUser:dataLoginUser.idUser,propertiesReadyToSend}));
+        window.location.href = response.payload;
+      
+        console.log("Enviando a mercado pago");
+        
+      }else {
+        Swal.fire({
+          icon: "warning",
+          title: "Address required",
+          text: "Please! Select your address",
+        });
+      }
       
     } catch (error) {
       console.log('Error al procesar el pago:', error.message);
