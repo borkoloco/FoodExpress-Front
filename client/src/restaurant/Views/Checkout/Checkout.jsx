@@ -29,8 +29,8 @@ export const Checkout = () => {
   const handleClickPay = async() => {
     try {
       if(formState.address !== "Select Address" && formState.address !== ""){
-        // const response = await dispatch(sendCartToMercadoPago({idUser:dataLoginUser.idUser,propertiesReadyToSend}));
-        // window.location.href = response.payload;
+        const response = await dispatch(sendCartToMercadoPago({idUser:dataLoginUser.idUser,propertiesReadyToSend}));
+        window.location.href = response.payload;
       
         console.log("Enviando a mercado pago");
         

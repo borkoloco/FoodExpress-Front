@@ -8,7 +8,7 @@ export const EmptyCart = () => {
         <div className="alert alert-warning px-5" role="alert">
         ⚠ Your cart is empty
         </div>
-        <NavLink to="/home"><button className="btn ">Return to the store</button></NavLink>
+        <NavLink to="/menus"><button className="btn ">Return to the store</button></NavLink>
     </div>
   );
 };
