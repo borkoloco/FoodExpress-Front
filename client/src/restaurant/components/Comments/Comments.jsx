@@ -57,6 +57,7 @@ export const Comments = () => {
     <div className={style.containerCardComments}>
       <p className={style.description}>
         We would love to hear your opinion. <br></br>Please leave your comment below<br></br> and feel free to share anything you find necessary.
+        
       </p>
       <div className={style["card"]}>
         <span className={style.title}>Leave a Comment</span>
