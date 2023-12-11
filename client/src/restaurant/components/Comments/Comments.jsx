@@ -55,6 +55,10 @@ export const Comments = () => {
 
   return (
     <div className={style.containerCardComments}>
+      <p className={style.description}>
+        We would love to hear your opinion. <br></br>Please leave your comment below<br></br> and feel free to share anything you find necessary.
+        
+      </p>
       <div className={style["card"]}>
         <span className={style.title}>Leave a Comment</span>
         <form className={style.form} onSubmit={handleSubmit}>
@@ -68,11 +72,11 @@ export const Comments = () => {
               value={formData.comment}
               onChange={handleInputChange}
             ></textarea>
-            <label for="comment">Comment</label>
+            <label htmlFor="comment">Comment</label>
           </div>
           <button type="submit">Submit</button>
         </form>
       </div>
     </div>
-  );
+  );  
 };
