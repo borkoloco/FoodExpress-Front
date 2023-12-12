@@ -25,7 +25,7 @@ export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
 export const ADD_TO_CART = "ADD_TO_CART  ";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
-export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART"
+export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
 export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
 export const ALLREVIEWS = "ALLREVIEWS";
 export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
@@ -39,8 +39,6 @@ export const SEND_ADDRESS_BY_USER = "SEND_ADDRESS_BY_USER";
 export const GET_ADDRESS_BY_USER = "GET_ADDRESS_BY_USER";
 export const DETELE_ADRRES_BY_USER = "DETELE_ADRRES_BY_USER";
 
-
-
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
 // const endPoint = 'http://localhost:3001';
@@ -48,7 +46,7 @@ const endPoint = import.meta.env.VITE_BACKEND_URL;
 //datos en nuestra BD del usuario logueado
 export const user_logued = (email) => {
   return async (dispatch) => {
-    console.log('pasa por aca');
+    console.log("pasa por aca");
     try {
       const { data } = await axios.get(endPoint + "/users/" + email);
       localStorage.setItem("sesion", JSON.stringify(data));
@@ -59,7 +57,7 @@ export const user_logued = (email) => {
         showConfirmButton: false,
         timer: 2000,
       });
-      
+
       const dataCartDB = await axios.get(
         endPoint + `/getcarrito/${data.idUser}`
       );
@@ -598,31 +596,32 @@ export const addToCartDB = (item, idUser) => {
 };
 
 export const removeOneFromCart = (id) => {
-  return ({
+  return {
     type: REMOVE_ONE_FROM_CART,
-    payload: {id:id}
-  })
-}
+    payload: { id: id },
+  };
+};
 
 export const removeFromCartDB = (idUser, idMenu, amount) => {
   return async () => {
-    
     try {
       if (amount === 0) {
-        const data = await axios.patch(`${endPoint}/carrito/update/${idUser}/${idMenu}`)
+        const data = await axios.patch(
+          `${endPoint}/carrito/update/${idUser}/${idMenu}`
+        );
         console.log(data);
-        
       }
-      const formatedData = { "cantidad": amount }
-      const data = await axios.patch(`${endPoint}/carrito/update/${idUser}/${idMenu}`, formatedData)
+      const formatedData = { cantidad: amount };
+      const data = await axios.patch(
+        `${endPoint}/carrito/update/${idUser}/${idMenu}`,
+        formatedData
+      );
       console.log(data);
     } catch (error) {
       console.log(error.message);
     }
-  }
-}
-
-
+  };
+};
 
 //Action para el borrado lógico
 export const updateMenuAvailability = (id, newAvailability) => {
@@ -782,9 +781,17 @@ export const addReview = (value) => {
 export const updateReviewById = (id, rate, comment) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.patch(endPoint + "/updatereview" + id, {
+      const { data } = await axios.patch(endPoint + "/updatereview/" + id, {
         rate,
         comment,
+        idStatus: 1,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Gracias por calificar",
+        showConfirmButton: false,
+        timer: 1800,
       });
       return dispatch({
         type: "",
@@ -922,8 +929,8 @@ export const getCartByUser = (idUser) => {
 export const sendCartToMercadoPago = (cart) => {
   return async (dispatch) => {
     try {
-      console.log("Envia:",cart);
-      
+      console.log("Envia:", cart);
+
       const { data } = await axios.post(endPoint + "/create-payment", cart);
       console.log("Responde:", data);
       return dispatch({
@@ -936,15 +943,16 @@ export const sendCartToMercadoPago = (cart) => {
   };
 };
 
-
-
 //! GESTIÓN DE DIRECCIÓN
-export const sendAddressByUser = (address,idUser) => {
+export const sendAddressByUser = (address, idUser) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(endPoint + `/postdireccion`,{ calle:address,idUser });
+      const { data } = await axios.post(endPoint + `/postdireccion`, {
+        calle: address,
+        idUser,
+      });
       // console.log(data.carritoItems);
-      
+
       return dispatch({
         type: SEND_ADDRESS_BY_USER,
         payload: data,
@@ -958,7 +966,9 @@ export const getAddresByUser = (idUser) => {
   return async (dispatch) => {
     try {
       const { data } = await axios(endPoint + `/getdireccionbyuser/${idUser}`);
-      // console.log(data);
+
+      // console.log(data.carritoItems);
+     // console.log(data);
       
       return dispatch({
         type: GET_ADDRESS_BY_USER,

@@ -32,8 +32,6 @@ import {
   SEND_ADDRESS_BY_USER,
   GET_ADDRESS_BY_USER,
   REMOVE_ONE_FROM_CART,
-
-
 } from "../actions/action";
 
 const initialState = {
@@ -58,7 +56,7 @@ const initialState = {
     availability: "all",
   },
   cartItems: JSON.parse(localStorage.getItem("cart")) || [],
-  cartItemsDB:[],
+  cartItemsDB: [],
   allreviews: [],
   reviewsByIdMenu: [],
   reviewsByIdUser: [],
@@ -66,7 +64,7 @@ const initialState = {
   reviewsAvgAll: [],
   cartBDTemp: [],
   linkMercadoPago: "",
-  address:[]
+  address: [],
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -84,7 +82,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_REVIEW_BY_IDUSER:
       return {
         ...state,
-        reviewsByIdMenu: payload,
+        reviewsByIdUser: payload,
       };
     case GET_REVIEW_BY_IDMENU:
       return {
@@ -100,7 +98,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userLogued: payload.data,
-        cartItemsDB:payload.dataCartDB
+        cartItemsDB: payload.dataCartDB,
       };
     case LOGIN:
       return {
@@ -244,8 +242,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userAuth: payload.data,
-        cartItemsDB:payload.dataCartDB
-
+        cartItemsDB: payload.dataCartDB,
       };
     case LOGOUT_BY_USER:
       localStorage.setItem("cart", JSON.stringify([]));
@@ -253,8 +250,8 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         userAuth: {},
         userLogued: {},
-        cartItems:[],
-        cartItemsDB:[],
+        cartItems: [],
+        cartItemsDB: [],
       };
 
     /* Registro con usuario, email y password */
@@ -285,7 +282,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: updatedCart,
-        
       };
 
     case REMOVE_FROM_CART:
@@ -307,10 +303,12 @@ const rootReducer = (state = initialState, action) => {
       }
 
     case REMOVE_ONE_FROM_CART:
-      const { id } = payload
+      const { id } = payload;
       console.log(id);
       // Buscar el índice del producto en el array
-      const productIndex = state.cartItems.findIndex(product => product.id === id);
+      const productIndex = state.cartItems.findIndex(
+        (product) => product.id === id
+      );
 
       if (productIndex !== -1) {
         // Copiar el array de productos para no mutar el estado directamente
@@ -319,18 +317,16 @@ const rootReducer = (state = initialState, action) => {
         // Reducir en 1 el amount del producto con el id especificado
         updatedCart[productIndex] = {
           ...updatedCart[productIndex],
-          amount: Math.max(updatedCart[productIndex].amount - 1, 0)
+          amount: Math.max(updatedCart[productIndex].amount - 1, 0),
         };
 
         return {
           ...state,
-          cartItems: updatedCart
+          cartItems: updatedCart,
         };
       }
       // Si el producto con el id especificado no se encuentra, devolver el estado actual
       return state;
-      
-
 
     // borrado logico
     case UPDATE_MENU_AVAILABILITY:
@@ -360,20 +356,17 @@ const rootReducer = (state = initialState, action) => {
         linkMercadoPago: payload,
       };
 
-
     /* GESTION DE DIRECCIÓN */
     case SEND_ADDRESS_BY_USER:
       return {
         ...state,
-        address: [...address,payload],
+        address: [...address, payload],
       };
     case GET_ADDRESS_BY_USER:
       return {
         ...state,
         address: payload,
       };
-
-    
 
     default:
       return state;

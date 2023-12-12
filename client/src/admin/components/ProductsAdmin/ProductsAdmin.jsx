@@ -23,7 +23,7 @@ export const ProductsAdmin = () => {
   const allMenu = useSelector((state) => state.allMenu);
   const [viewInactive, setViewInactive] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [orden, setOrden] = useState(true);
+  const [orden, setOrden] = useState(false);
   const [filteredMenu, setFilteredMenu] = useState([]);
   const [filteredInactiveMenu, setFilteredInactiveMenu] = useState([]);
 
@@ -31,6 +31,7 @@ export const ProductsAdmin = () => {
     const fetchData = async () => {
       try {
         await dispatch(getAllMenu());
+
         setFilteredMenu(allMenu.filter((menu) => menu.available));
         setFilteredInactiveMenu(allMenu.filter((menu) => !menu.available));
       } catch (error) {
@@ -136,9 +137,9 @@ export const ProductsAdmin = () => {
         </div>
       </div>
 
-         {/* Tabla de productos */}
+      {/* Tabla de productos */}
 
-         {isLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         ((viewInactive && filteredInactiveMenu.length > 0) ||

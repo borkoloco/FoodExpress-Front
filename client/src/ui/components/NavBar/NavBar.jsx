@@ -52,7 +52,18 @@ export const NavBar = () => {
               </li> */}
             </ul>
 
-         
+
+          {/*<div>
+              <FaWhatsapp
+                onClick={handleClick}
+                style={{
+                  cursor: "pointer",
+                  fontSize: "2em",
+                  color: "#25D366",
+                }}
+              />
+            </div> */}
+
 
             <NavLink to="/comments" className="nav-link">
               <button className="bookmarkBtn">

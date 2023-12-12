@@ -1,27 +1,68 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import utensEmpty from "../../../assets/icons/utens02Empty.svg";
 import utensHalf from "../../../assets/icons/utens03Half.svg";
 import utensFull from "../../../assets/icons/utens01Full.svg";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
-import { addReview } from "../../../redux/actions/action";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addReview,
+  getReviewsByUser,
+  updateReviewById,
+} from "../../../redux/actions/action";
+import { useNavigate } from "react-router-dom";
 
 const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
   //!eliminar estas lineas
-  idUser = 1;
-  idMenu = 7;
+  idUser = 5;
+  idMenu = 5;
   nameProduct = "Empanada Giga";
   descProduct =
     "Una buena empanada muy saciante para que llenes ese buche trabajador.";
   imgUrl =
     "http://res.cloudinary.com/foodexpressimg/image/upload/v1701849632/tk7gznipzznzjqn3lqww.jpg";
+  //! eliminar desde arriba
 
+  const navigate = useNavigate();
+  const reviewsByIdUser = useSelector((state) => state.reviewsByIdUser);
   const dispatch = useDispatch();
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [textEdit, setTextEdit] = useState("");
+  const [textSubmit, setTextSubmit] = useState("Calificar");
+  const [idReviewUpdate, setIdReviewUpdate] = useState();
   const maxCharacters = 250; // Máximo de caracteres permitidos para el comment
   const itemSize = 50; // Tamaño de los iconos de puntuación
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(getReviewsByUser(idUser));
+      } catch (error) {
+        console.error("Error en fetchData:", error);
+      }
+    };
+    fetchData();
+
+    console.log(idUser);
+    console.log(reviewsByIdUser.length);
+
+    if (reviewsByIdUser.length > 0) {
+      for (let index = 0; index < reviewsByIdUser.length; index++) {
+        if (idMenu == reviewsByIdUser[index].idMenu) {
+          setComment(reviewsByIdUser[index].comment);
+          setRating(reviewsByIdUser[index].rate);
+          setTextEdit("Actualiza tu calificación");
+          setTextSubmit("Actualizar");
+          setIdReviewUpdate(reviewsByIdUser[index].idReview);
+        }
+      }
+    }
+    // return () => {
+    //   dispatch(getReviewsByUser(0));
+    //   console.log("desmontado");
+    // };
+  }, [idUser, dispatch]);
 
   const handleIconClick = (value) => {
     setRating(value);
@@ -45,7 +86,7 @@ const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
   };
 
   //!acciones del boton Enviar comentario
-  const handleSubmit = () => {
+  const handleSubmit = (textSubmit) => {
     //addReview = (value)  value debe ser { idUser, idMenu, rate, comment }
     if (!idUser) {
       Swal.fire({
@@ -65,6 +106,7 @@ const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
       });
       return;
     }
+
     if (rating === 0 || comment === "") {
       Swal.fire({
         icon: "error",
@@ -74,9 +116,31 @@ const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
       });
       return;
     }
-
-    const dataSend = { idUser, idMenu, rate: rating, comment: comment };
-    dispatch(addReview(dataSend));
+    //evaluar si guardar review o actualizar existente
+    switch (textSubmit) {
+      case "Calificar":
+        const dataSend = { idUser, idMenu, rate: rating, comment: comment };
+        dispatch(addReview(dataSend));
+        navigate(-1);
+        break;
+      case "Actualizar":
+        const dataSendUpdate = {
+          id: idReviewUpdate,
+          rate: rating,
+          comment: comment,
+        };
+        dispatch(
+          updateReviewById(
+            dataSendUpdate.id,
+            dataSendUpdate.rate,
+            dataSendUpdate.comment
+          )
+        );
+        navigate(-1);
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -85,6 +149,7 @@ const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
     >
       <br />
       <h4>Qué te pareció tu producto?</h4>
+      <h5>{textEdit}</h5>
       <div
         style={{
           display: "flex",
@@ -140,8 +205,12 @@ const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
         </p>
       </div>
 
-      <button type="button" onClick={handleSubmit}>
-        Enviar
+      <button
+        type="button"
+        name={textSubmit}
+        onClick={() => handleSubmit(textSubmit)}
+      >
+        {textSubmit}
       </button>
       <p>
         Este comentario será visible públicamente. No uses términos ofensivos,
