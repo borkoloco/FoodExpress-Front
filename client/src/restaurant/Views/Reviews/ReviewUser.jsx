@@ -6,24 +6,25 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addReview,
+  cleanDetailMenu,
   getReviewsByUser,
   updateReviewById,
 } from "../../../redux/actions/action";
 import { useNavigate } from "react-router-dom";
+import { BackButton } from "../../../ui/components/BackButton/BackButton";
 
-const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
-  //!eliminar estas lineas
-  idUser = 5;
-  idMenu = 5;
-  nameProduct = "Empanada Giga";
-  descProduct =
-    "Una buena empanada muy saciante para que llenes ese buche trabajador.";
-  imgUrl =
-    "http://res.cloudinary.com/foodexpressimg/image/upload/v1701849632/tk7gznipzznzjqn3lqww.jpg";
-  //! eliminar desde arriba
+const ReviewUser = () => {
+  const datauser = JSON.parse(localStorage.getItem("sesion"));
+  const idUser = datauser.idUser;
+  const menuDetail = useSelector((state) => state.menuDetail);
+  const reviewsByIdUser = useSelector((state) => state.reviewsByIdUser);
+  const idMenu = menuDetail.idMenu;
+  const nameProduct = menuDetail.nameMenu;
+  const descProduct = menuDetail.description;
+  const imgUrl = menuDetail.imageUrl;
 
   const navigate = useNavigate();
-  const reviewsByIdUser = useSelector((state) => state.reviewsByIdUser);
+
   const dispatch = useDispatch();
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
@@ -35,17 +36,14 @@ const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
   const itemSize = 50; // Tamaño de los iconos de puntuación
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await dispatch(getReviewsByUser(idUser));
-      } catch (error) {
-        console.error("Error en fetchData:", error);
-      }
-    };
-    fetchData();
-
-    console.log(idUser);
-    console.log(reviewsByIdUser.length);
+    // const fetchData = async () => {
+    //   try {
+    //     await dispatch(getReviewsByUser(idUser));
+    //   } catch (error) {
+    //     console.error("Error en fetchData:", error);
+    //   }
+    // };
+    // fetchData();
 
     if (reviewsByIdUser.length > 0) {
       for (let index = 0; index < reviewsByIdUser.length; index++) {
@@ -60,13 +58,13 @@ const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
     }
     // return () => {
     //   dispatch(getReviewsByUser(0));
+    //   dispatch(cleanDetailMenu());
     //   console.log("desmontado");
     // };
-  }, [idUser, dispatch]);
+  }, []);
 
   const handleIconClick = (value) => {
     setRating(value);
-    console.log(value);
   };
 
   const handleIconHover = (value) => {
@@ -147,6 +145,7 @@ const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
+      <BackButton />
       <br />
       <h4>Qué te pareció tu producto?</h4>
       <h5>{textEdit}</h5>
@@ -157,7 +156,11 @@ const ReviewUser = ({ idUser, idMenu, nameProduct, descProduct, imgUrl }) => {
           alignItems: "center",
         }}
       >
-        <img src={imgUrl} alt="" />
+        <img
+          src={imgUrl}
+          alt="Plato"
+          style={{ width: "300px", height: "auto" }}
+        />
 
         <div>
           <p>
