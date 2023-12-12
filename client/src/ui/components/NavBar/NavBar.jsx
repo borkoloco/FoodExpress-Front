@@ -3,16 +3,10 @@ import logo from "../../../assets/logo-FE.svg";
 import { AccountButton } from "../../../auth/components/AccountButton/AccountButton";
 import { CartButton } from "../CartButton/CartButton";
 import "./Navbar.css";
-import { sendWhatsApp } from "../../../utils/links";
-import { FaWhatsapp } from "react-icons/fa";
+
 
 export const NavBar = () => {
-  const phoneNumber = "543408674244";
-  const message = "Hola Food Express, necesito hacerles una consulta";
-
-  const handleClick = () => {
-    sendWhatsApp(phoneNumber, message);
-  };
+ 
   return (
     <div className="shadow-sm  z-1 position-relative  rounded">
       <nav className="navbar navbar-expand-lg bg-white">
@@ -20,7 +14,7 @@ export const NavBar = () => {
           <NavLink className="navbar-brand" to="/">
             <img src={logo} alt="logo-FE" />
           </NavLink>
-
+          
           <button
             className="navbar-toggler"
             type="button"
@@ -58,16 +52,7 @@ export const NavBar = () => {
               </li> */}
             </ul>
 
-            <div className="nav-link">
-              <FaWhatsapp
-                onClick={handleClick}
-                style={{
-                  cursor: "pointer",
-                  fontSize: "2em",
-                  color: "#25D366",
-                }}
-              />
-            </div>
+         
 
             <NavLink to="/comments" className="nav-link">
               <button className="bookmarkBtn">

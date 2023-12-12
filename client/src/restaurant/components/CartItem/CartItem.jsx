@@ -125,12 +125,12 @@ export const CartItem = ({ id, amount, description, nameMenu, price, specialtyMe
         <td>${price}</td>
         <td>${subTotal}</td>
         <td>
-          <button class="btn btn-outline-secondary" onClick={removeInput}>-</button>
+          <button className="btn btn-outline-secondary" onClick={removeInput}>-</button>
           <label className={style.amountView}>
             {amount}
 
           </label>
-          <button class="btn btn-outline-secondary" onClick={addInput}>+</button>
+          <button className="btn btn-outline-secondary" onClick={addInput}>+</button>
         </td>
         <td>
           <button className="btn btn-danger" onClick={removeButton}>Remove</button>
