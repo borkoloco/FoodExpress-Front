@@ -20,6 +20,8 @@ import { AddressPage } from "../Views/Address/AddressPage";
 import ReviewUser from "../Views/Reviews/ReviewUser";
 import EditProfile from "../Views/EditProfile/EditProfile";
 import { SuccessPayment } from "../Views/SuccessPay/Success";
+import { Whatsapp } from "../../ui/components/Whatsapp/Whatsapp";
+import { Orders } from "../Views/Orders/Orders";
 
 
 
@@ -47,6 +49,7 @@ export const RestaurantRoutes = () => {
   return (
     <>
       <NavBar />
+      <Whatsapp/>
       <Routes>
         {/* <Route path="/" element={<Login />} /> */}
         <Route path="/" element={<Landing />} />
@@ -66,6 +69,7 @@ export const RestaurantRoutes = () => {
         <Route path="/address" element={<AddressPage />} />
         <Route path="/reviewuser" element={<ReviewUser />} />
         <Route path="/success" element={<SuccessPayment />} />
+        <Route path="/my-orders" element={<Orders />} />
 
 
         {/*Añade más rutas aqui...  */}
