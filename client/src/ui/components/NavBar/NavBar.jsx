@@ -58,7 +58,7 @@ export const NavBar = () => {
               </li> */}
             </ul>
 
-            <div className="nav-link">
+            <div>
               <FaWhatsapp
                 onClick={handleClick}
                 style={{
