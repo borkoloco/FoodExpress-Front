@@ -140,10 +140,10 @@ const DetailMenu = () => {
             {/* Detalles del menú */}
             <div className="col-md-7">
               {/* <p className={`${style.newArrival} text-center`}>NEW</p> */}
-              <h2>{menuDetail.nameMenu}</h2>{" "}
-              <span>Product ID: MEN{menuDetail.idMenu}U</span>
+              <h2 className="mb-0">{menuDetail.nameMenu}</h2>{" "}
+              <span className={style.title}>Product ID: MEN{menuDetail.idMenu}U</span>
               {reviewAVGbyIdMenu !== "0.0" && (
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
                   <RatingStars
                     averageRating={reviewAVGbyIdMenu}
                     iconSize={30}
@@ -198,6 +198,7 @@ const DetailMenu = () => {
                       cursor: "pointer",
                       fontSize: "2em",
                       color: "#25D366",
+                      marginLeft: "1rem"
                     }}
                   />
                 </div>
@@ -210,79 +211,48 @@ const DetailMenu = () => {
       )}
 
       {/* AQUI PODEMOS HACER EL APARTADO DE REVIEWS O COMENTARIOS */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-        }}
-      >
-        {reviewsByIdMenu.length > 0 && <h4>Opiniones sobre este plato</h4>}
-        <br />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+      <div className={`mb-5 ${style.containerReviews}`}>
+        {reviewsByIdMenu.length > 0 && (
+          <h4 className="card-header">Reviews about this product</h4>
+        )}
+        <div className="card-body">
+          <hr />
           {reviewsByIdMenu.map((review, index) => (
             <div key={review.idReview}>
               {review.idStatus !== 0 && (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    maxWidth: "400px", // Ajusta según sea necesario
-                    margin: "0 auto", // Centra el div dentro de su contenedor padre
-                  }}
-                >
+                <div>
                   {review.idStatus === 3 ? (
                     <div>
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <div>
-                          <RatingStars
-                            averageRating={review.rate}
-                            iconSize={30}
-                          />
-                        </div>
-                        <div>
-                          <p>{review.date}</p>
-                        </div>
+                      <span className={style.fecha}>{review.date}</span>
+                      <div className="mt-2 mb-2">
+                        <RatingStars
+                          averageRating={review.rate}
+                          iconSize={30}
+                        />
                       </div>
-                      <p>Este comentario fue rechazado por el moderador.</p>
+                      <p className={style.comment}>Este comentario fue rechazado por el moderador.</p>
                     </div>
                   ) : review.idStatus === 2 ? (
                     <div>
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <div>
-                          <RatingStars
-                            averageRating={review.rate}
-                            iconSize={30}
-                          />
-                        </div>
-                        <div>
-                          <p>{review.date}</p>
-                        </div>
+                      <span className={style.fecha}>{review.date}</span>
+                      <div className="mt-2 mb-2">
+                        <RatingStars
+                          averageRating={review.rate}
+                          iconSize={30}
+                        />
                       </div>
-                      <p>{review.comment}</p>
+                      <p className={style.comment}>{review.comment}</p>
                     </div>
                   ) : (
                     <div>
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <div>
-                          <RatingStars
-                            averageRating={review.rate}
-                            iconSize={30}
-                          />
-                        </div>
-                        <div>
-                          <p>{review.date}</p>
-                        </div>
+                      <span className={style.fecha}>{review.date}</span>
+                      <div className="mt-2 mb-2">
+                        <RatingStars
+                          averageRating={review.rate}
+                          iconSize={30}
+                        />
                       </div>
-                      <p>Comentario pendiente de moderación</p>
+                      <p className={style.comment}>Comentario pendiente de moderación</p>
                     </div>
                   )}
                 </div>

@@ -1,6 +1,15 @@
+import { NavLink } from "react-router-dom";
 import style from "./Footer.module.css";
+import { FaWhatsapp } from "react-icons/fa";
 
 export const Footer = () => {
+
+  const phoneNumber = "543408674244";
+  const message = "Hola Food Express, necesito hacerles una consulta";
+
+  const handleClick = () => {
+    sendWhatsApp(phoneNumber, message);
+  };
   return (
     <>
         <footer className={`${style.footer}`}>
@@ -13,33 +22,40 @@ export const Footer = () => {
                 </p>
               </div>
               <div className="col-md-4">
-                <h5>Quick Links</h5>
+                <h5>Contact us</h5>
                 <ul>
                   <li>
-                    <a href="#">Home</a>
+                  <span>Email: foodExpress@gmail.com</span>
                   </li>
                   <li>
-                    <a href="#">About</a>
+                    <NavLink to="/comments">Send us a comment</NavLink>
                   </li>
                   <li>
-                    <a href="#">Services</a>
+                    <div className={style.btnWhatsapp}>
+                      <FaWhatsapp
+                        // onClick={handleClick}
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "2em",
+                          color: "#25D366",
+                        }}
+                      />
+                    </div>
                   </li>
-                  <li>
-                    <a href="#">Contact</a>
-                  </li>
+
                 </ul>
               </div>
               <div className="col-md-4">
-                <h5>Contact Us</h5>
-                <p>123 Street, City, Country</p>
-                <p>Email: example@example.com</p>
-                <p>Phone: +123 456 789</p>
+                <h5>Locate us in</h5>
+                <p>Street, Alfonso Gómez 33 2 28037 Córdova</p>
+                
+                <span>Phone: +54 3408 67-4244</span>
               </div>
             </div>
           </div>
         </footer>
           <div className={style.AllRigth}>
-            <span>All rights Reserved</span>
+            <span>All rights Reserved 2024</span>
           </div>
     </>
   );
