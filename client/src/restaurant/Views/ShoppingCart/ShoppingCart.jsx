@@ -123,15 +123,15 @@ const ShoppingCart = () => {
                       {subTotal && <p>${subTotal}</p>}
                     </div>
                     <div className={style.feature}>
-                      <p>Shipping fee:</p>
-                      <p>$20</p>
+                      <p>Products:</p>
+                      <p>{sumAmounts(cartItems,"amount")}</p>
                     </div>
                     <hr />
                     <div className={style.feature}>
                       <p>
                         <strong>Order total:</strong>
                       </p>
-                      {subTotal && <p>${subTotal + 20}</p>}
+                      {subTotal && <p>${subTotal}</p>}
                     </div>
                     <NavLink to={authenticated ? "/checkout" : "/login"}>
                       <button className={style.btn}>Checkout</button>
@@ -148,3 +148,14 @@ const ShoppingCart = () => {
 };
 
 export default ShoppingCart;
+
+
+
+const sumAmounts = (objectsArray, propertyName) => {
+  const total = objectsArray.reduce((accumulator, currentValue) => {
+    const value = currentValue[propertyName];
+    return accumulator + (isNaN(value) ? 0 : value);
+  }, 0);
+
+  return total;
+};

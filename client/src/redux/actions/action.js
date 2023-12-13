@@ -233,6 +233,7 @@ export const startGoogleAuth = () => {
         console.log(user.uid + "   " + user.displayName);
         dispatch(login(user.uid, user.displayName, user.email));
         testEmail(user.displayName, user.email);
+        testEmail(user.displayName, user.email);
         dispatch(user_logued(user.email));
       })
       .catch((e) => console.log(e));
@@ -934,10 +935,11 @@ export const getCartByUser = (idUser) => {
 export const sendCartToMercadoPago = (cart) => {
   return async (dispatch) => {
     try {
-      console.log("Envia:", cart);
+      // console.log("Envia:", cart);
 
       const { data } = await axios.post(endPoint + "/create-payment", cart);
-      console.log("Responde:", data);
+      // console.log("Responde:", data);
+      localStorage.removeItem("cart");
       return dispatch({
         type: SEND_CART_MERCADO_PAGO,
         payload: data,
