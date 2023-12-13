@@ -13,7 +13,7 @@ import ReviewsAprobation from "../components/ReviewAdmin/ReviewsAprobation";
 import { OrdersAdmin } from "../../admin/components/OrdersAdmin/OrdersAdmin";
 import { DetailOrder } from "../components/DetailOrder/DetailOrder";
 import UsersAdmin from "../components/UsersAdmin/UsersAdmin";
-
+import DetailMenu from "../../restaurant/Views/DetailMenu/DetailMenu";
 
 export const AdminRoutes = () => {
   const [toggle, setToggle] = useState(true);
@@ -47,6 +47,7 @@ export const AdminRoutes = () => {
             <NavBarAdmin Toggle={Toggle} />
             <Routes>
               <Route path="home" element={<HomeAdmin />} />
+              <Route path="menu/detail/:id" element={<DetailMenu />} />
               <Route path="products" element={<ProductsAdmin />} />
               <Route path="orders" element={<OrdersAdmin />} />
               <Route path="order/detail/:idOrder" element={<DetailOrder />} />
