@@ -37,6 +37,7 @@ import {
   GET_ALL_ORDERS,
   FILTER_ORDER,
   ORDER_BY_IDUSER,
+  ALL_USERS,
 } from "../actions/action";
 
 const initialState = {
@@ -73,10 +74,16 @@ const initialState = {
   allOrders:[],
   filteredOrder:[],
   orderByIdUser: [],
+  allusers: [],
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
   switch (action.type) {
+    case ALL_USERS:
+      return {
+        ...state,
+        allusers: payload,
+      };
     case ORDER_BY_IDUSER:
       return {
         ...state,

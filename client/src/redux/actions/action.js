@@ -41,6 +41,7 @@ export const DETELE_ADRRES_BY_USER = "DETELE_ADRRES_BY_USER";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const FILTER_ORDER = 'FILTER_ORDER';
 export const ORDER_BY_IDUSER = "ORDER_BY_IDUSER;";
+export const ALL_USERS = "ALL_USERS";
 
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
@@ -1040,6 +1041,44 @@ export const getOrdenByUserByDate = (idUser) => {
       });
     } catch (error) {
       console.log("No se pudo eliminar la dirección", error.message);
+    }
+  };
+};
+
+
+//!USUARIOS PARA EL BLOQUEO O BANNEO
+/*obtiene un array de objetos de usuarios, cada objeto tiene
+	{
+		"nameUser": "admin",
+		"isBanned": false,
+		"email": "admin@admin.com"
+}*/
+
+export const getUsersBanned = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getusersbanned");
+      return dispatch({
+        type: ALL_USERS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener la lista de usuarios", error.message);
+    }
+  };
+};
+
+export const updateBanned = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(endPoint + "/updatebanned/" + idUser);
+      // console.log(data.allUs ers);
+      return dispatch({
+        type: "", //ALL_USERS,
+        payload: data.allUsers,
+      });
+    } catch (error) {
+      console.log("No pudimos actualizar la lista de usuarios", error.message);
     }
   };
 };
