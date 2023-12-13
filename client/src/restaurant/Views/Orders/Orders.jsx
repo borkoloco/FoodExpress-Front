@@ -44,11 +44,7 @@ export const Orders = () => {
         </tr>
         {envio.ordenes.map((orden) => (
           <tr key={orden.idOrden}>
-            <th scope="row">
-              {"("}
-              {orden.idOrden}
-              {")"}
-            </th>
+            <th scope="row">{/* {orden.idOrden} */} </th>
             <td>{orden.cantidad}</td>
             <td>${orden.precio}</td>
             <td>
@@ -56,7 +52,7 @@ export const Orders = () => {
             </td>
             <td>
               <button onClick={() => handleRating(orden.idMenu)}>
-                Califica
+                Qualify
               </button>{" "}
             </td>
           </tr>
@@ -77,10 +73,10 @@ export const Orders = () => {
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Precio</th>
-              <th scope="col">ID Menu</th>
+              <th scope="col">Order</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Price</th>
+              <th scope="col">ID/Menu</th>
             </tr>
           </thead>
           {renderOrders()}

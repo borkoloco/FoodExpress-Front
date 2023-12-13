@@ -56,8 +56,8 @@ function ReviewsAprobation() {
           <thead>
             <tr>
               <th style={{ width: "10%" }}>Status</th>
-              <th style={{ width: "60%" }}>Comentario</th>
-              <th style={{ width: "30%" }}>Acciones</th>
+              <th style={{ width: "60%" }}>Comment</th>
+              <th style={{ width: "30%" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -90,7 +90,7 @@ function ReviewsAprobation() {
           </tbody>
         </table>
       ) : (
-        <p>No hay comentarios pendientes de moderación.</p>
+        <p>There are no comments pending moderation.</p>
       )}
       <div
         style={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
@@ -100,13 +100,13 @@ function ReviewsAprobation() {
           disabled={pendingReviews.length === 0}
           style={{ marginRight: "10px" }}
         >
-          Aprobar Todos
+          Approve all
         </button>
         <button
           onClick={handleRejectAll}
           disabled={pendingReviews.length === 0}
         >
-          Rechazar Todos
+          Reject all
         </button>
       </div>
     </div>

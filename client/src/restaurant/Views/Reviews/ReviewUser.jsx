@@ -30,7 +30,7 @@ const ReviewUser = () => {
   const [hoveredRating, setHoveredRating] = useState(0);
   const [comment, setComment] = useState("");
   const [textEdit, setTextEdit] = useState("");
-  const [textSubmit, setTextSubmit] = useState("Calificar");
+  const [textSubmit, setTextSubmit] = useState("Qualify");
   const [idReviewUpdate, setIdReviewUpdate] = useState();
   const maxCharacters = 250; // Máximo de caracteres permitidos para el comment
   const itemSize = 50; // Tamaño de los iconos de puntuación
@@ -50,8 +50,8 @@ const ReviewUser = () => {
         if (idMenu == reviewsByIdUser[index].idMenu) {
           setComment(reviewsByIdUser[index].comment);
           setRating(reviewsByIdUser[index].rate);
-          setTextEdit("Actualiza tu calificación");
-          setTextSubmit("Actualizar");
+          setTextEdit("Update your rating");
+          setTextSubmit("Update");
           setIdReviewUpdate(reviewsByIdUser[index].idReview);
         }
       }
@@ -90,7 +90,7 @@ const ReviewUser = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Hubo un error, no estás logueado",
+        text: "You must Login",
         footer: "",
       });
       return;
@@ -99,7 +99,7 @@ const ReviewUser = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Hubo un error, no pudimos obtener el producto que compraste",
+        text: "We could not show the product you purchased",
         footer: "",
       });
       return;
@@ -109,19 +109,19 @@ const ReviewUser = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Debes calificar y comentar",
+        text: "You must rate and comment",
         footer: "",
       });
       return;
     }
     //evaluar si guardar review o actualizar existente
     switch (textSubmit) {
-      case "Calificar":
+      case "Qualify":
         const dataSend = { idUser, idMenu, rate: rating, comment: comment };
         dispatch(addReview(dataSend));
         navigate(-1);
         break;
-      case "Actualizar":
+      case "Update":
         const dataSendUpdate = {
           id: idReviewUpdate,
           rate: rating,
@@ -147,7 +147,7 @@ const ReviewUser = () => {
     >
       <BackButton />
       <br />
-      <h4>Qué te pareció tu producto?</h4>
+      <h4>What did you think of your product?</h4>
       <h5>{textEdit}</h5>
       <div
         style={{
@@ -164,10 +164,10 @@ const ReviewUser = () => {
 
         <div>
           <p>
-            <b>Producto:</b> {nameProduct}
+            <b>Product:</b> {nameProduct}
           </p>
           <p>
-            <b>Descripción:</b> {descProduct}
+            <b>Description:</b> {descProduct}
           </p>
         </div>
       </div>
@@ -191,20 +191,20 @@ const ReviewUser = () => {
           />
         ))}
       </div>
-      <h4>Contanos más acerca de este plato</h4>
+      <h4>Tell us more about this dish</h4>
       {/* <label htmlFor="comment">Deja tus comentarios</label> */}
       <textarea
         id="comment"
         name="comment"
         rows="4"
         cols="50"
-        placeholder="Ingresa tu comentario aquí..."
+        placeholder="Enter your comment..."
         value={comment}
         onChange={handleCommentChange}
       ></textarea>
       <div>
         <p>
-          Caracteres: {comment.length} de {maxCharacters}
+          Characters: {comment.length} of {maxCharacters}
         </p>
       </div>
 
@@ -216,10 +216,10 @@ const ReviewUser = () => {
         {textSubmit}
       </button>
       <p>
-        Este comentario será visible públicamente. No uses términos ofensivos,
-        ni palabras inapropiadas. Tampoco introduzcas contraseñas, direcciones,
-        ni datos privados. No incites a la violencia ni involucres a menores de
-        edad. Respeta las leyes de privacidad.
+        This comment will be publicly visible. Do not use offensive terms, nor
+        inappropriate words. Also do not enter passwords, addresses, no private
+        data. Do not incite violence or involve minors age. Respect privacy
+        laws.
       </p>
     </div>
   );
