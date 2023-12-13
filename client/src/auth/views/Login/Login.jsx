@@ -26,36 +26,34 @@ export const Login = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const cartItemsDB = useSelector((state) => state.cartItemsDB)
-  const cartItems = useSelector((state) => state.cartItems)
-  const userAuth = useSelector((state) => state.userAuth)
-  const userLogued = useSelector((state) => state.userLogued)
-
+  const cartItemsDB = useSelector((state) => state.cartItemsDB);
+  const cartItems = useSelector((state) => state.cartItems);
+  const userAuth = useSelector((state) => state.userAuth);
+  const userLogued = useSelector((state) => state.userLogued);
 
   useEffect(() => {
-
-    cartItemsDB && cartItemsDB.length > 0 && cartItemsDB.map((el) => {
-      dispatch(addToCart(el))
-    })
+    cartItemsDB &&
+      cartItemsDB.length > 0 &&
+      cartItemsDB.map((el) => {
+        dispatch(addToCart(el));
+      });
 
     if (Object.keys(userAuth).length > 0) {
-
-      cartItems && cartItems.length > 0 && cartItems.map((el) => {
-        dispatch(addToCartDB(el, userAuth.data.idUser))
-      })
+      cartItems &&
+        cartItems.length > 0 &&
+        cartItems.map((el) => {
+          dispatch(addToCartDB(el, userAuth.data.idUser));
+        });
     }
 
     if (Object.keys(userLogued).length > 0) {
-      cartItems && cartItems.length > 0 && cartItems.map((el) => {
-        dispatch(addToCartDB(el, userLogued.idUser))
-      })
-
+      cartItems &&
+        cartItems.length > 0 &&
+        cartItems.map((el) => {
+          dispatch(addToCartDB(el, userLogued.idUser));
+        });
     }
-
-
-
-  }, [cartItemsDB])
-
+  }, [cartItemsDB]);
 
   //Login forma 1
   const handleLoginByUser = () => {
@@ -81,6 +79,11 @@ export const Login = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && areThereErrors(errors)) {
+      dispatch(loginByUser(formState));
+    }
+  };
   return (
     <div
       className={`d-flex justify-content-center mt-5 ${style.containerLogin}`}
@@ -117,6 +120,7 @@ export const Login = () => {
             name="password"
             value={formState.password}
             onChange={onInputChange}
+            onKeyDown={handleKeyDown}
             aria-label="Amount (to the nearest dollar)"
           />
           <span className="input-group-text">
@@ -131,7 +135,9 @@ export const Login = () => {
         </div>
         {errors.password && (
           <div className={style.containerError}>
-            <p className={`text-danger ${style.errorsSize}`}>{errors.password}</p>
+            <p className={`text-danger ${style.errorsSize}`}>
+              {errors.password}
+            </p>
           </div>
         )}
 

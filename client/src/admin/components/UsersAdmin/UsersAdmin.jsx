@@ -33,13 +33,13 @@ function UsersAdmin() {
   return (
     <div>
       {" "}
-      <h3 style={{ textAlign: "center" }}>Control de usuarios</h3>
+      <h3 style={{ textAlign: "center" }}>Customers Control</h3>
       <table>
         <thead>
           <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Locked?</th>
+            <th>Blocked?</th>
           </tr>
         </thead>
         <tbody>

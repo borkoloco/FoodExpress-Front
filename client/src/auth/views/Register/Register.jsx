@@ -26,11 +26,19 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   //Login forma 1
-  const handleRegisterByUser = () => {
-    dispatch(registerByUser(formState));
-    navigate('/login')
-  }
-
+  const handleRegisterByUser = async () => {
+    try {
+      await dispatch(registerByUser(formState, navigate));
+    } catch (error) {
+      console.error("Error during registration:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Error during registration:",
+        footer: "",
+      });
+    }
+  };
   //Login forma 2
   // const handleEmailAuth = () => {
   //   const { username, email, password } = formState;
@@ -45,6 +53,22 @@ const Register = () => {
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleKeyDown = async (event) => {
+    if (event.key === "Enter" && areThereErrors(errors)) {
+      try {
+        await dispatch(registerByUser(formState, navigate));
+      } catch (error) {
+        console.error("Error during registration:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error during registration:",
+          footer: "",
+        });
+      }
+    }
   };
 
   return (
@@ -104,6 +128,7 @@ const Register = () => {
             name="password"
             value={formState.password}
             onChange={onInputChange}
+            onKeyDown={handleKeyDown}
             aria-label="Amount (to the nearest dollar)"
           />
           <span className="input-group-text">
@@ -118,12 +143,12 @@ const Register = () => {
         </div>
         {errors.password && (
           <div className={style.containerError}>
-            <p className={`text-danger ${style.errorsSize}`}>{errors.password}</p>
+            <p className={`text-danger ${style.errorsSize}`}>
+              {errors.password}
+            </p>
           </div>
         )}
-        <div className="mt-3">
-
-        </div>
+        <div className="mt-3"></div>
 
         <FormButton
           eventHandler={handleRegisterByUser}
