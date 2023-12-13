@@ -9,11 +9,11 @@ import { validateSesion } from "../../../utils/validateSesion";
 export const AccountButton = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userAuth = useSelector((state) => state.userAuth);   //Estado del logeo manual
+  const userAuth = useSelector((state) => state.userAuth); //Estado del logeo manual
   const userLogued = useSelector((state) => state.userLogued); //Estado del logeo con google
 
   /** Te trae los datos de inicio de sesión */
-  const dataLoginUser = JSON.parse(localStorage.getItem('sesion'));
+  const dataLoginUser = JSON.parse(localStorage.getItem("sesion"));
   const authenticated = validateSesion(dataLoginUser); //True: autenticado; false: no autenticado
   // console.log("En local storage:",dataLoginUser);
 
@@ -26,10 +26,10 @@ export const AccountButton = () => {
 
   /* Cierra sesión y redirige a "/login"  */
   const handleLogout = () => {
-      dispatch(logoutByUser());       //limpia el estado global userLogued y userAuth
-      dispatch(startGoogleLogout());  //limpia el uid, displaName y displayEmail por si acaso
-      navigate("/login");
-  }
+    dispatch(logoutByUser()); //limpia el estado global userLogued y userAuth
+    dispatch(startGoogleLogout()); //limpia el uid, displaName y displayEmail por si acaso
+    navigate("/login");
+  };
 
   /* Luego de autenticarse manual o con google te redirige a "/home" */
   useEffect(() => {
@@ -42,9 +42,6 @@ export const AccountButton = () => {
       navigate("/home");
     }
   }, [userLogued]);
-
-
-
 
   return (
     <>
@@ -65,27 +62,45 @@ export const AccountButton = () => {
             {authenticated && dataLoginUser.nameUser}
           </button>
           <ul className="dropdown-menu dropdown-menu-end">
-            {
-              dataLoginUser.idRole === 2 && ( <li>
-                <NavLink to="/dashboard">
+            {dataLoginUser.idRole === 2 && (
+              <li>
+                <NavLink className={style.textDecoration} to="/dashboard">
                   <button className="dropdown-item" type="button">
                     DashBoard
                   </button>
                 </NavLink>
-              </li> )
-            }
+              </li>
+            )}
             <li>
-              <button className="dropdown-item" type="button">
-                My Orders
-              </button>
+              <NavLink className={style.textDecoration} to="/my-orders">
+                <button className="dropdown-item" type="button">
+                  My Orders
+                </button>
+              </NavLink>
             </li>
             <li>
-              <button className="dropdown-item" type="button">
-                Edit Profile
-              </button>
+              {
+                userAuth && Object.keys(userAuth).length > 0 &&
+                <NavLink className={style.textDecoration} to="/editprofile">
+                  <button className="dropdown-item" type="button">
+                    Edit Password
+                  </button>
+                </NavLink>
+              }
             </li>
             <li>
-              <button onClick={handleLogout} className="dropdown-item" type="button">
+              <NavLink className={style.textDecoration} to="/address">
+                <button className="dropdown-item" type="button">
+                  Address
+                </button>
+              </NavLink>
+            </li>
+            <li>
+              <button
+                onClick={handleLogout}
+                className="dropdown-item"
+                type="button"
+              >
                 <strong>Logout</strong>
               </button>
             </li>
@@ -109,4 +124,3 @@ export const AccountButton = () => {
     </>
   );
 };
-

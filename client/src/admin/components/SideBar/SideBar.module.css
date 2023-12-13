@@ -1,6 +1,8 @@
 
 
-
+.list_group a{
+    padding: 10px;
+}
 
 
 
@@ -9,4 +11,11 @@
     color: white;
     cursor: pointer;
 }
+.active {
+    background-color: lightsalmon;
+    color: white;
+    cursor: pointer;
+
+}
+
 

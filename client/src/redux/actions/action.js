@@ -4,17 +4,6 @@ import Swal from "sweetalert2";
 import { formatData } from "../../utils/formatData";
 import { firebase, googleAuthProvider, auth } from "../../utils/firebase";
 
-/*
-import menu, { postMenu } from "../../Views/Home/menu";
-import {
-  specialty,
-  typesOfFood,
-  addSpecialty,
-  addTypes,
-} from "../../Views/Home/datosParaFiltros";
-
-*/
-
 export const ALL_MENU = "ALL_MENU";
 export const GET_MENU_DETAIL_BY_ID = "GET_MENU_DETAIL_BY_ID";
 export const CLEAN_DETAIL_MENU = "CLEAN_DETAIL_MENU";
@@ -34,17 +23,49 @@ export const LOGIN_BY_USER = "LOGIN_BY_USER";
 export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
-export const ADD_TO_CART = "ADD_TO_CART  ";
+export const ADD_TO_CART = "ADD_TO_CART ";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
 export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
+export const ALLREVIEWS = "ALLREVIEWS";
+export const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
+export const GET_REVIEW_BY_IDMENU = "GET_REVIEW_BY_IDMENU";
+export const GET_REVIEW_BY_IDUSER = "GET_REVIEW_BY_IDUSER";
+export const GET_AVDREVIEW_BYIDMENU = "GET_AVDREVIEW_BYIDMENU";
+export const GET_AVGALL = "GET_AVGALL";
+export const GET_CART_BY_USER = "GET_CART_BY_USER";
+export const SEND_CART_MERCADO_PAGO = "SEND_CART_MERCADO_PAGO";
+export const SEND_ADDRESS_BY_USER = "SEND_ADDRESS_BY_USER";
+export const GET_ADDRESS_BY_USER = "GET_ADDRESS_BY_USER";
+export const DETELE_ADRRES_BY_USER = "DETELE_ADRRES_BY_USER";
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
+export const FILTER_ORDER = "FILTER_ORDER";
+export const ORDER_BY_IDUSER = "ORDER_BY_IDUSER;";
+export const ALL_USERS = "ALL_USERS";
+export const ALL_USERS_SHOW = "ALL_USERS_SHOW";
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
+
+// const endPoint = 'http://localhost:3001';
 
 //datos en nuestra BD del usuario logueado
 export const user_logued = (email) => {
   return async (dispatch) => {
+    console.log("pasa por aca");
     try {
       const { data } = await axios.get(endPoint + "/users/" + email);
+
+      //!el usuario esta bloqueado o baneado??
+      if (data.isBanned) {
+        Swal.fire({
+          icon: "error",
+          title: "We're sorry...",
+          text: "Your account has been blocked",
+          footer: "",
+        });
+        return;
+      }
+
       localStorage.setItem("sesion", JSON.stringify(data));
       Swal.fire({
         position: "center",
@@ -53,10 +74,21 @@ export const user_logued = (email) => {
         showConfirmButton: false,
         timer: 2000,
       });
+
+      const dataCartDB = await axios.get(
+        endPoint + `/getcarrito/${data.idUser}`
+      );
+
+      let formatedDataCartDB = [];
+      ///formatear datos para mandar al estado global
+      dataCartDB.data.carritoItems.map((el) => {
+        formatedDataCartDB.push({ id: el.menu.idMenu, amount: el.cantidad });
+      });
+      const dataTotal = { data: data, dataCartDB: formatedDataCartDB };
       // console.log(data);
       return dispatch({
         type: USERLOGUED,
-        payload: data,
+        payload: dataTotal,
       });
     } catch (error) {
       console.error("Error al obtener el usuario en la BD: ", error.message);
@@ -136,7 +168,7 @@ export const startWithEmail = (email, password, username) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Listo, loguéate",
+        title: "Ready to log in",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -210,8 +242,9 @@ export const startGoogleAuth = () => {
       .signInWithPopup(googleAuthProvider)
       .then(({ user }) => {
         console.log(user);
-        console.log(user.uid + "   " + user.displayName);
+        console.log(user.uid + " " + user.displayName);
         dispatch(login(user.uid, user.displayName, user.email));
+        testEmail(user.displayName, user.email);
         testEmail(user.displayName, user.email);
         dispatch(user_logued(user.email));
       })
@@ -404,7 +437,7 @@ export const postProduct = (product) => {
       Swal.fire({
         position: "center-center",
         icon: "success",
-        title: "Guardado con éxito",
+        title: "Successfully saved",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -461,7 +494,7 @@ export const setCurrentPage = (page) => ({
   payload: page,
 });
 
-/*  ACTIONS PARA EL SEARCH */
+/* ACTIONS PARA EL SEARCH */
 export const setInput = (valor) => {
   return { type: SEARCH_INPUT, payload: valor };
 };
@@ -485,6 +518,17 @@ export const loginByUser = (user) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(endPoint + "/login", user);
+      //el usuario esta bloqueado o baneado??
+      if (data.data.isBanned) {
+        Swal.fire({
+          icon: "error",
+          title: "We'se sorry...",
+          text: "Your account has been blocked",
+          footer: "",
+        });
+        return;
+      }
+
       localStorage.setItem("sesion", JSON.stringify(data.data));
       Swal.fire({
         position: "center",
@@ -493,14 +537,30 @@ export const loginByUser = (user) => {
         showConfirmButton: false,
         timer: 2000,
       });
+      const dataCartDB = await axios.get(
+        endPoint + `/getcarrito/${data.data.idUser}`
+      );
+
+      let formatedDataCartDB = [];
+      ///formatear datos para mandar al estado global
+      dataCartDB.data.carritoItems.map((el) => {
+        formatedDataCartDB.push({ id: el.menu.idMenu, amount: el.cantidad });
+      });
+      const dataTotal = { data: data, dataCartDB: formatedDataCartDB };
+
       // window.alert(data.message);
       return dispatch({
         type: LOGIN_BY_USER,
-        payload: data,
+        payload: dataTotal,
       });
     } catch (error) {
       console.log(error.message);
-      window.alert(error.response.data.error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Invalid credentials",
+        footer: "",
+      });
     }
   };
 };
@@ -511,7 +571,7 @@ export const logoutByUser = () => {
 };
 
 /* ACTIONS PARA EL REGISTRO CON usuario, email y password */
-export const registerByUser = (user) => {
+export const registerByUser = (user, navigate) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(endPoint + "/register", user);
@@ -523,13 +583,20 @@ export const registerByUser = (user) => {
         timer: 2000,
       });
       // console.log(data);
-      return dispatch({
+      dispatch({
         type: REGISTER_BY_USER,
         payload: data,
       });
+      navigate("/login");
     } catch (error) {
       console.log(error.message);
-      window.alert(error.response.data);
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.error,
+        footer: "",
+      });
     }
   };
 };
@@ -549,12 +616,59 @@ export const removeFromCart = ({ id, amount }) => {
   };
 };
 
+/// subir al carrito de la base de datos
+export const addToCartDB = (item, idUser) => {
+  return async () => {
+    console.log("entra aca??");
+    const formatedData = [
+      { idUser: idUser, idMenu: item.id, cantidad: item.amount },
+    ];
+    console.log(formatedData);
+    try {
+      const sendData = await axios.post(
+        endPoint + "/carrito/add",
+        formatedData
+      );
+      console.log(sendData);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const removeOneFromCart = (id) => {
+  return {
+    type: REMOVE_ONE_FROM_CART,
+    payload: { id: id },
+  };
+};
+
+export const removeFromCartDB = (idUser, idMenu, amount) => {
+  return async () => {
+    try {
+      if (amount === 0) {
+        const data = await axios.patch(
+          `${endPoint}/carrito/update/${idUser}/${idMenu}`
+        );
+        console.log(data);
+      }
+      const formatedData = { cantidad: amount };
+      const data = await axios.patch(
+        `${endPoint}/carrito/update/${idUser}/${idMenu}`,
+        formatedData
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
 //Action para el borrado lógico
-export const updateMenuAvailability = (menuId, newAvailability) => {
-  console.log(menuId, newAvailability);
+export const updateMenuAvailability = (id, newAvailability) => {
   return async (dispatch) => {
     try {
-      const response = await axios.patch(`${endPoint}/menu/${menuId}`, {
+      const response = await axios.patch(`${endPoint}/menu/${id}`, {
         available: newAvailability,
       });
 
@@ -564,7 +678,7 @@ export const updateMenuAvailability = (menuId, newAvailability) => {
 
       dispatch({
         type: UPDATE_MENU_AVAILABILITY,
-        payload: { menuId, newAvailability },
+        payload: { id, newAvailability },
       });
     } catch (error) {
       console.error(
@@ -584,7 +698,7 @@ export const updateMenu = (id, value) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Actualizado",
+        title: "Updated",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -606,7 +720,7 @@ export const deleteType = (id) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Categoría eliminada",
+        title: "Category deleted",
         showConfirmButton: false,
         timer: 1800,
       });
@@ -618,7 +732,7 @@ export const deleteType = (id) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No pudimos eliminar la categoría",
+        text: "We couldn't delete the category",
         footer: "",
       });
     }
@@ -632,7 +746,7 @@ export const deleteSpecial = (id) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Categoría eliminada",
+        title: "Category deleted",
         showConfirmButton: false,
         timer: 1800,
       });
@@ -644,9 +758,379 @@ export const deleteSpecial = (id) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No pudimos eliminar la categoría",
+        text: "We couldn't delete the category",
         footer: "",
       });
     }
   };
 };
+
+//!SECCION REVIEWS Y PUNTUACION
+//GET de todos los reviews
+//devuelve un arrelgo de objetos {idReview, idUser, idMenu, rate, comment, date}
+export const getAllReviews = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getallreviews");
+      return dispatch({
+        type: ALLREVIEWS,
+        payload: data,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Unable to obtain the reviews",
+        footer: "",
+      });
+      console.log("Tuvimos un error al obtener los reviews: " + error.message);
+    }
+  };
+};
+
+//POST de un nuevo review
+//value debe ser { idUser, idMenu, rate, comment }
+export const addReview = (value) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(endPoint + "/addreview", value);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Thank you for opinion",
+        showConfirmButton: false,
+        timer: 1800,
+      });
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Unable to add review",
+        footer: "",
+      });
+      console.log("Tuvimos un error al agregar un review: " + error.message);
+    }
+  };
+};
+
+//UPDATE de review por parte del usuario
+// id por params, y rate, comment actualizados por body
+export const updateReviewById = (id, rate, comment) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(endPoint + "/updatereview/" + id, {
+        rate,
+        comment,
+        idStatus: 1,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Thank you for your opinion",
+        showConfirmButton: false,
+        timer: 1800,
+      });
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Unable to update review",
+        footer: "",
+      });
+      console.log("No pudimos actualizar tu review: " + error.message);
+    }
+  };
+};
+
+//GET reviews por ID de menú/plato. Pasamos ID por params
+//obtenemos todos los reviwes de un plato. Un Arreglo de objetos
+export const getReviewsByMenu = (idMenu) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getreviewsmenu/" + idMenu);
+      return dispatch({
+        type: GET_REVIEW_BY_IDMENU,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener los reviews");
+      return dispatch({
+        type: GET_REVIEW_BY_IDMENU,
+        payload: [],
+      });
+    }
+  };
+};
+
+//GET reviews por ID de usuario. Pasamos ID por params
+//obtenemos todos los reviwes de un usuario. Un Arreglo de objetos
+export const getReviewsByUser = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getreviewsuser/" + idUser);
+      return dispatch({
+        type: GET_REVIEW_BY_IDUSER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener los reviews");
+    }
+  };
+};
+
+//GET promedio de puntuaciones de un producto por id de producto
+// devuelve {"promedioRates": 3.6666666666666665 }
+export const getAvgReviewByIdMenu = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getavgreview/" + id);
+      const rawAverage = data.promedioRates ?? 0;
+      // Redondear al múltiplo de 0.5 más cercano
+      const roundedAverage = rawAverage.toFixed(1);
+
+      return dispatch({
+        type: GET_AVDREVIEW_BYIDMENU,
+        payload: roundedAverage,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener el promedio");
+    }
+  };
+};
+
+//GET promedios de todos los productos
+export const getAllAvg = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getallavg");
+      const averages = data.promedios;
+      return dispatch({
+        type: GET_AVGALL,
+        payload: averages,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener los promedios");
+    }
+  };
+};
+
+//PATCH del status de un cometnario, pasa a aprobado o rechazado
+export const updateReviewStatus = (idReview, idStatus) => {
+  const id = idReview;
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(
+        endPoint + "/updatereviewstatus/" + id,
+        { idStatus: idStatus }
+      );
+      return dispatch({
+        type: "",
+        payload: data,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "We couldn't approve or reject your comment",
+        footer: "",
+      });
+      console.log("No pudimos aprobar/rechazar el comentario");
+    }
+  };
+};
+
+//! CARRITO -> CHECKOUT
+/* OBTIENE LOS DATOS DEL CARRITO-TEMPORAL */
+export const getCartByUser = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + `/getcarrito/${idUser}`);
+      // console.log(data.carritoItems);
+
+      return dispatch({
+        type: GET_CART_BY_USER,
+        payload: data.carritoItems,
+      });
+    } catch (error) {
+      console.log(
+        "No se pudo obtener el carrito de ese usuario",
+        error.message
+      );
+    }
+  };
+};
+export const sendCartToMercadoPago = (cart) => {
+  return async (dispatch) => {
+    try {
+      // console.log("Envia:", cart);
+
+      const { data } = await axios.post(endPoint + "/create-payment", cart);
+      // console.log("Responde:", data);
+      localStorage.removeItem("cart");
+      return dispatch({
+        type: SEND_CART_MERCADO_PAGO,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("Error al enviar el carrito a mercado Pago", error.message);
+    }
+  };
+};
+
+//! GESTIÓN DE DIRECCIÓN
+export const sendAddressByUser = (address, idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(endPoint + `/postdireccion`, {
+        calle: address,
+        idUser,
+      });
+      // console.log(data.carritoItems);
+
+      return dispatch({
+        type: SEND_ADDRESS_BY_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No se pudo enviar la dirección", error.message);
+    }
+  };
+};
+export const getAddresByUser = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + `/getdireccionbyuser/${idUser}`);
+
+      // console.log(data.carritoItems);
+      // console.log(data);
+
+      return dispatch({
+        type: GET_ADDRESS_BY_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No se pudo obtener la dirección", error.message);
+    }
+  };
+};
+export const deleteAddresUserById = (idUser, idAddress) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(endPoint + `/deletedirebyid/${idUser}/${idAddress}`);
+
+      return dispatch({
+        type: DETELE_ADRRES_BY_USER,
+        // payload: data,
+      });
+    } catch (error) {
+      console.log("No se pudo eliminar la dirección", error.message);
+    }
+  };
+};
+
+//! GESTIÓN DE ORDERS admin
+/*ALL ORDERS - ADMIN */
+export const getOrders = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getorden");
+      // console.log(data);
+
+      return dispatch({
+        type: GET_ALL_ORDERS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("Error al obtener todas las orders", error.message);
+    }
+  };
+};
+
+export const filterOrder = (idOrder) => ({
+  type: FILTER_ORDER,
+  payload: idOrder,
+});
+
+//! SECCION VISTA DE ORDEN por USUARIO y para ADMIN
+//orden de compra por idUser, debe recibir idUser por Params
+//devuelve un arreglo de objetos agrupados por nro de orden/fecha
+//dentro de cada objeto hay una propiedad ordenes compuesto por otro
+//arreglo de objetos con los datos de cada idMenu que compone la orden
+export const getOrdenByUserByDate = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(
+        endPoint + `/getordenbyuserbydate2/${idUser}`
+      );
+      return dispatch({
+        type: ORDER_BY_IDUSER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No se pudo eliminar la dirección", error.message);
+    }
+  };
+};
+
+//!USUARIOS PARA EL BLOQUEO O BANNEO
+/*obtiene un array de objetos de usuarios, cada objeto tiene
+ {
+ "nameUser": "admin",
+ "isBanned": false,
+ "email": "admin@admin.com"
+}*/
+
+export const getUsersBanned = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getusersbanned");
+      return dispatch({
+        type: ALL_USERS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No pudimos obtener la lista de usuarios", error.message);
+    }
+  };
+};
+
+export const updateBanned = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.patch(endPoint + "/updatebanned/" + idUser);
+      // console.log(data.allUs ers);
+      return dispatch({
+        type: "", //ALL_USERS,
+        payload: data.allUsers,
+      });
+    } catch (error) {
+      console.log("No pudimos actualizar la lista de usuarios", error.message);
+    }
+  };
+};
+
+
+export const getAllUsers = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getallusers/");
+      // console.log(data.allUs ers);
+      return dispatch({
+        type: ALL_USERS_SHOW,
+        payload: data
+      });
+    } catch (error) {
+      console.log("No pudimos obtener los usuarios", error.message);
+    }
+  };
+};
+
+

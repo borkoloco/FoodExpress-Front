@@ -7,10 +7,14 @@ import {
   startGoogleLogout,
   loginByUser,
   startLoginWithEmail,
+  addToCart,
+  addToCartDB,
 } from "../../../redux/actions/action";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { areThereErrors } from "../../../utils/areThereErrors";
 import style from "./Login.module.css";
+import eyeOpen from "../../../assets/icons/eye-open.svg";
+import eyeclose from "../../../assets/icons/eye-close.svg";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -21,13 +25,42 @@ export const Login = () => {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const cartItemsDB = useSelector((state) => state.cartItemsDB);
+  const cartItems = useSelector((state) => state.cartItems);
+  const userAuth = useSelector((state) => state.userAuth);
+  const userLogued = useSelector((state) => state.userLogued);
+
+  useEffect(() => {
+    cartItemsDB &&
+      cartItemsDB.length > 0 &&
+      cartItemsDB.map((el) => {
+        dispatch(addToCart(el));
+      });
+
+    if (Object.keys(userAuth).length > 0) {
+      cartItems &&
+        cartItems.length > 0 &&
+        cartItems.map((el) => {
+          dispatch(addToCartDB(el, userAuth.data.idUser));
+        });
+    }
+
+    if (Object.keys(userLogued).length > 0) {
+      cartItems &&
+        cartItems.length > 0 &&
+        cartItems.map((el) => {
+          dispatch(addToCartDB(el, userLogued.idUser));
+        });
+    }
+  }, [cartItemsDB]);
 
   //Login forma 1
   const handleLoginByUser = () => {
     dispatch(loginByUser(formState));
   };
 
-   //Login forma 2
+  //Login forma 2
   // const handleLoginByUser = () => {
   //   const { email, password } = formState;
   //   dispatch(startLoginWithEmail(email, password));
@@ -38,11 +71,19 @@ export const Login = () => {
     dispatch(startGoogleAuth());
   };
 
-
   // const handleLogout = () => {
   //   dispatch(startGoogleLogout());
   // };
 
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && areThereErrors(errors)) {
+      dispatch(loginByUser(formState));
+    }
+  };
   return (
     <div
       className={`d-flex justify-content-center mt-5 ${style.containerLogin}`}
@@ -64,9 +105,10 @@ export const Login = () => {
             <p className={`text-danger ${style.errorsSize}`}>{errors.email}</p>
           )}
         </div>
-        <div className="mb-3">
+
+        <div className="input-group">
           <input
-            type="password"
+            type={`${showPassword ? "text" : "password"}`}
             placeholder="Password"
             className={`form-control ${
               errors.password
@@ -78,15 +120,28 @@ export const Login = () => {
             name="password"
             value={formState.password}
             onChange={onInputChange}
+            onKeyDown={handleKeyDown}
+            aria-label="Amount (to the nearest dollar)"
           />
-          {errors.password && (
+          <span className="input-group-text">
+            <button
+              style={{ border: "none", background: "transparent" }}
+              checked={showPassword}
+              onClick={toggleShowPassword}
+            >
+              <img src={showPassword ? eyeclose : eyeOpen} alt="icon" />
+            </button>
+          </span>
+        </div>
+        {errors.password && (
+          <div className={style.containerError}>
             <p className={`text-danger ${style.errorsSize}`}>
               {errors.password}
             </p>
-          )}
-        </div>
+          </div>
+        )}
 
-        <p className="form-text">
+        <p className="form-text mt-3">
           <a className={`${style.links}`} href="#">
             Forget Password
           </a>
@@ -116,5 +171,3 @@ export const Login = () => {
 };
 
 export default Login;
-
-

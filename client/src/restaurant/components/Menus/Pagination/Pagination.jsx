@@ -1,10 +1,10 @@
 
 
-
+import style from "./Pagination.module.css"
 
 export const Pagination = ({goToPreviousPage,goToNextPage,handlePageChange,currentPage, pages, totalPages}) => {
   return (
-    <>
+    <div className={style.containerPagination}>
       {/* Paginación */}
       <nav aria-label="...">
         <ul className="pagination ">
@@ -44,6 +44,6 @@ export const Pagination = ({goToPreviousPage,goToNextPage,handlePageChange,curre
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   );
 };

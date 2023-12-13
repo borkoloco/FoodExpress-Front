@@ -7,12 +7,20 @@
     font-weight: 600;
     border-radius: 25px;
     padding: 4px 9px;
-    
+    transition: transform 0.3s ease-in-out; 
 }
 
+.btnAccount:hover {
+    transform: scale(1.1); /* Cambio de escala al pasar el cursor */
+}
 
 .imgAccount {
     margin-right: 7px;
     width: 1.5rem;
+}
+
+
+.textDecoration{
+    text-decoration: none;
 }
 

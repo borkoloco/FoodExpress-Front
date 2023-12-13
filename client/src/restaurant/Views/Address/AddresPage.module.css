@@ -1,0 +1,34 @@
+
+.containerHeader {
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+.containerAddressPage{
+    /* background: gray; */
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+.groupAddress{
+    /* background: green; */
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 3px
+    
+}
+
+.titleAdress{
+    /* background: yellow; */
+    margin-right: 2rem ;
+    width: 20rem;
+    font-style: italic;
+
+}

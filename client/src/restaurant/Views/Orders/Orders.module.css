@@ -1,0 +1,52 @@
+.containerHeader{
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+
+.containerTable{
+    background: white;
+    margin-top: 2rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+
+
+    margin-left: 10rem;
+    margin-right: 10rem;
+
+}
+
+.button {
+    background: sandybrown;
+    border: 1px solid white;
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    
+}
+.button:hover {
+    background: transparent;
+    border: 1px solid sandybrown;
+    border-radius: 6px;
+    color: sandybrown;
+    font-weight: 500;
+    
+}
+
+
+
+
+
+@media (max-width: 920px) {
+
+    .containerTable{
+        margin-left: 2rem;
+        margin-right: 2rem;
+    
+    }
+   
+    .containerHeader {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+}

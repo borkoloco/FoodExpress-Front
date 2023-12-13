@@ -1,11 +1,19 @@
 
+.containerHeader{
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
 
 .containerCard{
-    /* background: red; */
+    background: white;
     margin-top: 2rem;
-    margin-bottom: 5rem;
-    margin-left: 2rem;
-    margin-right: 2rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+
+
+    margin-left: 10rem;
+    margin-right: 10rem;
 
 }
 
@@ -45,4 +53,64 @@
     width: 30px;
     margin-right: 12px;
 
+}
+
+.containerAddCart{
+    margin-top: 1rem;
+}
+
+.title {
+    color: gray;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+/* REVIEWS */
+.containerReviews{
+    margin-left: 10rem;
+    margin-right: 10rem;
+
+    background: white;
+    border-radius: 5px;
+    padding: 2rem;
+  
+}
+
+.fecha {
+    font-size: 13px;
+    color: gray;
+    font-weight: 600;
+}
+.comment {
+    font-size: 15px;
+    color: rgb(80, 80, 80);
+    font-weight: 500;
+}
+
+
+
+@media (max-width: 920px) {
+
+    .containerCard{
+        margin-left: 2rem;
+        margin-right: 2rem;
+    
+    }
+    .containerReviews{
+        margin-left: 2rem;
+        margin-right: 2rem;
+      
+    }
+ 
+   
+    .containerHeader {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
 }

@@ -3,12 +3,16 @@ import style from './CartItem.module.css'
 import {
   cleanDetailMenu,
   getMenuDetailById,
+  removeFromCartDB,
+  removeOneFromCart,
 } from "../../../redux/actions/action";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "../../../utils/useLocalStorage"
 import { addToCart } from "../../../redux/actions/action";
 import { removeFromCart } from "../../../redux/actions/action";
+import { addToCartDB } from "../../../redux/actions/action";
+import { AddCart } from "../../../ui/components/AddCart/AddCart";
 
 export const CartItem = ({ id, amount, description, nameMenu, price, specialtyMenu, typeMenu, imageUrl }) => {
 
@@ -16,6 +20,9 @@ export const CartItem = ({ id, amount, description, nameMenu, price, specialtyMe
   let subTotal = price * amount
   const dispatch = useDispatch()
   const prueba = { id: parseFloat(id), amount: parseFloat(amount) }
+  const userAuth = useSelector((state) => state.userAuth)
+  const userLogued = useSelector((state) => state.userLogued)
+
 
   const removeButton = () => {
 
@@ -23,9 +30,82 @@ export const CartItem = ({ id, amount, description, nameMenu, price, specialtyMe
     console.log(updatedProducts);
 
     dispatch(removeFromCart(prueba))
+    if (Object.keys(userAuth).length > 0) {
+      const newAmount = 0
+
+      dispatch(removeFromCartDB(userAuth.data.idUser, id, 0))
+      // dispatch(addToCartDB(data, userAuth.data.idUser))
+    }
+
+    if (Object.keys(userLogued).length > 0) {
+      const newAmount = 0
+      dispatch(removeFromCartDB(userLogued.idUser, id, 0))
+      // dispatch(addToCartDB(data, userLogued.idUser))
+    }
 
 
   }
+
+  const addInput = () => {
+    const data = { id: parseInt(id), amount: 1 };
+    let flag = false;
+    let index;
+    let newAmount;
+
+    const newCartProducts = cartProducts.map((el, ind) => {
+      if (el.id == id) {
+        newAmount = parseInt(el.amount) + parseInt(amount);
+        flag = true;
+        return { ...el, amount: newAmount };
+      } else {
+        return { ...el };
+      }
+    });
+    if (flag === true) {
+      console.log("entra en true");
+      setCartProducts(newCartProducts);
+    } else {
+      if (amount && amount >= 1) {
+        console.log("entra en el false");
+        setCartProducts([...cartProducts, data]);
+      }
+    }
+
+    /*Funcionalidad del icono del carrito */
+    dispatch(addToCart(data));
+
+
+    if (Object.keys(userAuth).length > 0) {
+
+      dispatch(addToCartDB(data, userAuth.data.idUser))
+    }
+
+    if (Object.keys(userLogued).length > 0) {
+      dispatch(addToCartDB(data, userLogued.idUser))
+    }
+  };
+
+  const removeInput = () => {
+    if (Object.keys(userAuth).length > 0) {
+      const newAmount = amount - 1
+
+      dispatch(removeFromCartDB(userAuth.data.idUser, id, newAmount))
+    }
+
+    if (Object.keys(userLogued).length > 0) {
+      const newAmount = amount - 1
+      dispatch(removeFromCartDB(userLogued.idUser, id, newAmount))
+    }
+    if (amount === 1) {
+      removeButton()
+
+    }
+    if (amount > 1) {
+      dispatch(removeOneFromCart(id))
+
+    }
+  }
+
 
   return (
     <>
@@ -43,8 +123,15 @@ export const CartItem = ({ id, amount, description, nameMenu, price, specialtyMe
           </div>
         </td>
         <td>${price}</td>
-        <td>{amount}</td>
         <td>${subTotal}</td>
+        <td>
+          <button className="btn btn-outline-secondary" onClick={removeInput}>-</button>
+          <label className={style.amountView}>
+            {amount}
+
+          </label>
+          <button className="btn btn-outline-secondary" onClick={addInput}>+</button>
+        </td>
         <td>
           <button className="btn btn-danger" onClick={removeButton}>Remove</button>
         </td>

@@ -1,0 +1,64 @@
+
+
+.containerDetail {
+    /* background: white; */
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    /* display: flex; */
+    
+}
+
+/*COmponente grandes*/
+.orderInfo{
+    background: white;
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+}
+.OrderDetails{
+    background: white;
+    width: 50%;
+    padding: 1rem;
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+}
+.amount{
+    background: white;
+    width: 50%;
+    padding: 1rem;
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.containerDetailsPurchase{
+    display: flex;
+}
+
+
+/* COmponente chiquitos */
+
+.cardMenu{
+    display: flex;
+    border-radius: rem;
+    margin-bottom: 1rem;
+}
+.imgMenu{
+    width: 7rem;
+}
+
+.infoMenu{
+    background: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+

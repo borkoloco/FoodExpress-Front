@@ -1,73 +1,83 @@
-
 import style from "./AddCart.module.css";
 import { useLocalStorage } from "../../../utils/useLocalStorage";
-import { Alert } from "../Alert/Alert";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/actions/action";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, addToCartDB } from "../../../redux/actions/action";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AddCart = ({ amount, id }) => {
   const dispatch = useDispatch();
 
   /* Funcionalidad de la página del carrito */
-  const numAmount = parseInt(amount)
+  const numAmount = parseInt(amount);
   if (numAmount < 1) {
-
-    window.alert('La cantidad minima es 1')
+    window.alert("La cantidad minima es 1");
   }
 
-  const [cartProducts, setCartProducts] = useLocalStorage('cart', [])
+  const [cartProducts, setCartProducts] = useLocalStorage("cart", []);
   const [showAlert, setShowAlert] = useState(false);
+  const userAuth = useSelector((state) => state.userAuth)
+  const userLogued = useSelector((state) => state.userLogued)
 
   const addInput = () => {
-
-    const data = { id: parseInt(id), amount: parseInt(amount) }
+    const data = { id: parseInt(id), amount: parseInt(amount) };
     let flag = false;
-    let index
-    let newAmount
+    let index;
+    let newAmount;
 
     const newCartProducts = cartProducts.map((el, ind) => {
       if (el.id == id) {
-        newAmount = parseInt(el.amount) + parseInt(amount)
-        flag = true
-        return { ...el, amount: newAmount }
+        newAmount = parseInt(el.amount) + parseInt(amount);
+        flag = true;
+        return { ...el, amount: newAmount };
       } else {
-        return { ...el }
+        return { ...el };
       }
-
-    })
+    });
     if (flag === true) {
-      console.log('entra en true');
-      setCartProducts(newCartProducts)
+      console.log("entra en true");
+      setCartProducts(newCartProducts);
     } else {
       if (amount && amount >= 1) {
-        console.log('entra en el false');
-        setCartProducts([...cartProducts, data])
+        console.log("entra en el false");
+        setCartProducts([...cartProducts, data]);
       }
     }
 
     /*Funcionalidad del icono del carrito */
     dispatch(addToCart(data));
 
+
+    if (Object.keys(userAuth).length > 0) {
+
+      dispatch(addToCartDB(data, userAuth.data.idUser))
+    }
+
+    if (Object.keys(userLogued).length > 0) {
+      dispatch(addToCartDB(data, userLogued.idUser))
+    }
+
     /* Esto es para desplegar una pequeña alerta abajo a la derecha
     cuando se agrega algo al carrito */
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 2000);
-  }
-
-
-
-
-
-
-
+    toast.success('Added to cart successfully', {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
 
   return (
     <div>
-      <button className={`card-link ${style.btnAdd}`} onClick={addInput}>Add to Cart</button>
-      <Alert show={showAlert} message="Added to your cart" />
+      <button className={`${style.btnAdd}`} onClick={addInput}>
+        Add to Cart
+      </button>
+
     </div>
-  )
+  );
 };

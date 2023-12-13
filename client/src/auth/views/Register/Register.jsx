@@ -10,6 +10,9 @@ import {
 } from "../../../redux/actions/action";
 import style from "./Register.module.css";
 import { areThereErrors } from "../../../utils/areThereErrors";
+import eyeOpen from "../../../assets/icons/eye-open.svg";
+import eyeclose from "../../../assets/icons/eye-close.svg";
+import { useState } from "react";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -20,13 +23,22 @@ const Register = () => {
     password: "",
     idRole: 1, // Envío manual del rol del cliente
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   //Login forma 1
-  const handleRegisterByUser = () => {
-    dispatch(registerByUser(formState));
-    navigate('/login')
-  }
-
+  const handleRegisterByUser = async () => {
+    try {
+      await dispatch(registerByUser(formState, navigate));
+    } catch (error) {
+      console.error("Error during registration:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Error during registration:",
+        footer: "",
+      });
+    }
+  };
   //Login forma 2
   // const handleEmailAuth = () => {
   //   const { username, email, password } = formState;
@@ -37,6 +49,26 @@ const Register = () => {
   // Login con Google
   const handleGoogleAuth = () => {
     dispatch(startGoogleAuth());
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleKeyDown = async (event) => {
+    if (event.key === "Enter" && areThereErrors(errors)) {
+      try {
+        await dispatch(registerByUser(formState, navigate));
+      } catch (error) {
+        console.error("Error during registration:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error during registration:",
+          footer: "",
+        });
+      }
+    }
   };
 
   return (
@@ -82,9 +114,9 @@ const Register = () => {
           )}
         </div>
 
-        <div className="mb-3">
+        <div className="input-group">
           <input
-            type="password"
+            type={`${showPassword ? "text" : "password"}`}
             placeholder="Password"
             className={`form-control ${
               errors.password
@@ -96,13 +128,27 @@ const Register = () => {
             name="password"
             value={formState.password}
             onChange={onInputChange}
+            onKeyDown={handleKeyDown}
+            aria-label="Amount (to the nearest dollar)"
           />
-          {errors.password && (
+          <span className="input-group-text">
+            <button
+              style={{ border: "none", background: "transparent" }}
+              checked={showPassword}
+              onClick={toggleShowPassword}
+            >
+              <img src={showPassword ? eyeclose : eyeOpen} alt="icon" />
+            </button>
+          </span>
+        </div>
+        {errors.password && (
+          <div className={style.containerError}>
             <p className={`text-danger ${style.errorsSize}`}>
               {errors.password}
             </p>
-          )}
-        </div>
+          </div>
+        )}
+        <div className="mt-3"></div>
 
         <FormButton
           eventHandler={handleRegisterByUser}

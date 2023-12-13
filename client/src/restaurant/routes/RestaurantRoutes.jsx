@@ -14,6 +14,16 @@ import FormCategories from "../../admin/views/FormMenu/FormCategories";
 import FormABMcategory from "../../admin/views/FormMenu/FormABMcategory";
 import { Footer } from "../../ui/components/Footer/Footer";
 import { Comments } from "../components/Comments/Comments";
+import { Checkout } from "../Views/Checkout/Checkout";
+import { Booking } from "../Views/Booking/Booking";
+import { AddressPage } from "../Views/Address/AddressPage";
+import ReviewUser from "../Views/Reviews/ReviewUser";
+import EditProfile from "../Views/EditProfile/EditProfile";
+import { SuccessPayment } from "../Views/SuccessPay/Success";
+import { Whatsapp } from "../../ui/components/Whatsapp/Whatsapp";
+import { Orders } from "../Views/Orders/Orders";
+
+
 
 export const RestaurantRoutes = () => {
   const dispatch = useDispatch();
@@ -39,24 +49,33 @@ export const RestaurantRoutes = () => {
   return (
     <>
       <NavBar />
+      <Whatsapp />
       <Routes>
         {/* <Route path="/" element={<Login />} /> */}
         <Route path="/" element={<Landing />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/menus" element={<Home />} />
         <Route path="/menu/detail/:id" element={<DetailMenu />} />
-        {/* <Route path="/form" element={<FormMenu/>} /> */}
-        <Route path="/form/category" element={<FormABMcategory />} />
         <Route path="/cart" element={<ShoppingCart />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/editprofile" element={<EditProfile />} />
 
         <Route path="/comments" element={<Comments />} />
+        <Route path="/checkout" element={<Checkout />} />
+
+        <Route path="/bookings" element={<Booking />} />
+
+        <Route path="/address" element={<AddressPage />} />
+        <Route path="/reviewuser" element={<ReviewUser />} />
+        <Route path="/success" element={<SuccessPayment />} />
+        <Route path="/my-orders" element={<Orders />} />
+
 
         {/*Añade más rutas aqui...  */}
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </>
   );
 };

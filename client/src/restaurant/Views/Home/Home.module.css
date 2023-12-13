@@ -1,36 +1,35 @@
-.bigDiv {
-    display: flex;
-    flex-direction: row;
+.containerHeader {
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
 
+
+.bigDiv {
+    /* background: green; */
+    display: flex;
+    /* flex-direction: column; */
+    padding-bottom: 2rem;
+    
+    margin-right: 10rem;
+    margin-left: 10rem;
 
 }
 
 .barDiv {
-    /* background: black; */
-    /* width: 300px; */
-    margin-top: 3.9em;
-
-
+    /* background: salmon; */
+    
 }
 
-.accordion {
-    width: 200px;
-
-}
 
 .cardsDiv {
-    flex-grow: 1;
-    margin-left: 3em;
+    /* background: yellow; */
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
-
-/* .imgLoading {
-    margin-top: 10em;
-    margin-left: 25em;
-    height: 14em;
-    width: auto;
-    border-radius: 50%;
-} */
 
 /* Fondo del home */
 .background_home{
@@ -40,4 +39,24 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     min-height: 100vh;
+}
+
+
+@media (max-width: 600px) {
+    .bigDiv {
+    
+        flex-direction: column;
+    }
+}
+@media (max-width: 1024px) {
+    .bigDiv {
+        margin-right: 0;
+        margin-left: 0;
+    
+    }
+}
+  
+@media (min-width: 1220px) {
+    
+
 }
