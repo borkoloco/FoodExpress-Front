@@ -78,6 +78,7 @@ export const ProductsAdmin = () => {
 
   const handleViewProduct = (idMenu) => {
     // dispatch(getMenuDetailById(idMenu));
+    alert(idMenu);
     navigate(`/menu/detail/${idMenu}`);
   };
 
@@ -120,14 +121,12 @@ export const ProductsAdmin = () => {
         <button className="btn btn-light" onClick={handleToggleView}>
           {viewInactive ? "View actives " : "View inactives"}
         </button>
-        
       </div>
       {/* Filters */}
-      
+
       <div className="card card-body mt-3">
         <Filters responsive={true} />
       </div>
-      
 
       {/* Tabla de productos */}
 
@@ -187,11 +186,11 @@ export const ProductsAdmin = () => {
                           <button
                             className="btn btn-warning"
                             id={plato.idMenu}
-                            onClick={(e) => {
-                              handleViewProduct(e.target.id);
+                            onClick={() => {
+                              handleViewProduct(plato.idMenu);
                             }}
                           >
-                            <FaEye color="white"/>
+                            <FaEye color="white" />
                           </button>
                           <button
                             className="btn btn-success"
@@ -222,11 +221,11 @@ export const ProductsAdmin = () => {
                           <button
                             className="btn btn-warning"
                             id={plato.idMenu}
-                            onClick={(e) => {
-                              handleViewProduct(e.target.id);
+                            onClick={() => {
+                              handleViewProduct(plato.idMenu);
                             }}
                           >
-                            <FaEye color="white"/>
+                            <FaEye color="white" />
                           </button>
                           <button
                             className="btn btn-danger"
