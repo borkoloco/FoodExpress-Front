@@ -6,7 +6,7 @@ import { FaWhatsapp } from "react-icons/fa";
 export const Whatsapp = () => {
   const phoneNumber = "543408674244";
   const message = "Hola Food Express, necesito hacerles una consulta";
-  
+
   const handleClick = () => {
     sendWhatsApp(phoneNumber, message);
   };

@@ -36,6 +36,7 @@ import {
   DETELE_ADRRES_BY_USER,
   GET_ALL_ORDERS,
   FILTER_ORDER,
+  ORDER_BY_IDUSER,
 } from "../actions/action";
 
 const initialState = {
@@ -70,11 +71,17 @@ const initialState = {
   linkMercadoPago: "",
   address: [],
   allOrders:[],
-  filteredOrder:[]
+  filteredOrder:[],
+  orderByIdUser: [],
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
   switch (action.type) {
+    case ORDER_BY_IDUSER:
+      return {
+        ...state,
+        orderByIdUser: payload,
+      };
     case GET_AVGALL:
       return {
         ...state,

@@ -40,6 +40,8 @@ export const GET_ADDRESS_BY_USER = "GET_ADDRESS_BY_USER";
 export const DETELE_ADRRES_BY_USER = "DETELE_ADRRES_BY_USER";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const FILTER_ORDER = 'FILTER_ORDER';
+export const ORDER_BY_IDUSER = "ORDER_BY_IDUSER;";
+
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
@@ -970,8 +972,8 @@ export const getAddresByUser = (idUser) => {
       const { data } = await axios(endPoint + `/getdireccionbyuser/${idUser}`);
 
       // console.log(data.carritoItems);
-     // console.log(data);
-      
+      // console.log(data);
+
       return dispatch({
         type: GET_ADDRESS_BY_USER,
         payload: data,
@@ -981,12 +983,11 @@ export const getAddresByUser = (idUser) => {
     }
   };
 };
-export const deleteAddresUserById = (idUser,idAddress) => {
+export const deleteAddresUserById = (idUser, idAddress) => {
   return async (dispatch) => {
     try {
       await axios.delete(endPoint + `/deletedirebyid/${idUser}/${idAddress}`);
-  
-      
+
       return dispatch({
         type: DETELE_ADRRES_BY_USER,
         // payload: data,
@@ -998,7 +999,8 @@ export const deleteAddresUserById = (idUser,idAddress) => {
 };
 
 
-//! GESTIÓN DE ORDERS
+
+//! GESTIÓN DE ORDERS admin
 /*ALL ORDERS - ADMIN */
 export const getOrders = () => {
   return async (dispatch) => {
@@ -1020,3 +1022,25 @@ export const filterOrder = (idOrder) => ({
   type: FILTER_ORDER,
   payload: idOrder,
 })
+
+//! SECCION VISTA DE ORDEN por USUARIO y para ADMIN
+//orden de compra por idUser, debe recibir idUser por Params
+//devuelve un arreglo de objetos agrupados por nro de orden/fecha
+//dentro de cada objeto hay una propiedad ordenes compuesto por otro
+//arreglo de objetos con los datos de cada idMenu que compone la orden
+export const getOrdenByUserByDate = (idUser) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(
+        endPoint + `/getordenbyuserbydate2/${idUser}`
+      );
+      return dispatch({
+        type: ORDER_BY_IDUSER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("No se pudo eliminar la dirección", error.message);
+    }
+  };
+};
+
