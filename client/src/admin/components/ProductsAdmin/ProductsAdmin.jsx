@@ -122,6 +122,7 @@ export const ProductsAdmin = () => {
         </button>
       </div>
       {/* Filters */}
+      {/* Filters */}
 
       <div className="card card-body mt-3">
         <Filters responsive={true} />
