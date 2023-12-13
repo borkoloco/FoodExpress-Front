@@ -37,12 +37,10 @@ export const SideBar = () => {
         {/* <NavLink className="list-group-item py-2">
           Bookings
         </NavLink> */}
-        <NavLink className="list-group-item py-2">
+        <NavLink to="/dashboard/usersAdmin" className="list-group-item py-2">
           Customers
         </NavLink>
-        <NavLink className="list-group-item py-2">
-          Payments
-        </NavLink>
+        <NavLink className="list-group-item py-2">Payments</NavLink>
         <NavLink
           to="/dashboard/reviewsaprobation"
           className="list-group-item py-2"
@@ -50,9 +48,7 @@ export const SideBar = () => {
           <span>Moderation</span>
           {pendingReviews.length !== 0 && <span>🔴</span>}
         </NavLink>
-        <NavLink className="list-group-item py-2">
-          Logout
-        </NavLink>
+        <NavLink className="list-group-item py-2">Logout</NavLink>
       </div>
     </div>
   );
