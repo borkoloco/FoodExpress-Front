@@ -16,6 +16,25 @@
 
 }
 
+.button {
+    background: sandybrown;
+    border: 1px solid white;
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    
+}
+.button:hover {
+    background: transparent;
+    border: 1px solid sandybrown;
+    border-radius: 6px;
+    color: sandybrown;
+    font-weight: 500;
+    
+}
+
+
+
 
 
 @media (max-width: 920px) {
