@@ -98,6 +98,7 @@ export const AddressPage = () => {
                   name="address"
                   value={formState.address}
                   onChange={onInputChange}
+                  placeholder="Av. Corrientes 1234, Buenos Aires, Argentina"
                 />
               </div>
               <button

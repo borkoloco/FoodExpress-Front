@@ -72,6 +72,9 @@ export const FormBillingDetails = ({ dataUser, formState, onInputChange }) => {
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
+            name="note"
+            value={formState.note}
+            onChange={onInputChange}
           />
         </div>
       </form>

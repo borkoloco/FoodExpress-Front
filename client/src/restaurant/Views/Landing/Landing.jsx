@@ -41,11 +41,11 @@ const Landing = () => {
                 <div className="col-lg-8">
                   <h6 className="text-white">Welcome to Food Express</h6>
                   <h1 className="display-1 fw-bold text-white">
-                    Un catálogo maravilloso para deleitar tu paladar.
+                    A wonderful catalog of menus to delight your palate
                   </h1>
                   <Link to="/menus">
                     <button className={`${style.btn} ${style.btn_brand}`}>
-                      Pedir ahora
+                      See more
                     </button>
                   </Link>
                 </div>
@@ -60,11 +60,11 @@ const Landing = () => {
                 <div className="col-lg-8">
                   <h6 className="text-white">Welcome to Food Express</h6>
                   <h1 className="display-1 fw-bold text-white">
-                    Garantiza tu lugar y disfruta junto a tu familia
+                    Guarantee your place and enjoy with your family
                   </h1>
                   <Link to="/bookings">
                     <button className={`${style.btn} ${style.btn_brand}`}>
-                      Reservar ahora
+                      Reserve now
                     </button>
                   </Link>
                 </div>

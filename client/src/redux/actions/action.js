@@ -38,8 +38,11 @@ export const SEND_CART_MERCADO_PAGO = "SEND_CART_MERCADO_PAGO";
 export const SEND_ADDRESS_BY_USER = "SEND_ADDRESS_BY_USER";
 export const GET_ADDRESS_BY_USER = "GET_ADDRESS_BY_USER";
 export const DETELE_ADRRES_BY_USER = "DETELE_ADRRES_BY_USER";
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
+export const FILTER_ORDER = 'FILTER_ORDER';
 export const ORDER_BY_IDUSER = "ORDER_BY_IDUSER;";
 export const ALL_USERS = "ALL_USERS";
+
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
@@ -996,6 +999,31 @@ export const deleteAddresUserById = (idUser, idAddress) => {
   };
 };
 
+
+
+//! GESTIÓN DE ORDERS admin
+/*ALL ORDERS - ADMIN */
+export const getOrders = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios(endPoint + "/getorden");
+      // console.log(data);
+      
+      return dispatch({
+        type: GET_ALL_ORDERS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("Error al obtener todas las orders", error.message);
+    }
+  };
+};
+
+export const filterOrder = (idOrder) => ({
+  type: FILTER_ORDER,
+  payload: idOrder,
+})
+
 //! SECCION VISTA DE ORDEN por USUARIO y para ADMIN
 //orden de compra por idUser, debe recibir idUser por Params
 //devuelve un arreglo de objetos agrupados por nro de orden/fecha
@@ -1016,6 +1044,7 @@ export const getOrdenByUserByDate = (idUser) => {
     }
   };
 };
+
 
 //!USUARIOS PARA EL BLOQUEO O BANNEO
 /*obtiene un array de objetos de usuarios, cada objeto tiene
@@ -1053,3 +1082,4 @@ export const updateBanned = (idUser) => {
     }
   };
 };
+

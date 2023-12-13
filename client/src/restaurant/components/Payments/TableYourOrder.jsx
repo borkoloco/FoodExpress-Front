@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Loading2 } from "../../../ui/components/Loading2/Loading2";
 
 export const TableYourOrder = ({ handleClick, properties }) => {
-
   const [loading, setLoading] = useState(false);
 
   const calculateSubtotal = () => {
@@ -27,18 +26,18 @@ export const TableYourOrder = ({ handleClick, properties }) => {
   return (
     <>
       <h3>Your Order</h3>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">Product</th>
-            <th scope="col"></th>
-            <th scope="col">Subtotal</th>
-          </tr>
-        </thead>
+      {loading ? (
+        <>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col"></th>
+                <th scope="col">Subtotal</th>
+              </tr>
+            </thead>
 
-        <tbody>
-          {loading ? (
-            <>
+            <tbody>
               {properties.map((item, index) => (
                 <tr key={index}>
                   <td>
@@ -59,36 +58,18 @@ export const TableYourOrder = ({ handleClick, properties }) => {
                 <td></td>
                 <td>${calculateSubtotal()}</td>
               </tr>
-            </>
-          ) : (
-            <Loading2 />
-          )}
+            </tbody>
+          </table>
 
-          {/* Información de precios fija */}
-        </tbody>
-      </table>
-      <div>
-        <button onClick={() => handleClick()} className="btn btn-warning">
-          Pay with MercadoPago
-        </button>
-        {/* <p className="d-inline-flex gap-1">
-              <a
-                className="btn btn-warning"
-                data-bs-toggle="collapse"
-                href="#collapseExample"
-                role="button"
-                aria-expanded="false"
-                aria-controls="collapseExample"
-              >
-                Pay with Mercadopago
-              </a>
-            </p>
-            <div className="collapse" id="collapseExample">
-              <div className="card card-body">
-                Form de MercadoPago, opciones ...
-              </div>
-            </div> */}
-      </div>
+          <div>
+            <button onClick={() => handleClick()} className="btn btn-warning">
+              Pay with MercadoPago
+            </button>
+          </div>
+        </>
+      ) : (
+        <Loading2 />
+      )}
     </>
   );
 };
