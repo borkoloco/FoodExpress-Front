@@ -10,6 +10,7 @@ import FormAdmin from "../components/FormAdmin/FormAdmin";
 import FormABMcategory from "../views/FormMenu/FormABMcategory";
 import { Form } from "../../ui/components/Form/Form";
 import ReviewsAprobation from "../components/ReviewAdmin/ReviewsAprobation";
+import UsersAdmin from "../components/UsersAdmin/UsersAdmin";
 
 export const AdminRoutes = () => {
   const [toggle, setToggle] = useState(true);
@@ -17,14 +18,12 @@ export const AdminRoutes = () => {
     setToggle(!toggle);
   };
 
-
-  const datauser = JSON.parse(localStorage.getItem('sesion'));
+  const datauser = JSON.parse(localStorage.getItem("sesion"));
   // console.log("soy data user", datauser)
   if (!datauser) {
     return <Navigate to="/" />;
   }
   const isAdmin = datauser.idRole === 2;
-
 
   if (!isAdmin) {
     return <Navigate to="/" />;
@@ -61,6 +60,10 @@ export const AdminRoutes = () => {
               <Route
                 path="reviewsaprobation"
                 element={<Form children={<ReviewsAprobation />} />}
+              />
+              <Route
+                path="usersAdmin"
+                element={<Form children={<UsersAdmin />} />}
               />
               {/*Añade más rutas aqui...  */}
               <Route path="/*" element={<Navigate to="/dashboard/home" />} />

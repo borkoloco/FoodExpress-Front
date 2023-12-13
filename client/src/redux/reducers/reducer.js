@@ -33,6 +33,7 @@ import {
   GET_ADDRESS_BY_USER,
   REMOVE_ONE_FROM_CART,
   ORDER_BY_IDUSER,
+  ALL_USERS,
 } from "../actions/action";
 
 const initialState = {
@@ -67,10 +68,16 @@ const initialState = {
   linkMercadoPago: "",
   address: [],
   orderByIdUser: [],
+  allusers: [],
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
   switch (action.type) {
+    case ALL_USERS:
+      return {
+        ...state,
+        allusers: payload,
+      };
     case ORDER_BY_IDUSER:
       return {
         ...state,
