@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMenuDetailById,
@@ -8,14 +8,22 @@ import {
 import { BackButton } from "../../../ui/components/BackButton/BackButton";
 import style from "./Orders.module.css";
 import { useNavigate } from "react-router-dom";
+import { Loading2 } from "../../../ui/components/Loading2/Loading2";
+import { transformarFecha } from "../../../utils/formatFecha";
 
 export const Orders = () => {
   const datauser = JSON.parse(localStorage.getItem("sesion"));
   const orderByIdUser = useSelector((state) => state.orderByIdUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    dispatch(getOrdenByUserByDate(datauser.idUser));
+    const dataFetch = async() => {
+      await dispatch(getOrdenByUserByDate(datauser.idUser));
+      setLoading(true);
+
+    }
+    dataFetch()
   }, []);
 
   // console.log("hola soy ", datauser.idUser);
@@ -35,10 +43,10 @@ export const Orders = () => {
     return orderByIdUser.map((envio, index) => (
       <tbody key={index}>
         <tr>
-          <th colSpan="4">{envio.numero_de_envio}</th>
+          <th colSpan="4">{transformarFecha(envio.numero_de_envio)}</th>
           <th colSpan="4">
-            <button onClick={() => handleRepeat(envio.numero_de_envio)}>
-              Repetir Pedido
+            <button className={style.button} onClick={() => handleRepeat(envio.numero_de_envio)}>
+              Repeat order
             </button>
           </th>
         </tr>
@@ -55,8 +63,8 @@ export const Orders = () => {
               #{orden.idMenu}: {orden.nameMenu}
             </td>
             <td>
-              <button onClick={() => handleRating(orden.idMenu)}>
-                Califica
+              <button className={style.button} onClick={() => handleRating(orden.idMenu)}>
+                Add review
               </button>{" "}
             </td>
           </tr>
@@ -73,19 +81,22 @@ export const Orders = () => {
         <h2>My Orders</h2>
       </div>
 
-      <div className={`card ${style.containerTable}`}>
+      {
+        loading ? (<div className={`card ${style.containerTable}`}>
         <table className="table">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Precio</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
               <th scope="col">ID Menu</th>
             </tr>
           </thead>
           {renderOrders()}
         </table>
-      </div>
+      </div>) : <Loading2/>
+      }
+      
     </>
   );
 };
