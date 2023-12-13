@@ -42,6 +42,7 @@ export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const FILTER_ORDER = "FILTER_ORDER";
 export const ORDER_BY_IDUSER = "ORDER_BY_IDUSER;";
 export const ALL_USERS = "ALL_USERS";
+export const ALL_USERS_SHOW = "ALL_USERS_SHOW";
 
 const endPoint = import.meta.env.VITE_BACKEND_URL;
 
@@ -1115,3 +1116,21 @@ export const updateBanned = (idUser) => {
     }
   };
 };
+
+
+export const getAllUsers = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endPoint + "/getallusers/");
+      // console.log(data.allUs ers);
+      return dispatch({
+        type: ALL_USERS_SHOW,
+        payload: data
+      });
+    } catch (error) {
+      console.log("No pudimos obtener los usuarios", error.message);
+    }
+  };
+};
+
+
