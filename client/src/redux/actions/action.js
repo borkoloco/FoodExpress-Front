@@ -23,7 +23,7 @@ export const LOGIN_BY_USER = "LOGIN_BY_USER";
 export const LOGOUT_BY_USER = "LOGOUT_BY_USER";
 export const REGISTER_BY_USER = "REGISTER_BY_USER";
 export const USERLOGUED = "USERLOGUED";
-export const ADD_TO_CART = "ADD_TO_CART  ";
+export const ADD_TO_CART = "ADD_TO_CART ";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
 export const UPDATE_MENU_AVAILABILITY = "UPDATE_MENU_AVAILABILITY";
@@ -58,8 +58,8 @@ export const user_logued = (email) => {
       if (data.isBanned) {
         Swal.fire({
           icon: "error",
-          title: "Lo lamentamos...",
-          text: "Has sido bloqueado",
+          title: "We're sorry...",
+          text: "Your account has been blocked",
           footer: "",
         });
         return;
@@ -167,7 +167,7 @@ export const startWithEmail = (email, password, username) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Listo, loguéate",
+        title: "Ready to log in",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -241,7 +241,7 @@ export const startGoogleAuth = () => {
       .signInWithPopup(googleAuthProvider)
       .then(({ user }) => {
         console.log(user);
-        console.log(user.uid + "   " + user.displayName);
+        console.log(user.uid + " " + user.displayName);
         dispatch(login(user.uid, user.displayName, user.email));
         testEmail(user.displayName, user.email);
         testEmail(user.displayName, user.email);
@@ -436,7 +436,7 @@ export const postProduct = (product) => {
       Swal.fire({
         position: "center-center",
         icon: "success",
-        title: "Guardado con éxito",
+        title: "Successfully saved",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -493,7 +493,7 @@ export const setCurrentPage = (page) => ({
   payload: page,
 });
 
-/*  ACTIONS PARA EL SEARCH */
+/* ACTIONS PARA EL SEARCH */
 export const setInput = (valor) => {
   return { type: SEARCH_INPUT, payload: valor };
 };
@@ -521,8 +521,8 @@ export const loginByUser = (user) => {
       if (data.data.isBanned) {
         Swal.fire({
           icon: "error",
-          title: "Lo lamentamos...",
-          text: "Has sido bloqueado",
+          title: "We'se sorry...",
+          text: "Your account has been blocked",
           footer: "",
         });
         return;
@@ -554,7 +554,12 @@ export const loginByUser = (user) => {
       });
     } catch (error) {
       console.log(error.message);
-      window.alert(error.response.data.error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Invalid credentials",
+        footer: "",
+      });
     }
   };
 };
@@ -565,7 +570,7 @@ export const logoutByUser = () => {
 };
 
 /* ACTIONS PARA EL REGISTRO CON usuario, email y password */
-export const registerByUser = (user) => {
+export const registerByUser = (user, navigate) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(endPoint + "/register", user);
@@ -577,13 +582,20 @@ export const registerByUser = (user) => {
         timer: 2000,
       });
       // console.log(data);
-      return dispatch({
+      dispatch({
         type: REGISTER_BY_USER,
         payload: data,
       });
+      navigate("/login");
     } catch (error) {
       console.log(error.message);
-      window.alert(error.response.data);
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.error,
+        footer: "",
+      });
     }
   };
 };
@@ -685,7 +697,7 @@ export const updateMenu = (id, value) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Actualizado",
+        title: "Updated",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -707,7 +719,7 @@ export const deleteType = (id) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Categoría eliminada",
+        title: "Category deleted",
         showConfirmButton: false,
         timer: 1800,
       });
@@ -719,7 +731,7 @@ export const deleteType = (id) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No pudimos eliminar la categoría",
+        text: "We couldn't delete the category",
         footer: "",
       });
     }
@@ -733,7 +745,7 @@ export const deleteSpecial = (id) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Categoría eliminada",
+        title: "Category deleted",
         showConfirmButton: false,
         timer: 1800,
       });
@@ -745,7 +757,7 @@ export const deleteSpecial = (id) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No pudimos eliminar la categoría",
+        text: "We couldn't delete the category",
         footer: "",
       });
     }
@@ -767,7 +779,7 @@ export const getAllReviews = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Tuvimos un error al obtener los reviews",
+        text: "Unable to obtain the reviews",
         footer: "",
       });
       console.log("Tuvimos un error al obtener los reviews: " + error.message);
@@ -784,7 +796,7 @@ export const addReview = (value) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Gracias por calificar",
+        title: "Thank you for opinion",
         showConfirmButton: false,
         timer: 1800,
       });
@@ -796,7 +808,7 @@ export const addReview = (value) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Tuvimos un error al agregar un review",
+        text: "Unable to add review",
         footer: "",
       });
       console.log("Tuvimos un error al agregar un review: " + error.message);
@@ -817,7 +829,7 @@ export const updateReviewById = (id, rate, comment) => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Gracias por calificar",
+        title: "Thank you for your opinion",
         showConfirmButton: false,
         timer: 1800,
       });
@@ -829,7 +841,7 @@ export const updateReviewById = (id, rate, comment) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No pudimos actualizar tu review",
+        text: "Unable to update review",
         footer: "",
       });
       console.log("No pudimos actualizar tu review: " + error.message);
@@ -926,7 +938,7 @@ export const updateReviewStatus = (idReview, idStatus) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No pudimos aprobar/rechazar el comentario",
+        text: "We couldn't approve or reject your comment",
         footer: "",
       });
       console.log("No pudimos aprobar/rechazar el comentario");
@@ -1069,10 +1081,10 @@ export const getOrdenByUserByDate = (idUser) => {
 
 //!USUARIOS PARA EL BLOQUEO O BANNEO
 /*obtiene un array de objetos de usuarios, cada objeto tiene
-	{
-		"nameUser": "admin",
-		"isBanned": false,
-		"email": "admin@admin.com"
+ {
+ "nameUser": "admin",
+ "isBanned": false,
+ "email": "admin@admin.com"
 }*/
 
 export const getUsersBanned = () => {
