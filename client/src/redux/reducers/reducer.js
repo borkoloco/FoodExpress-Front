@@ -38,6 +38,7 @@ import {
   FILTER_ORDER,
   ORDER_BY_IDUSER,
   ALL_USERS,
+  ALL_USERS_SHOW,
 } from "../actions/action";
 
 const initialState = {
@@ -75,6 +76,7 @@ const initialState = {
   filteredOrder:[],
   orderByIdUser: [],
   allusers: [],
+  allusersShow:[]
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -401,6 +403,14 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         filteredOrder,
       };
+
+    /**TRAE TODOS LOS USUARIOS */
+    case ALL_USERS_SHOW:
+      return {
+        ...state,
+        allusersShow: payload,
+      };
+
 
       
     default:

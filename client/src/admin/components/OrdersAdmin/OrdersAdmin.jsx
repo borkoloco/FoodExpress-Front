@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Loading } from "../../../ui/components/Loading/Loading";
-import { filterOrder, getOrders, getUsersBanned } from "../../../redux/actions/action";
+import { getAllUsers, getOrders } from "../../../redux/actions/action";
 import { useDispatch, useSelector } from "react-redux";
 import { organizeOrders } from "../../../utils/organizeOrders";
 import { transformarFecha } from "../../../utils/formatFecha";
@@ -12,16 +12,16 @@ export const OrdersAdmin = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const allOrders = useSelector((state) => state.allOrders);
-  const allusers = useSelector((state) => state.allusers);
+  const allusersShow = useSelector((state) => state.allusersShow);
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         await dispatch(getOrders());
-        await dispatch(getUsersBanned());
+        await dispatch(getAllUsers());
         setIsLoading(false);
-        console.log(allusers);
+        console.log(allusersShow);
         
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -52,7 +52,7 @@ export const OrdersAdmin = () => {
               {organizeOrders(allOrders).map((order,index) => (
                 <tr key={index}>
                   <th scope="row">{order.idOrden}</th>
-                  <td>{findUserNameById(allusers,order.idUser)}</td>
+                  <td>{findUserNameById(allusersShow,order.idUser)}</td>
                   <td>{order.subtotal}</td>
                   <td>{transformarFecha(order.fecha_de_compra)}</td>
                   <td>{order.estado}</td>

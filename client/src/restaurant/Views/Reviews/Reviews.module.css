@@ -1,0 +1,102 @@
+.containerHeader{
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+
+/* contendor general */
+.containerRows{
+    /* background: green; */
+    margin-left: 10rem;
+    margin-right: 10rem;
+
+    display: flex;
+    margin-bottom: 2rem;
+    /* width: 100%; */
+}
+
+
+/* container del menu */
+.containerMenu{
+    width: 35%;
+
+}
+
+/* container review */
+.containerReview{
+    margin-left: 1rem;
+    width: 65%;
+}
+
+
+
+
+
+/* más */
+.textWarning{
+    color: gray;
+    font-size: 12px;
+    margin-top: 4px;
+}
+.text{
+    color: gray;
+    font-size: 12px;
+    margin-bottom: 17px;
+}
+
+
+.img{
+    object-fit: cover;
+}
+
+
+.button {
+    background: sandybrown;
+    border: 1px solid white;
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    padding: 8px;
+    
+}
+.button:hover {
+    background: transparent;
+    border: 1px solid sandybrown;
+    border-radius: 6px;
+    color: sandybrown;
+    font-weight: 500;
+    
+}
+
+
+
+
+/* media queries */
+
+@media (max-width: 920px) {
+   
+    .containerRows{
+        margin-left: 2rem;
+        margin-right: 2rem;
+        flex-direction: column-reverse;
+    }
+
+    .containerReview{
+        margin-left: 0;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    .containerMenu{
+        width: 100%;
+    
+    }
+    
+    
+    
+    .containerHeader {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+}
+
+
