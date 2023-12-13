@@ -24,12 +24,19 @@ export const Checkout = () => {
     subtotal: item.subtotal,
   })) || null;
 
-  const { formState, onInputChange, errors } = useForm({address:""});
+  const { formState, onInputChange, errors } = useForm({address:"",note:""});
 
   const handleClickPay = async() => {
     try {
       if(formState.address !== "Select Address" && formState.address !== ""){
-        const response = await dispatch(sendCartToMercadoPago({idUser:dataLoginUser.idUser,propertiesReadyToSend}));
+        const response = await dispatch(sendCartToMercadoPago(
+          {
+            idUser:dataLoginUser.idUser,
+            address:formState.address,
+            note:formState.note,
+            propertiesReadyToSend
+          }
+          ));
         window.location.href = response.payload;
       
         console.log("Enviando a mercado pago");
@@ -73,8 +80,6 @@ export const Checkout = () => {
           </div>
         </div>) : <div style={{padding: "7rem"}}><center>"Login if you want to buy"</center></div>
       }
-
-    
     </>
   );
 };

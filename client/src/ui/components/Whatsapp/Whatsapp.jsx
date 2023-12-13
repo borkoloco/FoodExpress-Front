@@ -11,7 +11,7 @@ export const Whatsapp = () => {
     sendWhatsApp(phoneNumber, message);
   };
   return (
-    <div class={style.btnwsp}>
+    <div className={style.btnwsp}>
       <FaWhatsapp
         onClick={handleClick}
         style={{

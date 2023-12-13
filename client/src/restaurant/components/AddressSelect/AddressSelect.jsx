@@ -13,7 +13,7 @@ export const AddressSelect = ({ formState, onInputChange }) => {
           name="address"
           onChange={onInputChange} 
         >
-          <option selected>Select Address</option>
+          <option>Select Address</option>
           {address.direcciones.map((userAddress, index) => (
             <option key={index} value={userAddress.calle}>
               {userAddress.calle}

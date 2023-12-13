@@ -1,3 +1,4 @@
+import { organizeOrders } from "../../utils/organizeOrders";
 import {
   ALL_MENU,
   ALL_SPECIALTIES,
@@ -32,6 +33,9 @@ import {
   SEND_ADDRESS_BY_USER,
   GET_ADDRESS_BY_USER,
   REMOVE_ONE_FROM_CART,
+  DETELE_ADRRES_BY_USER,
+  GET_ALL_ORDERS,
+  FILTER_ORDER,
 } from "../actions/action";
 
 const initialState = {
@@ -65,6 +69,8 @@ const initialState = {
   cartBDTemp: [],
   linkMercadoPago: "",
   address: [],
+  allOrders:[],
+  filteredOrder:[]
 };
 const rootReducer = (state = initialState, action) => {
   const payload = action.payload;
@@ -368,6 +374,21 @@ const rootReducer = (state = initialState, action) => {
         address: payload,
       };
 
+    /*GESTIÓN DE ORDERS */
+    case GET_ALL_ORDERS:
+      return {
+        ...state,
+        allOrders: payload,
+      };
+
+    case FILTER_ORDER:
+      const filteredOrder = organizeOrders(state.allOrders).find(order =>order.idOrden === parseInt(payload));
+      return {
+        ...state,
+        filteredOrder,
+      };
+
+      
     default:
       return state;
       break;

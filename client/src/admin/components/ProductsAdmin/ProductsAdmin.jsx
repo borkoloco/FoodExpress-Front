@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 import { Loading } from "../../../ui/components/Loading/Loading";
 import FormMenuEdit from "../../views/FormMenu/FormMenuEdit";
 import { Filters } from "../../../ui/components/Filters/Filters";
+import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 
 export const ProductsAdmin = () => {
   const navigate = useNavigate();
@@ -119,23 +120,14 @@ export const ProductsAdmin = () => {
         <button className="btn btn-light" onClick={handleToggleView}>
           {viewInactive ? "View actives " : "View inactives"}
         </button>
-        <button
-          className="btn btn-light mx-3"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseExample"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-        >
-          Filters
-        </button>
+        
       </div>
-      {/* Colapse */}
-      <div className="collapse mt-2" id="collapseExample">
-        <div className="card card-body">
-          <Filters responsive={true} />
-        </div>
+      {/* Filters */}
+      
+      <div className="card card-body mt-3">
+        <Filters responsive={true} />
       </div>
+      
 
       {/* Tabla de productos */}
 
@@ -145,7 +137,7 @@ export const ProductsAdmin = () => {
         ((viewInactive && filteredInactiveMenu.length > 0) ||
           (!viewInactive && filteredMenu.length > 0)) && (
           <div className={Style.tableContainer}>
-            <table className="table caption-top bg-white rounded mt-2">
+            <table className="table caption-top bg-white rounded">
               <caption className="text-black fs-4">Products</caption>
               <thead>
                 <tr>
@@ -190,7 +182,7 @@ export const ProductsAdmin = () => {
                               handleEditProduct(e.target.id);
                             }}
                           >
-                            Edit
+                            <FaEdit />
                           </button>
                           <button
                             className="btn btn-warning"
@@ -199,13 +191,13 @@ export const ProductsAdmin = () => {
                               handleViewProduct(e.target.id);
                             }}
                           >
-                            View
+                            <FaEye color="white"/>
                           </button>
                           <button
                             className="btn btn-success"
                             onClick={() => handleRestore(plato.idMenu)}
                           >
-                            Restaurar
+                            Restore
                           </button>
                         </td>
                       </tr>
@@ -225,7 +217,7 @@ export const ProductsAdmin = () => {
                               handleEditProduct(e.target.id);
                             }}
                           >
-                            Edit
+                            <FaEdit />
                           </button>
                           <button
                             className="btn btn-warning"
@@ -234,13 +226,13 @@ export const ProductsAdmin = () => {
                               handleViewProduct(e.target.id);
                             }}
                           >
-                            View
+                            <FaEye color="white"/>
                           </button>
                           <button
                             className="btn btn-danger"
                             onClick={() => handleDelete(plato.idMenu)}
                           >
-                            Delete
+                            <FaTrash />
                           </button>
                         </td>
                       </tr>
