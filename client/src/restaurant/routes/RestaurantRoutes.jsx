@@ -49,7 +49,7 @@ export const RestaurantRoutes = () => {
   return (
     <>
       <NavBar />
-      <Whatsapp/>
+      <Whatsapp />
       <Routes>
         {/* <Route path="/" element={<Login />} /> */}
         <Route path="/" element={<Landing />} />
@@ -59,7 +59,7 @@ export const RestaurantRoutes = () => {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/editProfile" element={<EditProfile />} />
+        <Route path="/editprofile" element={<EditProfile />} />
 
         <Route path="/comments" element={<Comments />} />
         <Route path="/checkout" element={<Checkout />} />
