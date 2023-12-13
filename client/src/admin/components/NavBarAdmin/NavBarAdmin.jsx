@@ -53,17 +53,13 @@ export const NavBarAdmin = ({ Toggle }) => {
               <NavLink to="/" className="dropdown-item">
                 Home
               </NavLink>
-              {/* <NavLink to="/">
-                <a className="dropdown-item" href="#">
-                  Home
-                </a>
-              </NavLink> */}
-              <a className="dropdown-item" href="#">
+ 
+              {/* <a className="dropdown-item" href="#">
                 Profile
               </a>
               <a className="dropdown-item" href="#">
                 Settings
-              </a>
+              </a> */}
               <a className="dropdown-item" href="#" onClick={handleLogout}>
                 <strong>Logout</strong>
               </a>
