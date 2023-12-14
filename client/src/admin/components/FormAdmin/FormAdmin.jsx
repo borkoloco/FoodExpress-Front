@@ -44,10 +44,10 @@ const FormAdmin = () => {
   const handleAddSpecial = async () => {
     const { value: text } = await Swal.fire({
       input: "text",
-      inputLabel: "Especialidades",
-      inputPlaceholder: "Ingresa una especialidad aquí...",
+      inputLabel: "Specialties",
+      inputPlaceholder: "Enter a specialty...",
       inputAttributes: {
-        "aria-label": "Ingresa una especialidad aquí...",
+        "aria-label": "Enter a specialty...",
       },
       showCancelButton: true,
     });
@@ -63,10 +63,10 @@ const FormAdmin = () => {
   const handleAddTipoComida = async () => {
     const { value: text } = await Swal.fire({
       input: "text",
-      inputLabel: "Tipo de plato",
-      inputPlaceholder: "Ingresa un tipo aquí...",
+      inputLabel: "Type of plate",
+      inputPlaceholder: "Enter a type...",
       inputAttributes: {
-        "aria-label": "Ingresa un tipo aquí...",
+        "aria-label": "Enter a type...",
       },
       showCancelButton: true,
     });
@@ -81,16 +81,16 @@ const FormAdmin = () => {
 
   const validationsCategories = (value) => {
     if (value === "") {
-      Swal.fire("Debes ingresar una categoria");
+      Swal.fire("You must enter a category");
       return false;
     } else if (value.trim() === "") {
-      Swal.fire("No uses cadenas de espacios");
+      Swal.fire("Don't use space strings");
       return false;
     } else if (value.length < 2 || value.length > 30) {
-      Swal.fire("Usa entre 2 y 30 caracteres");
+      Swal.fire("Use between 2 and 30 characters");
       return false;
     } else if (!regexName.test(value)) {
-      Swal.fire("Usa solo letras y espacios");
+      Swal.fire("Use only letters and spaces");
       return false;
     }
     return true;
@@ -161,11 +161,11 @@ const FormAdmin = () => {
 
     if (!imgUrl) {
       const result = await Swal.fire({
-        title: "Crear un plato sin imagen?",
+        title: "Create a plate without an image?",
         showDenyButton: true,
         showCancelButton: false,
-        confirmButtonText: "Okey",
-        denyButtonText: `Cancelar`,
+        confirmButtonText: "Ok",
+        denyButtonText: `Cancel`,
       });
 
       if (result.isConfirmed) {
@@ -248,11 +248,11 @@ const FormAdmin = () => {
 
   return (
     <>
-      {showSuccessMessage && (
+      {/* {showSuccessMessage && (
         <div className="alert alert-success" role="alert">
           ¡Plato agregado correctamente!
         </div>
-      )}
+      )} */}
       <div className={style.container_form}>
         <div className="mb-3">
           <input
@@ -260,7 +260,7 @@ const FormAdmin = () => {
             type="text"
             name="nameMenu"
             id="nameMenu"
-            placeholder="Nombre del plato"
+            placeholder="Name of plate"
             value={menuData.nameMenu}
             onChange={handleChange}
           />
@@ -273,7 +273,7 @@ const FormAdmin = () => {
             type="text"
             name="description"
             id="description"
-            placeholder="Descripción del plato"
+            placeholder="Description"
             value={menuData.description}
             onChange={handleChange}
           />
@@ -284,14 +284,14 @@ const FormAdmin = () => {
           <div className="col-md-4 flex-column ">
             <div className="d-flex align-items-center">
               <label className="form-label" htmlFor="price">
-                Precio:
+                Price:
               </label>
               <input
                 className="form-control"
                 type="number"
                 name="price"
                 id="price"
-                placeholder="Precio del plato"
+                placeholder="Price of plate"
                 value={menuData.price}
                 onChange={handleChange}
               />
@@ -300,7 +300,7 @@ const FormAdmin = () => {
           </div>
           <div className="col-md-4 mt-3 mb-3 ">
             <label className="form-label d-flex  align-items-center ">
-              Disponible:
+              Available:
               <Switch
                 onChange={handleChangeAvailable}
                 checked={menuData.available}
@@ -312,7 +312,7 @@ const FormAdmin = () => {
         {/*options*/}
         <div>
           <div className="mb-3 d-flex  align-items-center">
-            <label className="form-label">Tipos de Platos:</label>
+            <label className="form-label">Type of plate:</label>
 
             <select
               className="form-select"
@@ -329,12 +329,12 @@ const FormAdmin = () => {
               className="btn btn-dark text-white"
               onClick={handleAddTipoComida}
             >
-              Agregar
+              Add
             </button>
           </div>
 
           <div className="mb-3 d-flex  align-items-center ">
-            <label className="form-label">Especialidades:</label>
+            <label className="form-label">Specialties:</label>
             <select
               className="form-select"
               value={menuData.specialtyMenu}
@@ -350,7 +350,7 @@ const FormAdmin = () => {
               className="btn btn-dark text-white"
               onClick={handleAddSpecial}
             >
-              Agregar
+              Add
             </button>
           </div>
         </div>
@@ -378,7 +378,7 @@ const FormAdmin = () => {
               onClick={handleSubmit}
               disabled={isSubmitButtonDisabled}
             >
-              CREAR
+              Create
             </button>
           </div>
         </div>
