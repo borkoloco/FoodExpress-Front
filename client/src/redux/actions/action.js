@@ -567,6 +567,7 @@ export const loginByUser = (user) => {
 
 export const logoutByUser = () => {
   localStorage.removeItem("sesion");
+  localStorage.removeItem("propertiesReadyToSend");
   return { type: LOGOUT_BY_USER };
 };
 
@@ -975,6 +976,7 @@ export const sendCartToMercadoPago = (cart) => {
       const { data } = await axios.post(endPoint + "/create-payment", cart);
       // console.log("Responde:", data);
       localStorage.removeItem("cart");
+      localStorage.removeItem("propertiesReadyToSend");
       return dispatch({
         type: SEND_CART_MERCADO_PAGO,
         payload: data,

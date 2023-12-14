@@ -18,6 +18,8 @@ export const TableYourOrder = ({ handleClick, properties }) => {
     // Simula el tiempo de carga
     const timer = setTimeout(() => {
       setLoading(true);
+      // console.log(properties);
+      
     }, 1500); // Cambia este valor por el tiempo que realmente demoran en llegar las properties
 
     return () => clearTimeout(timer);
@@ -62,7 +64,7 @@ export const TableYourOrder = ({ handleClick, properties }) => {
           </table>
 
           <div>
-            <button onClick={() => handleClick()} className="btn btn-warning">
+            <button onClick={() => handleClick()} className="btn btn-warning ">
               Pay with MercadoPago
             </button>
           </div>

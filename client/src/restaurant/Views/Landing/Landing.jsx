@@ -52,7 +52,9 @@ const Landing = () => {
               </div>
             </div>
           </div>
-          <div
+
+          {/* RESERVAS */}
+          {/* <div
             className={`carousel-item text-center vh-100 ${style.slide_2} ${style.bg_cover}`}
           >
             <div className="container h-100 d-flex align-items-center justify-content-center slide-2">
@@ -70,9 +72,11 @@ const Landing = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
-        <div>
+
+        {/* BOTONES PARA NAVEGAR */}
+        {/* <div>
           <button
             className={`carousel-control-prev`}
             type="button"
@@ -91,7 +95,7 @@ const Landing = () => {
             <span className="carousel-control-next-icon" aria-hidden="true"></span>
             <span className="visually-hidden">Next</span>
           </button>
-        </div>
+        </div> */}
       </div>
       {
         loading ? (<Carousell
