@@ -313,7 +313,6 @@ export const getMenuDetailById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endPoint + `/menus/${id}`);
-
       const newData = {
         idMenu: data.idMenu,
         nameMenu: data.nameMenu,
@@ -522,7 +521,7 @@ export const loginByUser = (user) => {
       if (data.data.isBanned) {
         Swal.fire({
           icon: "error",
-          title: "We'se sorry...",
+          title: "We're sorry...",
           text: "Your account has been blocked",
           footer: "",
         });
@@ -1119,7 +1118,6 @@ export const updateBanned = (idUser) => {
   };
 };
 
-
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
@@ -1127,12 +1125,10 @@ export const getAllUsers = () => {
       // console.log(data.allUs ers);
       return dispatch({
         type: ALL_USERS_SHOW,
-        payload: data
+        payload: data,
       });
     } catch (error) {
       console.log("No pudimos obtener los usuarios", error.message);
     }
   };
 };
-
-

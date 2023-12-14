@@ -26,21 +26,20 @@ function FormCategories() {
         const value = data[property];
 
         if (value === "") {
-          errors[property] = "El nombre no puede estar vacío";
+          errors[property] = "The name cannot be empty";
         } else if (value.trim() === "") {
-          errors[property] = "No uses sólo cadena de espacios";
+          errors[property] = "Don't use just space string";
         } else if (value.length < 2 || value.length > 30) {
-          errors[property] = "La categoría debe tener entre 2 y 30 caracteres";
+          errors[property] = "Category must be between 2 and 30 characters";
         } else if (!regexName.test(value)) {
-          errors[property] =
-            "La categoría debe contener solo letras y espacios";
+          errors[property] = "Category must contain only letters and spaces";
         } else if (
           allTypesOfFood.some(
             (type) =>
               type.name === value && !editingCategories.includes(type.id)
           )
         ) {
-          errors[property] = "Categoría ya declarada";
+          errors[property] = "Category already declared";
         }
       }
     }
@@ -106,7 +105,7 @@ function FormCategories() {
       setErrors({});
       setForce(!force);
     } else {
-      alert("Parece que no ingresaste una categoría");
+      alert("It looks like you didn't enter a category.");
     }
   };
 
@@ -117,13 +116,15 @@ function FormCategories() {
 
   return (
     <div>
-      <h3 className="fs-5">Tipos de comidas</h3>
+      <h3 className="fs-5" style={{ textAlign: "center", margin: "0" }}>
+        Types of food
+      </h3>
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Acciones</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -180,7 +181,7 @@ function FormCategories() {
             </tr>
           ))}
           <tr>
-            <td>Nuevo</td>
+            <td>New</td>
             <td>
               <input
                 type="text"
@@ -190,7 +191,7 @@ function FormCategories() {
                 onChange={(e) =>
                   handleChange(e.target.id, e.target.name, e.target.value)
                 }
-                placeholder="Ingresa un nombre"
+                placeholder="Enter a name"
               />
             </td>
             <td>
@@ -198,7 +199,7 @@ function FormCategories() {
                 onClick={() => handleGuardar(null, newCateg)}
                 disabled={!!errors.newCategory || newCateg.trim() === ""}
               >
-                Agregar
+                Add
               </button>
             </td>
             <td> {errors.newCategory}</td>
