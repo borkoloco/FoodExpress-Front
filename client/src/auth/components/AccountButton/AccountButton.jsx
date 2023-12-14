@@ -71,30 +71,36 @@ export const AccountButton = () => {
                 </NavLink>
               </li>
             )}
+
+            {dataLoginUser.idRole === 1 && (
+              <>
+                <li>
+                  <NavLink className={style.textDecoration} to="/my-orders">
+                    <button className="dropdown-item" type="button">
+                      My Orders
+                    </button>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className={style.textDecoration} to="/address">
+                    <button className="dropdown-item" type="button">
+                      Address
+                    </button>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
             <li>
-              <NavLink className={style.textDecoration} to="/my-orders">
-                <button className="dropdown-item" type="button">
-                  My Orders
-                </button>
-              </NavLink>
-            </li>
-            <li>
-              {
-                userAuth && Object.keys(userAuth).length > 0 &&
+              {userAuth && Object.keys(userAuth).length > 0 && (
                 <NavLink className={style.textDecoration} to="/editprofile">
                   <button className="dropdown-item" type="button">
                     Edit Password
                   </button>
                 </NavLink>
-              }
+              )}
             </li>
-            <li>
-              <NavLink className={style.textDecoration} to="/address">
-                <button className="dropdown-item" type="button">
-                  Address
-                </button>
-              </NavLink>
-            </li>
+
             <li>
               <button
                 onClick={handleLogout}

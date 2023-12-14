@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BackButton } from "../../../ui/components/BackButton/BackButton";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Checkout.module.css";
@@ -14,15 +14,9 @@ export const Checkout = () => {
   const cartBDTemp = useSelector((state) => state.cartBDTemp);
   const dataLoginUser = JSON.parse(localStorage.getItem("sesion"));
   const authenticated = validateSesion(dataLoginUser); //True: autenticado; false: no autenticado
+  const [propertiesReadyToSend, setPropertiesReadyToSend] = useState([]);
 
-  const propertiesReadyToSend = cartBDTemp.map((item) => ({
-    idMenu: item.menu.idMenu,
-    nameMenu: item.menu.nameMenu,
-    price: item.menu.price,
-    description: item.menu.description,
-    quantity: item.cantidad,
-    subtotal: item.subtotal,
-  })) || null;
+
 
   const { formState, onInputChange, errors } = useForm({address:"",note:""});
 
@@ -32,8 +26,10 @@ export const Checkout = () => {
         const response = await dispatch(sendCartToMercadoPago(
           {
             idUser:dataLoginUser.idUser,
+            name:dataLoginUser.nameUser,
+            email:dataLoginUser.email,
             address:formState.address,
-            note:formState.note,
+            note:formState.address,
             propertiesReadyToSend
           }
           ));
@@ -57,10 +53,29 @@ export const Checkout = () => {
   useEffect(() => {
     if(authenticated){
       dispatch(getCartByUser(dataLoginUser.idUser));
-      
     }
     // console.log(dataLoginUser);
   }, []);
+
+  useEffect(() => {
+    localStorage.removeItem("propertiesReadyToSend");
+    const storedProperties = JSON.parse(localStorage.getItem("propertiesReadyToSend"));
+    if (storedProperties && storedProperties.length > 0) {
+      setPropertiesReadyToSend(storedProperties);
+    } else if (cartBDTemp && cartBDTemp.length > 0) {
+      const propertiesFromCart = cartBDTemp.map((item) => ({
+        idMenu: item.menu.idMenu,
+        nameMenu: item.menu.nameMenu,
+        price: item.menu.price,
+        description: item.menu.description,
+        quantity: item.cantidad,
+        subtotal: item.subtotal,
+      }));
+  
+      setPropertiesReadyToSend(propertiesFromCart);
+      localStorage.setItem("propertiesReadyToSend", JSON.stringify(propertiesFromCart));
+    }
+  }, [cartBDTemp]);
 
   return (
     <>
