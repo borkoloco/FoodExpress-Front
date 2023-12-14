@@ -78,7 +78,6 @@ export const ProductsAdmin = () => {
 
   const handleViewProduct = (idMenu) => {
     // dispatch(getMenuDetailById(idMenu));
-    alert(idMenu);
     navigate(`/menu/detail/${idMenu}`);
   };
 

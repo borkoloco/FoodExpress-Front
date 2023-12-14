@@ -20,7 +20,7 @@ function ReviewsAprobation() {
   }, [allreviews]);
 
   // Filtra los comentarios con estado "Pendiente"
-  const pendingReviews = allreviews.filter((review) => review.idStatus !== 2);
+  const pendingReviews = allreviews.filter((review) => review.idStatus === 1);
 
   const handleApprove = async (idReview) => {
     await dispatch(updateReviewStatus(idReview, 2));
@@ -50,18 +50,20 @@ function ReviewsAprobation() {
   };
   return (
     <div>
-      <h2>Comentarios Pendientes de Moderación</h2>
+      <h3 style={{ textAlign: "center", margin: "0" }}>
+        Comments Pending Moderation
+      </h3>
       {pendingReviews.length > 0 ? (
         <table style={{ width: "100%" }}>
           <thead>
             <tr>
               <th style={{ width: "10%" }}>Status</th>
-              <th style={{ width: "60%" }}>Comentario</th>
-              <th style={{ width: "30%" }}>Acciones</th>
+              <th style={{ width: "60%" }}>Comment</th>
+              <th style={{ width: "30%" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {pendingReviews.map((review) => (
+            {pendingReviews.map((review, index) => (
               <tr key={review.idReview}>
                 <td>
                   {review.reviewStatus
@@ -73,6 +75,10 @@ function ReviewsAprobation() {
                     maxWidth: "250px",
                     wordWrap: "break-word",
                     color: review.idStatus === 3 ? "red" : "black",
+                    borderBottom:
+                      index < pendingReviews.length - 1
+                        ? "1px solid #ddd"
+                        : "none",
                   }}
                 >
                   {review.comment}
@@ -90,7 +96,7 @@ function ReviewsAprobation() {
           </tbody>
         </table>
       ) : (
-        <p>No hay comentarios pendientes de moderación.</p>
+        <p>There are no comments pending moderation.</p>
       )}
       <div
         style={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
@@ -100,13 +106,13 @@ function ReviewsAprobation() {
           disabled={pendingReviews.length === 0}
           style={{ marginRight: "10px" }}
         >
-          Aprobar Todos
+          Approve all
         </button>
         <button
           onClick={handleRejectAll}
           disabled={pendingReviews.length === 0}
         >
-          Rechazar Todos
+          Reject All
         </button>
       </div>
     </div>
