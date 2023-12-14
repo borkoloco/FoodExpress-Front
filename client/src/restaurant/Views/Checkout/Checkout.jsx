@@ -26,6 +26,8 @@ export const Checkout = () => {
         const response = await dispatch(sendCartToMercadoPago(
           {
             idUser:dataLoginUser.idUser,
+            name:dataLoginUser.nameUser,
+            email:dataLoginUser.email,
             address:formState.address,
             note:formState.address,
             propertiesReadyToSend
