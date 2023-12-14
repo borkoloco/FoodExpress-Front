@@ -78,7 +78,7 @@ export const ProductsAdmin = () => {
 
   const handleViewProduct = (idMenu) => {
     // dispatch(getMenuDetailById(idMenu));
-    navigate(`/menu/detail/${idMenu}`);
+    navigate(`/dashboard/menu/detail/${idMenu}`);
   };
 
   const handleOrder = (propiedad) => {
