@@ -9,6 +9,7 @@ import {
   getTypesOfFood,
   postSpecialties,
   postTypesOfFood,
+  getAllMenu,
 } from "../../../redux/actions/action";
 import { BackButton } from "../../../ui/components/BackButton/BackButton";
 import Swal from "sweetalert2";
@@ -180,6 +181,8 @@ const FormAdmin = () => {
           especialidad: menuData.specialtyMenu,
         };
         await dispatch(postProduct(sendData));
+        await dispatch(getAllMenu());
+
         //* limpiar formulario
         setMenuData({
           ...menuData,
@@ -206,7 +209,8 @@ const FormAdmin = () => {
       tipo: menuData.tipeMenu,
       especialidad: menuData.specialtyMenu,
     };
-    dispatch(postProduct(sendData));
+    await dispatch(postProduct(sendData));
+    await dispatch(getAllMenu());
     //* limpiar formulario
     setMenuData({
       ...menuData,
@@ -253,6 +257,7 @@ const FormAdmin = () => {
           ¡Plato agregado correctamente!
         </div>
       )} */}
+      <h4 style={{ textAlign: "center", margin: "0" }}>Add new</h4>
       <div className={style.container_form}>
         <div className="mb-3">
           <input
