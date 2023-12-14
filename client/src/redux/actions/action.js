@@ -521,7 +521,7 @@ export const loginByUser = (user) => {
       if (data.data.isBanned) {
         Swal.fire({
           icon: "error",
-          title: "We'se sorry...",
+          title: "We're sorry...",
           text: "Your account has been blocked",
           footer: "",
         });

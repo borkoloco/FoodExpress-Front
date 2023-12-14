@@ -116,7 +116,9 @@ function FormCategories() {
 
   return (
     <div>
-      <h3 className="fs-5">Types of food</h3>
+      <h3 className="fs-5" style={{ textAlign: "center", margin: "0" }}>
+        Types of food
+      </h3>
       <table>
         <thead>
           <tr>

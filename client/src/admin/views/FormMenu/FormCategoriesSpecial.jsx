@@ -115,7 +115,9 @@ function FormCategoriesSpecial() {
   };
   return (
     <div>
-      <h3 className="fs-5">Specialties</h3>
+      <h3 className="fs-5" style={{ textAlign: "center", margin: "0" }}>
+        Specialties
+      </h3>
       <table>
         <thead>
           <tr>
