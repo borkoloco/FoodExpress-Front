@@ -47,7 +47,7 @@ export const OrdersAdmin = () => {
               </tr>
             </thead>
             <tbody>
-              {organizeOrders(allOrders).map((order, index) => (
+              {organizeOrders(allOrders).reverse().map((order, index) => (
                 <tr key={index}>
                   <th scope="row">{order.idOrden}</th>
                   <td>{findUserNameById(allusersShow, order.idUser)}</td>

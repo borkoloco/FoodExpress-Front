@@ -58,16 +58,20 @@ export const DetailOrder = () => {
             <div className={` ${style.orderInfo}`}>
               <h5>Order ID: {filteredOrder.idOrden}</h5>
               <span>{transformarFecha(filteredOrder.fecha_de_compra)}</span>
-              <p>
-                Payment type:
-                {filteredOrder.metodo_de_compra === null
-                  ? " null"
-                  : " "+filteredOrder.metodo_de_compra}
-              </p>
-              <p>
-                Payment: 
-                {filteredOrder.estado === "Approved" ? " Paid" : " Declined"}
-              </p>
+              <div>
+                <span>
+                  Payment type:
+                  {filteredOrder.metodo_de_compra === null
+                    ? " null"
+                    : " "+filteredOrder.metodo_de_compra}
+                </span>
+              </div>
+              <div>
+                <span>
+                  Payment:
+                  {filteredOrder.estado === "Approved" ? " Paid" : " Declined"}
+                </span>
+              </div>
             </div>
 
             <div className={style.containerDetailsPurchase}>
@@ -88,7 +92,7 @@ export const DetailOrder = () => {
                             <p>
                               <strong>{menu.payload.nameMenu}</strong>
                             </p>
-                            <span>$ {menu.payload.price}</span>
+                            {/* <span>$ {menu.payload.price}</span> */}
                             <p>x{filteredOrder.orderItems[index].cantidad}</p>
                           </div>
                         </div>

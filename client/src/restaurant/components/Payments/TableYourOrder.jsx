@@ -18,7 +18,7 @@ export const TableYourOrder = ({ handleClick, properties }) => {
     // Simula el tiempo de carga
     const timer = setTimeout(() => {
       setLoading(true);
-      // console.log(properties);
+      console.log(properties);
       
     }, 1500); // Cambia este valor por el tiempo que realmente demoran en llegar las properties
 
