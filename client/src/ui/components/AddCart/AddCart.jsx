@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToCartDB } from "../../../redux/actions/action";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { validateSesion } from "../../../utils/validateSesion";
 
 export const AddCart = ({ amount, id }) => {
   const dispatch = useDispatch();
 
   const dataLoginUser = JSON.parse(localStorage.getItem("sesion"));
-  // const authenticated = validateSesion(dataLoginUser);
+  const authenticated = validateSesion(dataLoginUser);
 
   /* Funcionalidad de la página del carrito */
   const numAmount = parseInt(amount);
@@ -51,7 +52,7 @@ export const AddCart = ({ amount, id }) => {
     /*Funcionalidad del icono del carrito */
     dispatch(addToCart(data));
 
-    if (Object.keys(dataLoginUser).length > 0) {
+    if (authenticated) {
       dispatch(addToCartDB(data, dataLoginUser.idUser));
     }
 
@@ -61,6 +62,9 @@ export const AddCart = ({ amount, id }) => {
 
     /* Esto es para desplegar una pequeña alerta abajo a la derecha
     cuando se agrega algo al carrito */
+
+    console.log("entro");
+    
     toast.success("Added to cart successfully", {
       position: "bottom-right",
       autoClose: 2000,

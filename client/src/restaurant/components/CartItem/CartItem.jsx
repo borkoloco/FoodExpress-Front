@@ -14,6 +14,7 @@ import { removeFromCart } from "../../../redux/actions/action";
 import { addToCartDB } from "../../../redux/actions/action";
 import { AddCart } from "../../../ui/components/AddCart/AddCart";
 import { FaTrash } from "react-icons/fa";
+import { validateSesion } from "../../../utils/validateSesion";
 
 export const CartItem = ({
   id,
@@ -33,7 +34,7 @@ export const CartItem = ({
   // const userLogued = useSelector((state) => state.userLogued);
 
   const dataLoginUser = JSON.parse(localStorage.getItem("sesion"));
-  // const authenticated = validateSesion(dataLoginUser);
+  const authenticated = validateSesion(dataLoginUser);
 
   const removeButton = () => {
     const updatedProducts = cartProducts.filter((cart) => cart.id !== id);
@@ -41,7 +42,7 @@ export const CartItem = ({
 
     dispatch(removeFromCart(prueba));
 
-    if (Object.keys(dataLoginUser).length > 0) {
+    if (authenticated) {
       const newAmount = 0;
       dispatch(removeFromCartDB(dataLoginUser.idUser, id, 0));
     }
@@ -80,7 +81,7 @@ export const CartItem = ({
     /*Funcionalidad del icono del carrito */
     dispatch(addToCart(data));
 
-    if (Object.keys(dataLoginUser).length > 0) {
+    if (authenticated) {
       dispatch(addToCartDB(data, dataLoginUser.idUser));
     }
 
@@ -90,7 +91,7 @@ export const CartItem = ({
   };
 
   const removeInput = () => {
-    if (Object.keys(dataLoginUser).length > 0) {
+    if (authenticated) {
       const newAmount = amount - 1;
 
       dispatch(removeFromCartDB(dataLoginUser.idUser, id, newAmount));
