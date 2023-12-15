@@ -95,7 +95,7 @@ export const AccountButton = () => {
               {userAuth && Object.keys(userAuth).length > 0 && (
                 <NavLink className={style.textDecoration} to="/editprofile">
                   <button className="dropdown-item" type="button">
-                    Edit Password
+                    Change Password
                   </button>
                 </NavLink>
               )}

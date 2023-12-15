@@ -95,7 +95,7 @@ function EditProfile() {
     return (
         <div className={styles.bigDiv}>
             <div className={styles.formPassword}>
-                <h2>Edit Password</h2>
+                <h2>Change Password</h2>
                 <br></br>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
