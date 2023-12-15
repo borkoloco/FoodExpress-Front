@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { Link } from 'react-router-dom';
 import { logoutByUser } from '../../../redux/actions/action'
 import { NavLink, useNavigate } from "react-router-dom";
+import { FormButton } from '../../../ui/components/FormButtton/FormButton'
 
 function EditProfile() {
     const dispatch = useDispatch()

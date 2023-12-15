@@ -9,6 +9,9 @@ import "react-toastify/dist/ReactToastify.css";
 export const AddCart = ({ amount, id }) => {
   const dispatch = useDispatch();
 
+  const dataLoginUser = JSON.parse(localStorage.getItem("sesion"));
+  // const authenticated = validateSesion(dataLoginUser);
+
   /* Funcionalidad de la página del carrito */
   const numAmount = parseInt(amount);
   if (numAmount < 1) {
@@ -16,9 +19,9 @@ export const AddCart = ({ amount, id }) => {
   }
 
   const [cartProducts, setCartProducts] = useLocalStorage("cart", []);
-  const [showAlert, setShowAlert] = useState(false);
-  const userAuth = useSelector((state) => state.userAuth)
-  const userLogued = useSelector((state) => state.userLogued)
+  // const [showAlert, setShowAlert] = useState(false);
+  // const userAuth = useSelector((state) => state.userAuth);
+  // const userLogued = useSelector((state) => state.userLogued);
 
   const addInput = () => {
     const data = { id: parseInt(id), amount: parseInt(amount) };
@@ -48,19 +51,17 @@ export const AddCart = ({ amount, id }) => {
     /*Funcionalidad del icono del carrito */
     dispatch(addToCart(data));
 
-
-    if (Object.keys(userAuth).length > 0) {
-
-      dispatch(addToCartDB(data, userAuth.data.idUser))
+    if (Object.keys(dataLoginUser).length > 0) {
+      dispatch(addToCartDB(data, dataLoginUser.idUser));
     }
 
-    if (Object.keys(userLogued).length > 0) {
-      dispatch(addToCartDB(data, userLogued.idUser))
-    }
+    // if (Object.keys(dataLoginUser).length > 0) {
+    //   dispatch(addToCartDB(data, dataLoginUser.idUser));
+    // }
 
     /* Esto es para desplegar una pequeña alerta abajo a la derecha
     cuando se agrega algo al carrito */
-    toast.success('Added to cart successfully', {
+    toast.success("Added to cart successfully", {
       position: "bottom-right",
       autoClose: 2000,
       hideProgressBar: false,
@@ -77,7 +78,6 @@ export const AddCart = ({ amount, id }) => {
       <button className={`${style.btnAdd}`} onClick={addInput}>
         Add to Cart
       </button>
-
     </div>
   );
 };
