@@ -141,11 +141,11 @@ export const Login = () => {
           </div>
         )}
 
-        <p className="form-text mt-3">
+        {/* <p className="form-text mt-3">
           <a className={`${style.links}`} href="#">
             Forget Password
           </a>
-        </p>
+        </p> */}
 
         <FormButton
           eventHandler={handleLoginByUser}

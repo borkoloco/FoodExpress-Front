@@ -48,15 +48,90 @@ export const Filters = ({ responsive = false }) => {
     <>
       {
         !responsive ? (<div className={`accordion ${Style.accordion}`} id="accordionExample">
-          <div className={`accordion-item `}>
-            <h2 className="accordion-header" id="headingOne">
-              <button
-                className="accordion-button"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapseOne"
-                aria-expanded="true"
-                aria-controls="collapseOne"
+
+        <div className={`accordion-item `}>
+          <h2 className="accordion-header" id="headingOne">
+            <button
+              className="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne"
+            >
+              Filters
+            </button>
+          </h2>
+          <div
+            id="collapseOne"
+            className="accordion-collapse collapse show"
+            aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample"
+          >
+            <div className="accordion-body">
+              <Search />
+            </div>
+            <div className="accordion-body">
+              <p>Specialties</p>
+              <select
+                className="form-select form-select-sm"
+                aria-label="Small select example"
+                name="specialties"
+                defaultValue={filterGlobalState.specialties}
+                onChange={(el) => handleFilters(el)}
+              >
+                <option value="all">All</option>
+                {allSpecialties &&
+                  allSpecialties.map((special, index) => {
+                    return (
+                      <option value={special.name} key={index}>
+                        {special.name}
+                      </option>
+                    );
+                  })}
+              </select>
+            </div>
+            <div className="accordion-body">
+              <p>Types</p>
+              <select
+                className="form-select form-select-sm"
+                aria-label="Small select example"
+                name="types"
+                defaultValue={filterGlobalState.typesOfFood}
+                onChange={(el) => handleFilters(el)}
+              >
+                <option value="all">All</option>
+                {allTypesOfFood &&
+                  allTypesOfFood.map((typeFood, index) => {
+                    return (
+                      <option value={typeFood.name} key={index}>
+                        {typeFood.name}
+                      </option>
+                    );
+                  })}
+              </select>
+            </div>
+            {/* <div className="accordion-body">
+              <p>Availables</p>
+              <select
+                className="form-select form-select-sm"
+                aria-label="Small select example"
+                name="availability"
+                onChange={(el) => handleFilters(el)}
+                defaultValue={filterGlobalState.availability}
+              >
+                <option value="all">All</option>
+                <option value={1}>Available</option>
+                <option value={0}>No Available</option>
+              </select>
+            </div> */}
+            <div className="accordion-body">
+              <p>Order by:</p>
+              <select
+                className="form-select form-select-sm"
+                aria-label="Small select example"
+                onChange={(el) => handleOrder(el)}
+
               >
                 Filters
               </button>
