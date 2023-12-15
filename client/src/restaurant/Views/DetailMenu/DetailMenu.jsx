@@ -27,6 +27,7 @@ const DetailMenu = () => {
   const [amountValue, setAmountValue] = useState(1);
   const [cartProducts, setCartProducts] = useLocalStorage("cart", "[]");
   const phoneNumber = "543408674244";
+  const [available, setAvailable] = useState(5);
 
   useEffect(() => {
     dispatch(getMenuDetailById(id));
@@ -39,14 +40,30 @@ const DetailMenu = () => {
   }, [id]);
 
   const handleInputCart = (value) => {
-    setAmountValue(value);
+    const numericValue = Number(value);
+
+    // Verificar si numericValue es un número válido y mayor o igual a 1
+    if (!isNaN(numericValue) && numericValue >= 1) {
+      // Verificar si numericValue es menor o igual a available
+      if (numericValue <= available) {
+        setAmountValue(numericValue);
+      } else {
+        // Si numericValue es mayor que available, establecer amountValue en available
+        setAmountValue(available);
+      }
+    }
   };
+  // const handleInputCart = (value) => {
+  //   if (Number(amountValue) <= Number(available)) {
+  //     setAmountValue(value);
+  //   }
+  // };
   // useEffect(() => {
   //   console.log(amountValue);
   // }, [amountValue]);
 
   const handleClick = () => {
-    const message = `Hola Food Express, estoy interesado en el siguiente producto: %0A Nombre: ${menuDetail.nameMenu} %0A Descripción: ${menuDetail.description}%0A Precio: $${menuDetail.price} %0A ${menuDetail.imageUrl}`;
+    const message = `Hola Food Express, estoy interesado en el siguiente producto: %0A Nombre: ${menuDetail.nameMenu} %0A Descripción: ${menuDetail.description}%0A Precio: $${menuDetail.price}`;
     sendWhatsApp(phoneNumber, message);
   };
 
@@ -66,7 +83,7 @@ const DetailMenu = () => {
             <div className="col-md-5">
               <div id="carouselExampleIndicators" className="carousel slide">
                 <div className="carousel-indicators">
-                  <button
+                  {/* <button
                     type="button"
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="0"
@@ -85,7 +102,7 @@ const DetailMenu = () => {
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="2"
                     aria-label="Slide 3"
-                  ></button>
+                  ></button> */}
                 </div>
                 <div className="carousel-inner">
                   <div className="carousel-item active">
@@ -95,7 +112,7 @@ const DetailMenu = () => {
                       alt={menuDetail.nameMenu}
                     />
                   </div>
-                  <div className="carousel-item">
+                  {/* <div className="carousel-item">
                     <img
                       src={menuDetail.imageUrl}
                       className="d-block w-100"
@@ -108,9 +125,9 @@ const DetailMenu = () => {
                       className="d-block w-100"
                       alt={menuDetail.nameMenu}
                     />
-                  </div>
+                  </div> */}
                 </div>
-                <button
+                {/* <button
                   className="carousel-control-prev"
                   type="button"
                   data-bs-target="#carouselExampleIndicators"
@@ -121,8 +138,8 @@ const DetailMenu = () => {
                     aria-hidden="true"
                   ></span>
                   <span className="visually-hidden">Previous</span>
-                </button>
-                <button
+                </button> */}
+                {/* <button
                   className="carousel-control-next"
                   type="button"
                   data-bs-target="#carouselExampleIndicators"
@@ -133,7 +150,7 @@ const DetailMenu = () => {
                     aria-hidden="true"
                   ></span>
                   <span className="visually-hidden">Next</span>
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -141,9 +158,17 @@ const DetailMenu = () => {
             <div className="col-md-7">
               {/* <p className={`${style.newArrival} text-center`}>NEW</p> */}
               <h2 className="mb-0">{menuDetail.nameMenu}</h2>{" "}
-              <span className={style.title}>Product ID: MEN{menuDetail.idMenu}U</span>
+              <span className={style.title}>
+                Product ID: MEN{menuDetail.idMenu}U
+              </span>
               {reviewAVGbyIdMenu !== "0.0" && (
-                <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginTop: "10px",
+                  }}
+                >
                   <RatingStars
                     averageRating={reviewAVGbyIdMenu}
                     iconSize={30}
@@ -168,16 +193,17 @@ const DetailMenu = () => {
               <p>
                 {menuDetail.typeMenu} - {menuDetail.specialtyMenu}
               </p>
-              <p>
-                <b>Available: </b> 5
-              </p>
+              {/* <p>
+                <b>Available: </b> {available}
+              </p> */}
               <label>
                 <b>Quantity: </b>&nbsp;
                 <input
                   className={style.quantityInput}
                   type="number"
                   onChange={(el) => handleInputCart(el.target.value)}
-                  defaultValue={amountValue}
+                  //defaultValue={amountValue}
+                  value={amountValue}
                 />
               </label>
               <div
@@ -198,7 +224,7 @@ const DetailMenu = () => {
                       cursor: "pointer",
                       fontSize: "2em",
                       color: "#25D366",
-                      marginLeft: "1rem"
+                      marginLeft: "1rem",
                     }}
                   />
                 </div>
@@ -230,7 +256,9 @@ const DetailMenu = () => {
                           iconSize={30}
                         />
                       </div>
-                      <p className={style.comment}>Este comentario fue rechazado por el moderador.</p>
+                      <p className={style.comment}>
+                        Este comentario fue rechazado por el moderador.
+                      </p>
                     </div>
                   ) : review.idStatus === 2 ? (
                     <div>
@@ -252,7 +280,9 @@ const DetailMenu = () => {
                           iconSize={30}
                         />
                       </div>
-                      <p className={style.comment}>Comentario pendiente de moderación</p>
+                      <p className={style.comment}>
+                        Comentario pendiente de moderación
+                      </p>
                     </div>
                   )}
                 </div>

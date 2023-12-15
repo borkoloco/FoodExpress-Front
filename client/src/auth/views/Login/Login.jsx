@@ -142,9 +142,9 @@ export const Login = () => {
         )}
 
         <p className="form-text mt-3">
-          <a className={`${style.links}`} href="#">
+          {/* <a className={`${style.links}`} href="#">
             Forget Password
-          </a>
+          </a> */}
         </p>
 
         <FormButton

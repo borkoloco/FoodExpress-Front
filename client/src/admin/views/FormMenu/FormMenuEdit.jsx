@@ -140,17 +140,17 @@ const FormMenuEdit = () => {
       {/* <BackButton /> */}
       {/* <div className={style.container_form}> */}
       <div>
-        <h2>Edita el plato seleccionado</h2>
+        <h2>Edit the selected plate</h2>
         <div className="mb-3">
           <label className="form-label" htmlFor="nameMenu">
-            Plato:{" "}
+            Plate:{" "}
           </label>
           <input
             className="form-control"
             type="text"
             name="nameMenu"
             id="nameMenu"
-            placeholder="Nombre del plato"
+            placeholder="Name of plate"
             value={menuData.nameMenu}
             onChange={handleChange}
           />
@@ -158,7 +158,7 @@ const FormMenuEdit = () => {
         </div>
         <div className="mb-3">
           <label className="form-label" htmlFor="description">
-            Descripción:{" "}
+            Description:{" "}
           </label>
           <textarea
             className="form-control"
@@ -166,7 +166,7 @@ const FormMenuEdit = () => {
             type="text"
             name="description"
             id="description"
-            placeholder="Descripción del plato"
+            placeholder="Description of plate"
             value={menuData.description}
             onChange={handleChange}
           />
@@ -174,14 +174,14 @@ const FormMenuEdit = () => {
         </div>
         <div className="mb-3">
           <label className="form-label" htmlFor="price">
-            Precio:{" "}
+            Price:{" "}
           </label>
           <input
             className="form-control"
             type="number"
             name="price"
             id="price"
-            placeholder="Precio del plato"
+            placeholder="Price of plate"
             value={menuData.price}
             onChange={handleChange}
           />
@@ -190,7 +190,7 @@ const FormMenuEdit = () => {
 
         <div>
           <div className="mb-3">
-            <label className="form-label">Tipos de Platos:</label>{" "}
+            <label className="form-label">Types of plates:</label>{" "}
             {/* <button onClick={handleAddTipoComida}>Agregar</button> */}
             <select
               className="form-select"
@@ -205,7 +205,7 @@ const FormMenuEdit = () => {
             </select>
           </div>
           <div className="mb-3">
-            <label className="form-label">Especialidades:</label>{" "}
+            <label className="form-label">Specialties:</label>{" "}
             {/* <button onClick={handleAddSpecial}>Agregar</button> */}
             <select
               className="form-select"
@@ -239,7 +239,7 @@ const FormMenuEdit = () => {
             onClick={handleSubmit}
             disabled={isSubmitButtonDisabled}
           >
-            Actualizar
+            Update
           </button>
         </div>
       </div>

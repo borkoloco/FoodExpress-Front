@@ -18,12 +18,11 @@ export const Orders = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    const dataFetch = async() => {
+    const dataFetch = async () => {
       await dispatch(getOrdenByUserByDate(datauser.idUser));
       setLoading(true);
-
-    }
-    dataFetch()
+    };
+    dataFetch();
   }, []);
 
   // console.log("hola soy ", datauser.idUser);
@@ -45,9 +44,9 @@ export const Orders = () => {
         <tr>
           <th colSpan="4">{transformarFecha(envio.numero_de_envio)}</th>
           <th colSpan="4">
-            <button className={style.button} onClick={() => handleRepeat(envio.numero_de_envio)}>
+            {/* <button className={style.button} onClick={() => handleRepeat(envio.numero_de_envio)}>
               Repeat order
-            </button>
+            </button> */}
           </th>
         </tr>
         {envio.ordenes.map((orden) => (
@@ -63,7 +62,10 @@ export const Orders = () => {
               #{orden.idMenu}: {orden.nameMenu}
             </td>
             <td>
-              <button className={style.button} onClick={() => handleRating(orden.idMenu)}>
+              <button
+                className={style.button}
+                onClick={() => handleRating(orden.idMenu)}
+              >
                 Add review
               </button>{" "}
             </td>
@@ -81,22 +83,32 @@ export const Orders = () => {
         <h2>My Orders</h2>
       </div>
 
-      {
-        loading ? (<div className={`card ${style.containerTable}`}>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Price</th>
-              <th scope="col">ID Menu</th>
-            </tr>
-          </thead>
-          {renderOrders()}
-        </table>
-      </div>) : <Loading2/>
-      }
-      
+      {loading ? (
+        orderByIdUser.length > 0 ? (
+          <div className={`card ${style.containerTable}`}>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">ID Menu</th>
+                </tr>
+              </thead>
+              {renderOrders()}
+            </table>
+          </div>
+        ) : (
+          <div style={{display: "flex", justifyContent:"center", height:"50vh", marginTop:"2rem"}}>
+            <center>
+              <b><p>There are no orders</p></b>
+              <span>Make your first purchase</span>
+            </center>
+          </div>
+        )
+      ) : (
+        <Loading2 />
+      )}
     </>
   );
 };

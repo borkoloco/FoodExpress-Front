@@ -43,22 +43,22 @@ export const ProductsAdmin = () => {
     };
 
     fetchData();
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     setFilteredMenu(allMenu.filter((menu) => menu.available));
     setFilteredInactiveMenu(allMenu.filter((menu) => !menu.available));
   }, [allMenu]);
 
-  const handleEditProduct = (id) => {
+  const handleEditProduct = async (id) => {
     Swal.fire({
       icon: "warning",
       title: "Advertencia",
-      text: "No realices cambios radicales en los productos que ya guardaste.",
+      text: "No realices cambios radicales en los productos que ya guardaste. ",
       //footer: '<a href="#">Why do I have this issue?</a>',
     });
 
-    dispatch(getMenuDetailById(id));
+    await dispatch(getMenuDetailById(id));
     navigate("/dashboard/editproduct");
   };
 
@@ -78,8 +78,7 @@ export const ProductsAdmin = () => {
 
   const handleViewProduct = (idMenu) => {
     // dispatch(getMenuDetailById(idMenu));
-    alert(idMenu);
-    navigate(`/menu/detail/${idMenu}`);
+    navigate(`/dashboard/menu/detail/${idMenu}`);
   };
 
   const handleOrder = (propiedad) => {
@@ -177,8 +176,8 @@ export const ProductsAdmin = () => {
                           <button
                             className="btn btn-primary"
                             id={plato.idMenu}
-                            onClick={(e) => {
-                              handleEditProduct(e.target.id);
+                            onClick={() => {
+                              handleEditProduct(plato.idMenu);
                             }}
                           >
                             <FaEdit />
@@ -212,8 +211,8 @@ export const ProductsAdmin = () => {
                           <button
                             className="btn btn-primary"
                             id={plato.idMenu}
-                            onClick={(e) => {
-                              handleEditProduct(e.target.id);
+                            onClick={() => {
+                              handleEditProduct(plato.idMenu);
                             }}
                           >
                             <FaEdit />

@@ -91,7 +91,7 @@ const ReviewUser = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Hubo un error, no estás logueado",
+        text: "You are not logged in",
         footer: "",
       });
       return;
@@ -100,7 +100,7 @@ const ReviewUser = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Hubo un error, no pudimos obtener el producto que compraste",
+        text: "We could not obtain the product you purchased",
         footer: "",
       });
       return;
@@ -110,19 +110,19 @@ const ReviewUser = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Debes calificar y comentar",
+        text: "You must rate and comment",
         footer: "",
       });
       return;
     }
     //evaluar si guardar review o actualizar existente
     switch (textSubmit) {
-      case "Calificar":
+      case "Send rating":
         const dataSend = { idUser, idMenu, rate: rating, comment: comment };
         dispatch(addReview(dataSend));
         navigate(-1);
         break;
-      case "Actualizar":
+      case "Update":
         const dataSendUpdate = {
           id: idReviewUpdate,
           rate: rating,
@@ -193,11 +193,10 @@ const ReviewUser = () => {
               <h6 className="mt-4">Tell us more about this dish</h6>
               {/* <label htmlFor="comment">Deja tus comentarios</label> */}
 
-
               <div className="form-floating">
                 <textarea
                   className="form-control"
-                  style={{height:"100px"}}
+                  style={{ height: "100px" }}
                   id="comment"
                   name="comment"
                   rows="4"
@@ -206,7 +205,9 @@ const ReviewUser = () => {
                   value={comment}
                   onChange={handleCommentChange}
                 ></textarea>
-                <label className={style.text} for="comment">Enter your comment here...</label>
+                <label className={style.text} for="comment">
+                  Enter your comment here...
+                </label>
               </div>
 
               <div>
@@ -224,11 +225,10 @@ const ReviewUser = () => {
                 {textSubmit}
               </button>
               <p className={style.textWarning}>
-                Este comentario será visible públicamente. No uses términos
-                ofensivos, ni palabras inapropiadas. Tampoco introduzcas
-                contraseñas, direcciones, ni datos privados. No incites a la
-                violencia ni involucres a menores de edad. Respeta las leyes de
-                privacidad.
+                This comment will be publicly visible. Don't use terms
+                offensive, or inappropriate words. Also do not enter passwords,
+                addresses, or private data. Do not incite violence or involve
+                minors. Respect the laws of privacy.
               </p>
             </div>
           </div>

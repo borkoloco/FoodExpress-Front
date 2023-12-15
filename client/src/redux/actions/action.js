@@ -313,7 +313,6 @@ export const getMenuDetailById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endPoint + `/menus/${id}`);
-
       const newData = {
         idMenu: data.idMenu,
         nameMenu: data.nameMenu,
@@ -522,7 +521,7 @@ export const loginByUser = (user) => {
       if (data.data.isBanned) {
         Swal.fire({
           icon: "error",
-          title: "We'se sorry...",
+          title: "We're sorry...",
           text: "Your account has been blocked",
           footer: "",
         });
@@ -567,6 +566,7 @@ export const loginByUser = (user) => {
 
 export const logoutByUser = () => {
   localStorage.removeItem("sesion");
+  localStorage.removeItem("propertiesReadyToSend");
   return { type: LOGOUT_BY_USER };
 };
 
@@ -975,6 +975,7 @@ export const sendCartToMercadoPago = (cart) => {
       const { data } = await axios.post(endPoint + "/create-payment", cart);
       // console.log("Responde:", data);
       localStorage.removeItem("cart");
+      localStorage.removeItem("propertiesReadyToSend");
       return dispatch({
         type: SEND_CART_MERCADO_PAGO,
         payload: data,
@@ -1117,7 +1118,6 @@ export const updateBanned = (idUser) => {
   };
 };
 
-
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
@@ -1125,12 +1125,10 @@ export const getAllUsers = () => {
       // console.log(data.allUs ers);
       return dispatch({
         type: ALL_USERS_SHOW,
-        payload: data
+        payload: data,
       });
     } catch (error) {
       console.log("No pudimos obtener los usuarios", error.message);
     }
   };
 };
-
-
