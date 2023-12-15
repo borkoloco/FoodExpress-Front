@@ -25,7 +25,7 @@ export const Footer = () => {
                 <h5>Contact us</h5>
                 <ul>
                   <li>
-                  <span>Email: foodExpress@gmail.com</span>
+                  <span>Email: food.expresshenry@gmail.com</span>
                   </li>
                   <li>
                     <NavLink to="/comments">Send us a comment</NavLink>

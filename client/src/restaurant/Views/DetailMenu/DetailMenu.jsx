@@ -193,9 +193,9 @@ const DetailMenu = () => {
               <p>
                 {menuDetail.typeMenu} - {menuDetail.specialtyMenu}
               </p>
-              <p>
+              {/* <p>
                 <b>Available: </b> {available}
-              </p>
+              </p> */}
               <label>
                 <b>Quantity: </b>&nbsp;
                 <input
