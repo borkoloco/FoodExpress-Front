@@ -53,8 +53,8 @@ export const ProductsAdmin = () => {
   const handleEditProduct = async (id) => {
     Swal.fire({
       icon: "warning",
-      title: "Advertencia",
-      text: "No realices cambios radicales en los productos que ya guardaste. ",
+      title: "Warning",
+      text: "Don't make radical changes to products you've already saved. ",
       //footer: '<a href="#">Why do I have this issue?</a>',
     });
 
