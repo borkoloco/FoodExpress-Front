@@ -110,20 +110,20 @@ export const Filters = ({ responsive = false }) => {
                     })}
                 </select>
               </div>
-              {/* <div className="accordion-body">
-              <p>Availables</p>
-              <select
-                className="form-select form-select-sm"
-                aria-label="Small select example"
-                name="availability"
-                onChange={(el) => handleFilters(el)}
-                defaultValue={filterGlobalState.availability}
-              >
-                <option value="all">All</option>
-                <option value={1}>Available</option>
-                <option value={0}>No Available</option>
-              </select>
-            </div> */}
+              <div className="accordion-body">
+                <p>Availables</p>
+                <select
+                  className="form-select form-select-sm"
+                  aria-label="Small select example"
+                  name="availability"
+                  onChange={(el) => handleFilters(el)}
+                  defaultValue={filterGlobalState.availability}
+                >
+                  <option value="all">All</option>
+                  <option value={1}>Available</option>
+                  <option value={0}>No Available</option>
+                </select>
+              </div>
               <div className="accordion-body">
                 <p>Order by:</p>
                 <select
