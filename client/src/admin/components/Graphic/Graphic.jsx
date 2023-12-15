@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import style from "./Graphic.module.css"
 import { LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Line } from 'recharts';
+import { transformarFecha, transformarFecha2 } from '../../../utils/formatFecha';
 
 export const Graphic = ({ ordersData }) => {
   const [processedData, setProcessedData] = useState([]);
@@ -19,7 +20,7 @@ export const Graphic = ({ ordersData }) => {
       });
 
       return Object.keys(ordersByDay).map((day) => ({
-        name: day,
+        name: transformarFecha2(day),
         totalAmount: ordersByDay[day].totalAmount,
         count: ordersByDay[day].count,
       }));
