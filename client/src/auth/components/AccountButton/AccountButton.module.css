@@ -24,3 +24,25 @@
     text-decoration: none;
 }
 
+
+/* .showSpan{
+    
+} */
+
+.hideSpan{
+    display: none;
+}
+
+/* EN CELULAR oculta */
+@media (max-width: 920px) {
+
+    .showSpan{
+        display: none;
+    }
+    .hideSpan{
+        display: inline;
+        
+    }
+    
+    
+}
