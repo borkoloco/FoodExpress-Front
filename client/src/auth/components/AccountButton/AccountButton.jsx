@@ -59,9 +59,15 @@ export const AccountButton = () => {
               alt="user-account"
               className={`${style.imgAccount}`}
             />
-            {authenticated && dataLoginUser.nameUser}
+            <span className={style.showSpan}>{authenticated && dataLoginUser.nameUser}</span>
           </button>
+
           <ul className="dropdown-menu dropdown-menu-end">
+            <li className={style.hideSpan}>
+              <center><span> Hi 👋, {authenticated && dataLoginUser.nameUser}</span></center>
+              <hr />
+            </li>
+            
             {dataLoginUser.idRole === 2 && (
               <li>
                 <NavLink className={style.textDecoration} to="/dashboard">
@@ -124,7 +130,7 @@ export const AccountButton = () => {
             alt="user-account"
             className={`${style.imgAccount}`}
           />
-          Login
+          <span className={style.showSpan}>Login</span>
         </button>
       )}
     </>

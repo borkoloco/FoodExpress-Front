@@ -111,7 +111,8 @@ export const CartItem = ({
 
   return (
     <>
-      <tr>
+      {/* Desktop */}
+      <tr className={style.cardA}>
         <td>
           <div className={style.containerCard}>
             <img className={style.image} src={imageUrl} />
@@ -140,6 +141,26 @@ export const CartItem = ({
           </button>
         </td>
       </tr>
+
+      {/* Responsive */}
+      <div className={style.card}>
+        <div className={style.cardContent}>
+          <img className={style.image} src={imageUrl} alt="Product" />
+          <div className={style.details}>
+            <strong>{nameMenu}</strong>
+            <span className="">Price: ${price}</span>
+            <span>Subtotal: ${subTotal}</span>
+          </div>
+          <div className={style.interactions}>
+            <button className="btn btn-outline-secondary" onClick={removeInput}>-</button>
+            <label className={style.amountView}>{amount}</label>
+            <button className="btn btn-outline-secondary" onClick={addInput}>+</button>
+          </div>
+          <div className={style.removeButton}>
+            <button className="btn btn-danger" onClick={removeButton}><FaTrash /></button>
+          </div>
+        </div>
+    </div>
     </>
   );
 };

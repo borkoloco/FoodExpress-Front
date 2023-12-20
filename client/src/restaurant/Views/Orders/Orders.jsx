@@ -86,7 +86,9 @@ export const Orders = () => {
       {loading ? (
         orderByIdUser.length > 0 ? (
           <div className={`card ${style.containerTable}`}>
-            <table className="table">
+
+ 
+            <table className={`table ${style.hideResponsive}`}>
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -97,6 +99,17 @@ export const Orders = () => {
               </thead>
               {renderOrders()}
             </table>
+
+            <div className={style.showResponsive}>
+              {renderOrders()}
+            </div>
+            
+
+
+
+
+
+
           </div>
         ) : (
           <div style={{display: "flex", justifyContent:"center", height:"50vh", marginTop:"2rem"}}>
