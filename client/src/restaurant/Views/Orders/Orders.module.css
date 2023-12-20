@@ -35,9 +35,15 @@
 
 
 
+.showResponsive{
+    display: none;
+}
 
 
-@media (max-width: 920px) {
+
+
+
+@media (max-width: 720px) {
 
     .containerTable{
         margin-left: 2rem;
@@ -49,4 +55,12 @@
         margin-left: 2rem;
         margin-right: 2rem;
     }
+
+    .hideResponsive{
+        display: none;
+    }
+    .showResponsive{
+        display: flex;
+    }
+    
 }

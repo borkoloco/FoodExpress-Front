@@ -62,6 +62,16 @@
 }
 
 
+.hideResponsive{
+    display: inline;
+}
+
+
+.showResponsive{
+    display: none;
+}
+
+
 @media (max-width: 920px) {
     .containerInfo{
         flex-direction: column;
@@ -85,5 +95,19 @@
         margin-left: 2rem;
         margin-right: 2rem;
     }
+
+
+}
+
+
+@media (max-width: 620px) {
+    .showResponsive{
+        display: inline;
+    }
+
+    .hideResponsive{
+        display: none;
+    }
+   
 }
 
