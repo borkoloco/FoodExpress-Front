@@ -253,6 +253,13 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, input: payload };
 
     case GET_MENUS_BY_NAME:
+      if (!payload) {
+        return {
+          ...state,
+          allMenu: [],
+          allMenuOriginal: [],
+        };
+      }
       return {
         ...state,
         allMenu: payload,
