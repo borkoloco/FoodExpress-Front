@@ -11,6 +11,7 @@ export const Loading = () => {
         src="https://media.tenor.com/SWJCs0u0Tr0AAAAC/taco-tacos.gif"
         alt="Loading"
       />
+      <h3 className={style.h2}>Loading</h3>
     </div>
   );
 };
