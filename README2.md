@@ -71,7 +71,7 @@ Figueroa, Nicolas (Sparda3)
 
 Gomez, Axel (Axel3890)
 
-Luciano, Jorge (JLucianoSS)
+Sanchez, Jorge Luciano (JLucianoSS)
 
 Pauluk, Kevin Osmar (Kevinpg123)
 
