@@ -32,3 +32,58 @@
     padding-left: 0.6em;
     padding-right: 0.6em;
 }
+
+
+
+
+
+/* Card responsive */
+.card {
+    display: none
+  }
+  
+  .cardContent {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .image {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .interactions,
+  .removeButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .amountView {
+    margin: 0 10px;
+  }
+
+
+
+@media (max-width: 620px) {
+    .card {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        padding: 15px;
+    }
+    .cardA{
+        display: none;
+    }
+   
+}

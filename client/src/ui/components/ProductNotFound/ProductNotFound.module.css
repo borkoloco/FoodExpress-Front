@@ -1,4 +1,4 @@
-.containerLoading {
+.containerProductNotFound {
     /* background-color: black; */
     display: flex;
     flex-direction: column;
@@ -10,10 +10,10 @@
 
 
 
-.imgLoading {
+.imgProductNotFound {
     height: 11em;
     width: auto;
-    border-radius: 50%;
+
 }
 
 .h2 {

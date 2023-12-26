@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Style from "./Home.module.css";
 import Cards from "../../components/Menus/Cards/Cards";
 import { useDispatch, useSelector } from "react-redux";
-import {getAllMenu,} from "../../../redux/actions/action";
+import { getAllMenu, } from "../../../redux/actions/action";
 import { Loading } from "../../../ui/components/Loading/Loading";
 import { ToastContainer } from "react-toastify";
 import { Filters } from "../../../ui/components/Filters/Filters";
+import { ProductNotFound } from "../../../ui/components/ProductNotFound/ProductNotFound";
 
 function Home() {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ function Home() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
- 
+
   const filteredMenu = allMenu.filter((menu) => menu.available);
   return (
     <div className={Style.background_home}>
@@ -54,22 +55,22 @@ function Home() {
       <div className={`${Style.bigDiv}`}>
 
         <div className={Style.barDiv}>
-        {windowSize.width > 600 ? (
+          {windowSize.width > 600 ? (
             <Filters />
           ) : (
             <Filters responsive={true} />
           )}
-          
+
         </div>
 
-        
-        
+
+
 
         <div className={Style.cardsDiv}>
           {filteredMenu && allMenu.length > 0 ? (
             <Cards props={filteredMenu} />
           ) : (
-            <Loading />
+            <ProductNotFound />
           )}
         </div>
 

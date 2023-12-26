@@ -78,7 +78,9 @@ const ShoppingCart = () => {
           <div>
             <div className={style.containerInfo}>
               <div className={`${style.tableContainer}`}>
-                <table className="table">
+
+                {/* Desktop */}
+                <table className={`table ${style.hideResponsive}`}>
                   <thead>
                     <tr>
                       <th scope="col">Product</th>
@@ -112,6 +114,36 @@ const ShoppingCart = () => {
                       })}
                   </tbody>
                 </table>
+
+
+                {/* Responsive */}
+                <div className={style.showResponsive}>
+                  {filterMenu &&
+                    filterMenu.length > 0 &&
+                    filterMenu.map((el) => {
+                      const amountId = cartItems.filter(
+                        (cart) => el.idMenu === cart.id
+                      );
+                      const amount = amountId[0]?.amount || 0;
+                      return (
+                        <CartItem
+                          key={el.idMenu}
+                          id={el.idMenu}
+                          amount={amount}
+                          imageUrl={el.imageUrl}
+                          nameMenu={el.nameMenu}
+                          price={el.price}
+                          specialtyMenu={el.specialtyMenu}
+                          typeMenu={el.typeMenu}
+                          description={el.description}
+                        />
+                      );
+                    })
+                  }
+
+                </div>
+
+
               </div>
 
               <div className={style.container_}>

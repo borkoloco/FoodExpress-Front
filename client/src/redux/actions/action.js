@@ -499,15 +499,24 @@ export const setInput = (valor) => {
 };
 
 export const getMenusByName = (name) => {
+  const codeWord = encodeURIComponent(name)
+  if (name.length === 0) {
+    return getAllMenu()
+  }
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(endPoint + `/menu/?name=${name}`);
+      const { data } = await axios.get(endPoint + `/menu/?name=${codeWord}`);
+      console.log(data);
       return dispatch({
         type: GET_MENUS_BY_NAME,
         payload: formatData(data),
       });
     } catch (error) {
       console.log(error.message);
+      return dispatch({
+        type: GET_MENUS_BY_NAME,
+        
+      });
     }
   };
 };
