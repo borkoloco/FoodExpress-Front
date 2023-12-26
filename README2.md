@@ -29,12 +29,11 @@ Además, tendrán la posibilidad de calificar el o los productos y dejar comenta
 
 # Tecnologías utilizadas:
 
- •	Frontend: React/Vite , Redux, JavaScript, Bootstrap
- 
- •	Backend: PostgreSQL, Sequelize, Express, Node.js
- 
- •	Herramientas Adicionales: Nodemailer para correos, Cloudinary para la subida de fotos desde el admin, Firebase para el login,   
-   Pasarela de pagos con Mercado Pago.
+•	Frontend: React/Vite , Redux, JavaScript, Bootstrap
+
+•	Backend: PostgreSQL, Sequelize, Express, Node.js
+
+•	Herramientas Adicionales: Nodemailer para correos, Cloudinary para la subida de fotos desde el admin, Firebase para el login, Pasarela de pagos con Mercado Pago.
 
 
  # Implementacion y Deploy:
