@@ -100,10 +100,14 @@ export const AddressPage = () => {
                   onChange={onInputChange}
                   placeholder="Av. Corrientes 1234, Buenos Aires, Argentina"
                 />
+                 {errors.address && (
+                    <p className={`text-danger mt-1 ${style.errorsSize}`}>{errors.address}</p>
+                  )}
               </div>
               <button
                 type="button"
                 className="btn btn-dark"
+                disabled={errors.address}
                 onClick={() => handleClick()}
               >
                 Submit

@@ -71,5 +71,15 @@ const validate = (inputForm) => {
     }
   }
 
+ 
+  if ('address' in inputForm) {
+    const addressRegex = /^(?![\d\W]+$)[\w\d\s#,\/-]+$/;
+    if (inputForm.address.trim() === '') {
+      errors.address = 'Enter an address';
+    } else if (!addressRegex.test(inputForm.address)) {
+      errors.address = 'Incorrect format';
+    }
+  }
+
   return errors;
 };
