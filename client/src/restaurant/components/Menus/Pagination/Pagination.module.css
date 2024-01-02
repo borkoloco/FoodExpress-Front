@@ -2,8 +2,32 @@
 
 .containerPagination{
     margin-top: 2rem;
+    display: flex;
+    justify-content: center;
 }
 
-.active {
-    color: sandybrown;
-}
+.pagination {
+    display: flex;
+
+    list-style: none;
+    padding: 0;
+  }
+  
+  .pageLink {
+    /* Estilos base para cada botón de página */
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: transparent;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  
+  .active {
+    /* Estilos para el botón activo */
+    background-color: sandybrown;
+    color: #fff;
+    font-weight: bold;
+  }
