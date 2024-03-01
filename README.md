@@ -10,58 +10,55 @@ Además, tendrán la posibilidad de calificar el o los productos y dejar comenta
 
 **Usuarios:**
 
-•	Los usuarios podrán registrarse con un correo electrónico o vía Google "Continue with Google", para poder realizar una reserva y/o adquirir un plato.
+• Los usuarios podrán registrarse con un correo electrónico o vía Google "Continue with Google", para poder realizar una reserva y/o adquirir un plato.
 
-• 	Podrán ir generando un carrito de compras, contaran con una pasarela de pagos para abonar y podrán visualizar el estado de las reservas realizadas.
+• Podrán ir generando un carrito de compras, contaran con una pasarela de pagos para abonar y podrán visualizar el estado de las reservas realizadas.
 
-•	Tendrán la opción de hacer preguntas sobre los servicios ofrecidos y dejar comentarios sobre los mismos, como asi tambien calificar los servicios.
+• Tendrán la opción de hacer preguntas sobre los servicios ofrecidos y dejar comentarios sobre los mismos, como asi tambien calificar los servicios.
 
-•	Contarán también con la posibilidad de visualizar las órdenes de compra que concretaron.
+• Contarán también con la posibilidad de visualizar las órdenes de compra que concretaron.
+
+**Datos para plataforma de pagos:**
+
+• Podrán ir generando pagos con los datos del siguiente link: https://www.mercadopago.com.ar/developers/es/docs/checkout-api/additional-content/your-integrations/test/cards
 
 **Administrador:**
 
-•	El administrador tendrá el control de la carta de menus, podrá agregar, modificar y eliminar platos y categorías. 
+• El administrador tendrá el control de la carta de menus, podrá agregar, modificar y eliminar platos y categorías.
 
-•	Podrá responder y/o eliminar las preguntas o comentarios de usuarios. 
+• Podrá responder y/o eliminar las preguntas o comentarios de usuarios.
 
-•	Podrá eliminar a un usuarios, entre otras tareas.
-
+• Podrá eliminar a un usuarios, entre otras tareas.
 
 # Tecnologías utilizadas:
 
-•	Frontend: React/Vite , Redux, JavaScript, Bootstrap
+• Frontend: React/Vite , Redux, JavaScript, Bootstrap
 
-•	Backend: PostgreSQL, Sequelize, Express, Node.js
+• Backend: PostgreSQL, Sequelize, Express, Node.js
 
-•	Herramientas Adicionales: Nodemailer para correos, Cloudinary para la subida de fotos desde el admin, Firebase para el login, Pasarela de pagos con Mercado Pago.
+• Herramientas Adicionales: Nodemailer para correos, Cloudinary para la subida de fotos desde el admin, Firebase para el login, Pasarela de pagos con Mercado Pago.
 
+# Implementacion y Deploy:
 
- # Implementacion y Deploy:
+• Frontend deploy en Vercel.
 
- •	Frontend deploy en Vercel.
- 
- •	Base de datos en Railway.
- 
- • Backend deploy en Railway.
+• Base de datos en Railway.
 
+• Backend deploy en Railway.
 
- # Pasos para levantar el proyecto:
+# Pasos para levantar el proyecto:
 
-•	Clonar el repositorio en una carpeta del ordenador.
+• Clonar el repositorio en una carpeta del ordenador.
 
-•	Abrir la carpeta en Visual Studio Code.
+• Abrir la carpeta en Visual Studio Code.
 
-•	Crear una base de datos en PostgreSQL con el nombre de "menu".
+• Crear una base de datos en PostgreSQL con el nombre de "menu".
 
-•	Actualizar el archivo dot env 
+• Actualizar el archivo dot env
 
-•	Hacer click derecho en la carpeta "FoodExpress-Back" y abrir la terminal integrada, escribir el comando "npm install", luego "npm start".
+• Hacer click derecho en la carpeta "FoodExpress-Back" y abrir la terminal integrada, escribir el comando "npm install", luego "npm start".
 
-•	Hacer click derecho en la carpeta "FoodExpress-Front" y abrir la terminal integrada, escribir el comando "npm install", luego "npm start". El proyecto se abrirá en el localhost:3000 de su navegador.
-
-
-
-
+• Hacer click derecho en la carpeta "FoodExpress-Front" y abrir la terminal integrada, escribir el comando "npm install", luego "npm start". El proyecto se abrirá en el localhost:3000 de su navegador.
 
 # Equipo de desarrollo
 
